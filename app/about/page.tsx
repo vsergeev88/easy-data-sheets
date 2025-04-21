@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 import { getComments, createComment, Comment } from '@/lib/data'; // Use alias @/lib
 
 export default async function About() {
@@ -7,6 +8,7 @@ export default async function About() {
     const commentText = formData.get('comment') as string; // Get comment text
     try {
       await createComment(commentText);
+      revalidatePath('/about'); // Invalidate the cache for the about page
       redirect('/about'); // Redirect to refresh the page and show new comment
     } catch (error) {
       console.error('Failed to create comment:', error);
@@ -16,8 +18,6 @@ export default async function About() {
 
   // Fetch comments using the imported function
   const comments: Comment[] = await getComments();
-
-  console.log(comments);
 
   return (
     <div>
