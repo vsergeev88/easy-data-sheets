@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
 import {
   ClerkProvider,
-  CreateOrganization,
+  // CreateOrganization,
   SignInButton,
   SignUpButton,
   SignedIn,
@@ -37,7 +37,7 @@ export default function RootLayout({
       baseTheme: dark,
     }}>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[1200px] mx-auto`}>
           <header className="flex justify-end items-center p-4 gap-4 h-16">
             <SignedOut>
               <SignInButton />
@@ -47,9 +47,9 @@ export default function RootLayout({
               <UserButton />
             </SignedIn>
           </header>
-          <SignedIn>
+          {/* <SignedIn>
             <CreateOrganization />
-          </SignedIn>
+          </SignedIn> */}
           {children}
         </body>
       </html>
