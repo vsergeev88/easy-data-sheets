@@ -1,9 +1,6 @@
-import { auth } from "@clerk/nextjs/server";
-export { sql } from "./sql";
-export async function getUserId(): Promise<string> {
-  const { userId } = await auth();
-  if (!userId) {
-    throw new Error('User not found');
-  }
-  return userId;
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
 }

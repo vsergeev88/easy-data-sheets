@@ -11,6 +11,7 @@ import {
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { dark } from '@clerk/themes'
+import { Toaster } from "@/components/ui/sonner"
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -50,7 +51,10 @@ export default function RootLayout({
           {/* <SignedIn>
             <CreateOrganization />
           </SignedIn> */}
-          {children}
+          <main>
+            {children}
+          </main>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

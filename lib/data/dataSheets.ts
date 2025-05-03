@@ -1,5 +1,5 @@
-import { getUserId } from "../utils";
-import { sql } from "../utils";
+import { getUserId } from "../utils/user";
+import { sql } from "../utils/sql";
 
 
 export type DataSheet = {
