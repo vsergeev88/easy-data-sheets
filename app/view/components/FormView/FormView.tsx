@@ -28,6 +28,7 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import TextAreaField from "../formItems/TextAreaField/TextAreaField"
 import CheckboxField from "../formItems/CheckboxField/CheckboxField"
+import Fieldset from "../Fieldset"
 const items = [
   {
     id: "recents",
@@ -108,6 +109,7 @@ export default function FormView() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      phone: "",
       items: ["recents", "home"],
     },
   })
@@ -129,8 +131,18 @@ export default function FormView() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <TextAreaField form={form} name="username" label="Контактное лицо" description="имя и должность" />
-        <CheckboxField form={form} name="items" label="Область применения" items={items} />
+        <Fieldset legend="1. Контактная информация и условия поставки" filledPercent={90}>
+          <TextAreaField control={form.control} name="username" label="Контактное лицо" description="имя и должность" />
+          <TextAreaField control={form.control} name="phone" label="Телефон" description="с кодом города" />
+          <TextAreaField control={form.control} name="email" label="Электронная почта" />
+          <TextAreaField control={form.control} name="organization" label="Организация" />
+          <TextAreaField control={form.control} name="place" label="Местонахождение и тип объекта" />
+          <TextAreaField control={form.control} name="time" label="Необходимые сроки поставки" />
+          <TextAreaField control={form.control} name="number" label="Количество агрегатов" />
+        </Fieldset>
+        <Fieldset legend="2. Характеристики перекачиваемой среды и сфера применения" filledPercent={50}>
+          <CheckboxField control={form.control} name="items" label="Область применения" items={items} withCustomField />
+        </Fieldset>
         <Button type="submit">Submit</Button>
       </form>
     </Form>

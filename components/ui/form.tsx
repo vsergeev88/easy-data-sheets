@@ -15,6 +15,7 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
+import { TriangleAlert } from "lucide-react"
 
 const Form = FormProvider
 
@@ -147,10 +148,10 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="form-message"
       id={formMessageId}
-      className={cn("text-destructive text-sm", className)}
+      className={cn("text-destructive text-sm flex items-center", className)}
       {...props}
     >
-      {body}
+      <TriangleAlert className="w-3 h-3 mr-1" /> {body}
     </p>
   )
 }

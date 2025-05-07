@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { FormControl, FormItem, FormLabel } from '@/components/ui/form';
 import { FormField } from '@/components/ui/form';
 import FormItemWrapper from '../../FormItemWrapper';
 import { Checkbox } from '@/components/ui/checkbox';
 import { UseFormReturn } from 'react-hook-form';
+import { Input } from '@/components/ui/input';
 
 type CheckboxFieldProps = {
-  form: UseFormReturn<any>
+  control: UseFormReturn<any>['control']
   label: string
   description?: string
   name: string
@@ -15,12 +16,14 @@ type CheckboxFieldProps = {
     id: string
     label: string
   }[]
+  withCustomField?: boolean
 }
 
-const CheckboxField: React.FC<CheckboxFieldProps> = ({ form, label, description, name, items }) => {
+const CheckboxField: React.FC<CheckboxFieldProps> = ({ control, label, description, name, items, withCustomField }) => {
+  const [otherValue, setOtherValue] = useState('');
   return (
     <FormField
-      control={form.control}
+      control={control}
       name={name}
       render={({ field }) => (
         <FormItemWrapper field={field} label={label} description={description}>
@@ -28,7 +31,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({ form, label, description,
             {items.map((item) => (
               <FormField
                 key={item.id}
-                control={form.control}
+                control={control}
                 name="items"
                 render={({ field }) => {
                   return (
@@ -58,6 +61,18 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({ form, label, description,
                 }}
               />
             ))}
+            {withCustomField && <label className="flex flex-row items-center space-x-2">
+              <Checkbox
+                checked={!!otherValue}
+              />
+              <Input
+                type="text"
+                className="w-full"
+                placeholder="Другое"
+                value={otherValue}
+                onChange={(e) => setOtherValue(e.target.value)}
+              />
+            </label>}
           </div>
         </FormItemWrapper>
       )}

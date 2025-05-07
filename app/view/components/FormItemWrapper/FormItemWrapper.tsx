@@ -20,9 +20,9 @@ type FormItemProps = {
 
 const FormItemWrapper: React.FC<FormItemProps> = ({ field, children, label, description }) => {
   console.log(field)
-  return (<FormItem className="border border-gray-300 mb-0 min-h-[80px] bg-gray-50 gap-0">
-    <div className="flex relative">
-      <div className="px-2 min-w-[260px]">
+  return (<FormItem className="border border-gray-300 mb-1 md:mb-0 min-h-[80px] bg-gray-50 gap-0 ">
+    <div className="flex relative sm:flex-row flex-col">
+      <div className="px-2 pb-2 md:w-[260px] md:min-w-[260px]">
         <FormLabel className="text-md">{label}</FormLabel>
         <FormDescription>
           {description}

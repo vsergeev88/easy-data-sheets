@@ -5,15 +5,15 @@ import { Textarea } from '@/components/ui/textarea';
 import { UseFormReturn } from 'react-hook-form';
 
 type TextAreaFieldProps = {
-  form: UseFormReturn<any>
+  control: UseFormReturn<any>['control']
   label: string
   description?: string
   name: string
   placeholder?: string
 }
-const TextAreaField: React.FC<TextAreaFieldProps> = ({ form, label, description, name, placeholder }) => {
+const TextAreaField: React.FC<TextAreaFieldProps> = ({ control, label, description, name, placeholder }) => {
   return (<FormField
-    control={form.control}
+    control={control}
     name={name}
     render={({ field }) => (
       <FormItemWrapper field={field} label={label} description={description}>

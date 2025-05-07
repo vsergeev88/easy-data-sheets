@@ -1,6 +1,6 @@
 'use client'
 
-import { useCounterStore } from '../store/counterStore'
+import { useCounterStore } from '../stores/counterStore'
 
 export default function Editor() {
   const { count, increment, reset } = useCounterStore()
