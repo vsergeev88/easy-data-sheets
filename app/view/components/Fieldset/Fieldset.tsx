@@ -11,7 +11,7 @@ type FieldsetProps = {
   filledPercent?: number
 }
 const Fieldset: React.FC<FieldsetProps> = ({ children, legend, className, filledPercent }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   return <fieldset className={cn("border border-gray-300 py-1 px-1 bg-gray-300 md:mb-4 mb-6 relative", className)}>
     {legend && <legend className="text-lg font-medium bg-white px-2 py-1 border-gray-400 border border-b-4 border-r-4" onClick={() => setIsOpen(!isOpen)}>{legend}
       {filledPercent && <p className="text-xs text-gray-500">Заполнено на {filledPercent}%</p>}</legend>}
