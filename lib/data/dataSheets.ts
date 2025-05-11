@@ -10,9 +10,10 @@ export type DataSheet = {
   userId: string;
   data: string;
   published: boolean;
+  companyId: string | null;
 }
 
-export async function createDataSheet(name: string, data?: Record<string, unknown>): Promise<DataSheet> {
+export async function createDataSheet(name: string, data?: Record<string, unknown>, companyId?: string): Promise<DataSheet> {
   const id = crypto.randomUUID();
   const createdAt = new Date();
   const updatedAt = new Date();
@@ -21,7 +22,7 @@ export async function createDataSheet(name: string, data?: Record<string, unknow
   const userId = await getUserId();
 
 
-  await sql`INSERT INTO data_sheets (id, name, data, created_at, updated_at, user_id, published) VALUES (${id}, ${name}, ${dataString}, ${createdAt}, ${updatedAt}, ${userId}, false)`;
+  await sql`INSERT INTO data_sheets (id, name, data, created_at, updated_at, user_id,  published, company_id) VALUES (${id}, ${name}, ${dataString}, ${createdAt}, ${updatedAt}, ${userId}, false, ${companyId ?? null})`;
 
   // Construct the DataSheet object to return
   const newDataSheet: DataSheet = {
@@ -31,6 +32,7 @@ export async function createDataSheet(name: string, data?: Record<string, unknow
     updatedAt,
     userId,
     published: false,
+    companyId: companyId ?? null,
     data: dataString
   };
 

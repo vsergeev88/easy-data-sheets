@@ -1,4 +1,4 @@
-import { getDataSheet } from "@/lib/data/";
+import { getDataSheet } from "@/lib/data/dataSheets";
 
 export default async function DataSheetPage({ params }: { params: { dataSheetId: string } }) {
   const dataSheet = await getDataSheet(params.dataSheetId);
@@ -9,5 +9,8 @@ export default async function DataSheetPage({ params }: { params: { dataSheetId:
 
   const data = JSON.parse(dataSheet.data);
 
-  return <div>DataSheetPage</div>;
+  return <div>
+    <h1>{dataSheet.name}</h1>
+    <pre>{JSON.stringify(data, null, 2)}</pre>
+  </div>;
 }
