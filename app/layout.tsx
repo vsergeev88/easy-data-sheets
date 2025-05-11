@@ -12,6 +12,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { dark } from '@clerk/themes'
 import { Toaster } from "@/components/ui/sonner"
+import { MainLogo } from '@/components/MainLogo'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -38,20 +39,23 @@ export default function RootLayout({
       baseTheme: dark,
     }}>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[1200px] mx-auto`}>
-          <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <SignedOut>
-              <SignInButton />
-              <SignUpButton />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[1200px] mx-auto bg-gray-100 flex flex-col min-h-screen pb-4`}>
+          <header className="flex justify-between items-center p-4 gap-4 h-16 ">
+            <MainLogo />
+            <div className="flex items-center gap-4">
+              <SignedOut>
+                <SignInButton />
+                <SignUpButton />
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </div>
           </header>
           {/* <SignedIn>
             <CreateOrganization />
           </SignedIn> */}
-          <main>
+          <main className="p-4 bg-white rounded-lg flex-1">
             {children}
           </main>
           <Toaster />

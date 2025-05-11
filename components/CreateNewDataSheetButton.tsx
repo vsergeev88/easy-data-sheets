@@ -14,8 +14,6 @@ export const CreateNewDataSheetButton: React.FC<{ userId: string, companyId?: st
       data: {}
     })
 
-    console.log(dataSheet)
-
     redirect(`/editor/${dataSheet.id}`)
   }
   return <Button onClick={createNewDataSheet}>Create new Data Sheet</Button>

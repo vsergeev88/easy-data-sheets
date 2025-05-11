@@ -1,7 +1,13 @@
-'use client'
-import { useParams } from "next/navigation";
+import { getDataSheet } from "@/lib/data/dataSheets";
 
-export default function Editor() {
-  const { id } = useParams()
-  return <div>Editor {id}</div>
+async function Editor({ params }: { params: { id: string } }) {
+  const { id } = await params
+  const dataSheet = await getDataSheet(id)
+
+  return <div>Editor {dataSheet.id}
+    <pre>{JSON.stringify(dataSheet, null, 2)}</pre>
+  </div>
 }
+
+
+export default Editor

@@ -5,18 +5,19 @@ import { ChevronDown } from 'lucide-react';
 import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-type FieldsetProps = {
+type BaseFieldsetProps = {
   children: React.ReactNode
   legend?: string
   className?: string
+  onLegendClick?: () => void
 }
-const Fieldset: React.FC<FieldsetProps> = ({ children, legend, className }) => {
+const BaseFieldset: React.FC<BaseFieldsetProps> = ({ children, legend, className, onLegendClick }) => {
   const [isOpen, setIsOpen] = useState(true);
   return <fieldset className={cn("border border-gray-300 py-1 px-1 bg-gray-300 md:mb-4 mb-6 relative", className)}>
     {
       legend && <legend
         className="text-lg font-medium bg-white px-2 py-1 border-gray-400 border border-b-4 border-r-4 flex items-center gap-2"
-        onClick={() => setIsOpen(!isOpen)}>
+        onClick={() => onLegendClick?.() ?? setIsOpen(!isOpen)}>
         {legend}
         {isOpen ? <ChevronDown /> : <ChevronRight />}
       </legend>
@@ -30,4 +31,4 @@ const Fieldset: React.FC<FieldsetProps> = ({ children, legend, className }) => {
     </Button >
   </fieldset >;
 };
-export default Fieldset
+export default BaseFieldset

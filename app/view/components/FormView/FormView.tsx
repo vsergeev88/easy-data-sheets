@@ -26,9 +26,9 @@ import { toast } from "sonner"
 //   DrawerTrigger,
 // } from "@/components/ui/drawer"
 // import { Textarea } from "@/components/ui/textarea"
-import TextAreaField from "../formItems/TextAreaField/TextAreaField"
-import CheckboxField from "../formItems/CheckboxField/CheckboxField"
-import Fieldset from "../Fieldset"
+import TextAreaField from "../formItems/TextAreaField"
+import CheckboxField from "../formItems/CheckboxField"
+import Fieldset from "../formItems/Fieldset"
 import { FIELD_TYPES } from "@/lib/types/form";
 import type { Form } from "@/lib/types/form";
 
@@ -151,7 +151,7 @@ export default function FormView({ formData }: { formData: Form }) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         {formData.fieldSets.map((fieldSet, index) => {
           return (
-            <Fieldset key={index} legend={`${index + 1}. ${fieldSet.legend}`} filledPercent={90}>
+            <Fieldset key={index} legend={`${index + 1}. ${fieldSet.legend}`}>
               {fieldSet.fields.map((field) => {
                 const commonProps = {
                   control: form.control,
