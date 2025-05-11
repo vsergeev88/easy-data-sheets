@@ -2,23 +2,31 @@ import React, { useState } from 'react'
 import { cn } from '@/lib/utils';
 import { ChevronUp } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 type FieldsetProps = {
   children: React.ReactNode
   legend?: string
   className?: string
-  filledPercent?: number
 }
-const Fieldset: React.FC<FieldsetProps> = ({ children, legend, className, filledPercent }) => {
+const Fieldset: React.FC<FieldsetProps> = ({ children, legend, className }) => {
   const [isOpen, setIsOpen] = useState(true);
   return <fieldset className={cn("border border-gray-300 py-1 px-1 bg-gray-300 md:mb-4 mb-6 relative", className)}>
-    {legend && <legend className="text-lg font-medium bg-white px-2 py-1 border-gray-400 border border-b-4 border-r-4" onClick={() => setIsOpen(!isOpen)}>{legend}
-      {filledPercent && <p className="text-xs text-gray-500">Заполнено на {filledPercent}%</p>}</legend>}
+    {
+      legend && <legend
+        className="text-lg font-medium bg-white px-2 py-1 border-gray-400 border border-b-4 border-r-4 flex items-center gap-2"
+        onClick={() => setIsOpen(!isOpen)}>
+        {legend}
+        {isOpen ? <ChevronDown /> : <ChevronRight />}
+      </legend>
+    }
     {isOpen && children}
-    <Button variant="ghost" type="button" onClick={() => setIsOpen(!isOpen)}> {isOpen
-      ? <span className="flex items-center gap-1  text-xs text-gray-500"> Collapse <ChevronUp /></span>
-      : <span className="flex items-center gap-1 text-xs text-gray-500"> Expand <ChevronDown /></span>}
+    <Button variant="ghost" type="button" onClick={() => setIsOpen(!isOpen)}>
+      <span className="flex items-center gap-1 text-xs text-gray-500">
+        {isOpen ? 'Collapse' : 'Expand'}
+        {isOpen ? <ChevronUp /> : <ChevronDown />}
+      </span>
     </Button >
   </fieldset >;
 };

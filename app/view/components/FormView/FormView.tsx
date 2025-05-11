@@ -153,11 +153,14 @@ export default function FormView({ formData }: { formData: Form }) {
           return (
             <Fieldset key={index} legend={`${index + 1}. ${fieldSet.legend}`} filledPercent={90}>
               {fieldSet.fields.map((field) => {
+                const commonProps = {
+                  control: form.control,
+                }
                 switch (field.type) {
                   case FIELD_TYPES.TEXT:
-                    return <TextAreaField key={field.name} {...field} control={form.control} />
+                    return <TextAreaField key={field.name} {...commonProps} {...field} />
                   case FIELD_TYPES.CHECKBOX:
-                    return <CheckboxField key={field.name} {...field} control={form.control} />
+                    return <CheckboxField key={field.name} {...commonProps} {...field} />
                 }
               })}
             </Fieldset>

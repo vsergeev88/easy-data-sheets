@@ -17,10 +17,8 @@ export type TextField = CommonFieldProps & {
 
 export type CheckboxField = CommonFieldProps & {
   type: FIELD_TYPES.CHECKBOX
-  items: {
-    id: string
-    label: string
-  }[]
+  items: string[]
+  withCustomField?: boolean
 }
 
 export type Field = TextField | CheckboxField
