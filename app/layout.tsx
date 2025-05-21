@@ -39,7 +39,7 @@ export default function RootLayout({
       baseTheme: dark,
     }}>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[1200px] mx-auto bg-gray-100 flex flex-col min-h-screen pb-4`}>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100 grid grid-rows-[auto_1fr_auto] w-full h-screen`}>
           <header className="flex justify-between items-center p-4 gap-4 h-16 ">
             <MainLogo />
             <div className="flex items-center gap-4">
@@ -55,9 +55,12 @@ export default function RootLayout({
           {/* <SignedIn>
             <CreateOrganization />
           </SignedIn> */}
-          <main className="p-4 bg-white rounded-lg flex-1">
+          <main className="bg-white">
             {children}
           </main>
+          <footer className="flex justify-left items-center px-4 h-6">
+            <p>2025 © EasyDataSheets.com</p>
+          </footer>
           <Toaster />
         </body>
       </html>

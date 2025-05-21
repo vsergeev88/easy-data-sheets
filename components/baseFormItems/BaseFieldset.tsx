@@ -5,7 +5,7 @@ import { ChevronDown } from 'lucide-react';
 import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-type BaseFieldsetProps = {
+export type BaseFieldsetProps = {
   children: React.ReactNode
   legend?: string
   className?: string
@@ -17,11 +17,12 @@ const BaseFieldset: React.FC<BaseFieldsetProps> = ({ children, legend, className
     {
       legend && <legend
         className="text-lg font-medium bg-white px-2 py-1 border-gray-400 border border-b-4 border-r-4 flex items-center gap-2"
-        onClick={() => onLegendClick?.() ?? setIsOpen(!isOpen)}>
+        onClick={() => onLegendClick?.()}>
         {legend}
         {isOpen ? <ChevronDown /> : <ChevronRight />}
       </legend>
     }
+    {/* {children} */}
     {isOpen && children}
     <Button variant="ghost" type="button" onClick={() => setIsOpen(!isOpen)}>
       <span className="flex items-center gap-1 text-xs text-gray-500">

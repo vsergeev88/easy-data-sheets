@@ -1,12 +1,11 @@
 import { getDataSheet } from "@/lib/data/dataSheets";
+import EditorClient from "./EditorClient";
 
 async function Editor({ params }: { params: { id: string } }) {
   const { id } = await params
   const dataSheet = await getDataSheet(id)
 
-  return <div>Editor {dataSheet.id}
-    <pre>{JSON.stringify(dataSheet, null, 2)}</pre>
-  </div>
+  return <EditorClient dataSheet={dataSheet} />
 }
 
 

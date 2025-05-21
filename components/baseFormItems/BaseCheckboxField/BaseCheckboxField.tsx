@@ -1,14 +1,9 @@
-import React, { useState } from 'react'
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { PlusIcon } from 'lucide-react';
+import React from 'react'
 import { CheckboxField as CheckboxFieldType } from '@/lib/types/form';
-import { FormLabel } from '../ui/form';
-import { FormControl } from '../ui/form';
-import { FormItem } from '../ui/form';
-import { FormField } from '../ui/form';
+import { FormLabel, FormControl, FormItem, FormField } from '@/components/ui/form';
 import { UseFormReturn } from 'react-hook-form';
-import { Checkbox } from '../ui/checkbox';
+import { Checkbox } from '@/components/ui/checkbox';
+import CustomField from './CustomField';
 
 type BaseCheckboxFieldProps = Omit<CheckboxFieldType, 'type' | 'label'> & {
   control?: UseFormReturn['control']
@@ -16,8 +11,6 @@ type BaseCheckboxFieldProps = Omit<CheckboxFieldType, 'type' | 'label'> & {
 }
 
 const BaseCheckboxField: React.FC<BaseCheckboxFieldProps> = ({ control, withCustomField, items, onAddOtherValue, name }) => {
-  const [otherValue, setOtherValue] = useState('');
-
   return (
     <div className="flex flex-col space-y-2 px-2 py-2 bg-white w-full">
       {items.map((item) => (
@@ -53,17 +46,7 @@ const BaseCheckboxField: React.FC<BaseCheckboxFieldProps> = ({ control, withCust
           }}
         />
       ))}
-      {withCustomField && <div className="flex flex-row items-center space-x-2 w-full">
-        <div className="flex w-full items-center space-x-2">
-          <Input type="text" placeholder="Other" value={otherValue} className="max-w-lg"
-            onChange={(e) => setOtherValue(e.target.value)} />
-          <Button variant="outline" type="button" disabled={!otherValue} onClick={() => {
-            onAddOtherValue?.(otherValue)
-            setOtherValue('')
-          }}><PlusIcon /> Add</Button>
-        </div>
-      </div>
-      }
+      {withCustomField && <CustomField onAddOtherValue={onAddOtherValue} />}
     </div>
   )
 };
