@@ -22,7 +22,7 @@ export default function EditorClient({ dataSheet = null }: EditorClientProps) {
     <div className="border-r border-gray-200 h-full">
       <LeftPanel />
     </div>
-    <div className="flex-1 overflow-auto h-full">
+    <div className="flex-1 overflow-auto h-full bg-gray-50 py-4">
       {/* <pre>{JSON.stringify(dataSheet, null, 2)}</pre> */}
       <FormView />
     </div>

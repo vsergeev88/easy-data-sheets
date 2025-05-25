@@ -1,33 +1,58 @@
 import { DataSheet } from '@/lib/data/dataSheets'
 import { create } from 'zustand'
 import { FALLBACK_FORM_DATA } from './fallbackFormData'
+import { FieldSet } from '@/lib/types/form'
 
-type EditorState = {
+type EditorStore = {
   formData: Record<string, unknown> | null
-  formName: string | null
-  // count: number
-  // increment: () => void
-  // reset: () => void
-}
-
-type EditorActions = {
+  formInfo: Omit<DataSheet, "data"> | null
   init: (dataSheet: DataSheet) => void
+  selectedFieldSetId: string | null
+  setSelectedFieldSetId: (id: string | null) => void
+  selectedFieldId: string | null
+  setSelectedFieldId: (id: string | null) => void
+  addEmptySection: (afterId?: string | null) => void
 }
 
-export const useEditorStore = create<EditorState & EditorActions>((set) => ({
-  // count: 0,
-  // increment: () => set((state) => ({ count: state.count + 1 })),
-  // reset: () => set({ count: 0 }),
-
+export const useEditorStore = create<EditorStore>((set, get) => ({
   formData: null,
-  formName: null,
+  formInfo: null,
   init: (dataSheet: DataSheet) => {
-    console.log('init', dataSheet)
-    const formData = JSON.parse(dataSheet.data)
+    const { data, ...formInfo } = dataSheet
+
+    const formData = JSON.parse(data)
     if (!formData.fieldSets?.length) {
       formData.fieldSets = [...FALLBACK_FORM_DATA.fieldSets]
     }
 
-    set({ formData, formName: dataSheet.name })
+    set({ formData, formInfo })
+  },
+  selectedFieldSetId: null,
+  setSelectedFieldSetId: (id) => set({ selectedFieldSetId: id }),
+  selectedFieldId: null,
+  setSelectedFieldId: (id) => set({ selectedFieldId: id }),
+  addEmptySection: (afterId) => {
+    const { formData, formInfo } = get()
+    if (!formData || !formInfo) return
+
+    const newSection: FieldSet = {
+      id: crypto.randomUUID(),
+      fields: [],
+      legend: 'New section'
+    }
+
+    const updatedFieldSets = [...(formData.fieldSets as FieldSet[])]
+
+    if (afterId) {
+      const afterIndex = updatedFieldSets.findIndex(section => section.id === afterId)
+      if (afterIndex !== -1) {
+        updatedFieldSets.splice(afterIndex + 1, 0, newSection)
+      }
+    } else {
+      updatedFieldSets.push(newSection)
+    }
+
+    set({ formData: { ...formData, fieldSets: updatedFieldSets } })
+    set({ selectedFieldSetId: newSection.id })
   }
 }))

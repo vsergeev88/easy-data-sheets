@@ -4,6 +4,7 @@ export enum FIELD_TYPES {
 }
 
 export type CommonFieldProps = {
+  id: string
   label: string
   description?: string
   name: string
@@ -24,6 +25,7 @@ export type CheckboxField = CommonFieldProps & {
 export type Field = TextField | CheckboxField
 
 export type FieldSet = {
+  id: string
   legend?: string
   fields: Field[]
 }
@@ -36,10 +38,10 @@ export type FormStyle = {
 export type Form = {
   id: string
   name: string
-  description: string | null
   createdAt: string
   updatedAt: string
-  isPublic: boolean
+  description: string | null
+  userId: boolean
   authorId: string
   companyId?: string
   formStyle?: FormStyle

@@ -26,9 +26,10 @@ function onSubmit(values: FormSchema) {
   })
 }
 
-export default function FormView({ formData }: { formData: Form }) {
+export default function FormView({ formData, formInfo }: { formData: Form }) {
   return <BaseFormView
     formData={formData}
+    formInfo={formInfo}
     onSubmit={onSubmit}
     fieldComponentsMap={VIEWER_FIELD_COMPONENTS_MAP}
     Fieldset={Fieldset}

@@ -4,54 +4,48 @@ import { useForm } from "react-hook-form"
 import {
   Form as FormComponent,
 } from "@/components/ui/form"
-import BaseFieldset, { type BaseFieldsetProps } from "./BaseFieldset"
+import { type BaseFieldsetProps } from "./BaseFieldset"
 import { Button } from "../ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { getFormDefaultValues, getFormSchema } from "./utils"
-import { DEFAULT_FIELD_COMPONENTS_MAP } from "./constants"
 import { FormSchema } from "./types"
+import { ButtonHTMLAttributes } from "react"
+import { DataSheet } from "@/lib/data/dataSheets"
 
-export default function BaseFormView({
-  formData,
-  formName,
-  fieldComponentsMap = DEFAULT_FIELD_COMPONENTS_MAP,
-  Fieldset = BaseFieldset,
-  onSubmit = () => { }
-}: {
+type BaseFormViewProps = {
   formData: Form
-  formName: string
+  formInfo: Omit<DataSheet, "data">
   fieldComponentsMap: Record<FIELD_TYPES, React.FC>
   Fieldset: React.FC<BaseFieldsetProps>
   onSubmit?: (data: FormSchema) => void
-}) {
+  submitButtonProps?: ButtonHTMLAttributes<HTMLButtonElement>
+  children: (form: ReturnType<typeof useForm<FormSchema>>) => React.ReactNode
+}
 
+export default function BaseFormView({
+  formData,
+  formInfo,
+  children,
+  onSubmit = () => { },
+  submitButtonProps = {
+    type: "submit",
+  }
+}: BaseFormViewProps) {
   const form = useForm<FormSchema>({
     defaultValues: getFormDefaultValues(formData),
     resolver: zodResolver(getFormSchema(formData)),
   })
 
   return (
-    <div className="p-4 max-w-[980px] mx-auto">
+    <div className="p-4 max-w-[980px] mx-auto bg-white">
       <FormComponent {...form}>
-        <h1 className="text-2xl font-bold mb-4 text-center md:text-left">{formName}</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center md:text-left">{formInfo.name}</h1>
         <p className="text-sm text-gray-500 mb-4">
           {formData.description}
         </p>
-        <form onSubmit={onSubmit} className="space-y-8">
-          {formData.fieldSets.map((fieldSet, index) => {
-            return (
-              <Fieldset key={index} legend={`${index + 1}. ${fieldSet.legend}`}>
-                {fieldSet.fields.map((field) => {
-                  const commonProps = {
-                    control: form.control,
-                  }
-                  const FieldComponent = fieldComponentsMap[field.type]
-                  return <FieldComponent key={field.name} {...commonProps} {...field} />
-                })}
-              </Fieldset>
-            )
-          })}
-          <Button type="submit">Submit</Button>
+        <form onSubmit={onSubmit} className="space-y-4">
+          {children(form)}
+          <Button {...submitButtonProps}>Submit</Button>
         </form>
       </FormComponent>
     </div>
