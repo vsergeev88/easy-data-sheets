@@ -5,7 +5,7 @@ import { UseFormReturn } from 'react-hook-form';
 import BaseTextAreaField from '@/components/baseFormItems/BaseTextAreaField';
 
 type TextAreaFieldProps = {
-  control: UseFormReturn['control']
+  control?: UseFormReturn['control']
   label: string
   description?: string
   name: string

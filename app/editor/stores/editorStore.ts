@@ -1,10 +1,10 @@
 import { DataSheet } from '@/lib/data/dataSheets'
 import { create } from 'zustand'
 import { FALLBACK_FORM_DATA } from './fallbackFormData'
-import { FieldSet } from '@/lib/types/form'
+import { FieldSet, Form } from '@/lib/types/form'
 
 type EditorStore = {
-  formData: Record<string, unknown> | null
+  formData: Form | null
   formInfo: Omit<DataSheet, "data"> | null
   init: (dataSheet: DataSheet) => void
   selectedFieldSetId: string | null

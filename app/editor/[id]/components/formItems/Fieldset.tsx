@@ -4,8 +4,8 @@ import { useEditorStore } from '@/app/editor/stores/editorStore';
 import { FieldSet } from '@/lib/types/form';
 import { cn } from '@/lib/utils';
 import { ClickOutside } from '@/components/ClickOutside';
-import { Button } from '@/components/ui/button';
 import AddFieldsetButton from '../AddFieldsetButton';
+import BaseFieldsetLegend from '@/components/baseFormItems/BaseFieldsetLegend';
 
 type FieldsetProps = {
   children: React.ReactNode
@@ -23,9 +23,12 @@ const Fieldset: React.FC<FieldsetProps> = ({ children, fieldSet, className, inde
       "border-blue-500": isSelected,
       "hover:border-blue-500/50": !isSelected
     })}>
-      <BaseFieldset fieldSet={fieldSet} className={className} index={index}>
+      <fieldset
+        className={cn("border border-gray-300 py-1 px-1 bg-gray-300 relative p-4", className)}
+      >
+        <BaseFieldsetLegend legend={fieldSet.legend ?? ''} index={index} />
         {children}
-      </BaseFieldset>
+      </fieldset>
     </div>
     {isSelected && <AddFieldsetButton fieldSetId={fieldSet.id} />}
   </ClickOutside>
