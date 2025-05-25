@@ -1,11 +1,10 @@
 import React from 'react'
-import BaseFieldset from '@/components/baseFormItems/BaseFieldset';
 import { useEditorStore } from '@/app/editor/stores/editorStore';
 import { FieldSet } from '@/lib/types/form';
 import { cn } from '@/lib/utils';
 import { ClickOutside } from '@/components/ClickOutside';
 import AddFieldsetButton from '../AddFieldsetButton';
-import BaseFieldsetLegend from '@/components/baseFormItems/BaseFieldsetLegend';
+import LegendEditable from './LegendEditable';
 
 type FieldsetProps = {
   children: React.ReactNode
@@ -15,7 +14,7 @@ type FieldsetProps = {
 }
 
 const Fieldset: React.FC<FieldsetProps> = ({ children, fieldSet, className, index }) => {
-  const { selectedFieldSetId, setSelectedFieldSetId } = useEditorStore()
+  const { selectedFieldSetId, setSelectedFieldSetId, setLegend } = useEditorStore()
   const isSelected = selectedFieldSetId === fieldSet.id
 
   return <ClickOutside onClickOutside={() => setSelectedFieldSetId(null)}>
@@ -26,7 +25,7 @@ const Fieldset: React.FC<FieldsetProps> = ({ children, fieldSet, className, inde
       <fieldset
         className={cn("border border-gray-300 py-1 px-1 bg-gray-300 relative p-4", className)}
       >
-        <BaseFieldsetLegend legend={fieldSet.legend ?? ''} index={index} />
+        <LegendEditable legend={fieldSet.legend ?? ''} index={index} setLegend={(legend) => setLegend(fieldSet.id, legend)} />
         {children}
       </fieldset>
     </div>

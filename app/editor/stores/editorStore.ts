@@ -12,6 +12,7 @@ type EditorStore = {
   selectedFieldId: string | null
   setSelectedFieldId: (id: string | null) => void
   addEmptySection: (afterId?: string | null) => void
+  setLegend: (fieldSetId: string, legend: string) => void
 }
 
 export const useEditorStore = create<EditorStore>((set, get) => ({
@@ -54,5 +55,17 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
 
     set({ formData: { ...formData, fieldSets: updatedFieldSets } })
     set({ selectedFieldSetId: newSection.id })
+  },
+  setLegend: (fieldSetId, legend) => {
+    const { formData } = get()
+    if (!formData) return
+
+    const updatedFieldSets = [...(formData.fieldSets as FieldSet[])]
+    const fieldSetIndex = updatedFieldSets.findIndex(section => section.id === fieldSetId)
+    if (fieldSetIndex !== -1) {
+      updatedFieldSets[fieldSetIndex].legend = legend
+    }
+
+    set({ formData: { ...formData, fieldSets: updatedFieldSets } })
   }
 }))
