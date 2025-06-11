@@ -17,7 +17,7 @@ const Fieldset: React.FC<FieldsetProps> = ({ children, fieldSet, className, inde
   const { selectedFieldSetId, setSelectedFieldSetId, setLegend } = useEditorStore()
   const isSelected = selectedFieldSetId === fieldSet.id
 
-  return <ClickOutside onClickOutside={() => setSelectedFieldSetId(null)}>
+  return <ClickOutside onClickOutside={() => setSelectedFieldSetId(null)} ignoreClass="ignore-deselect">
     <div onClick={() => setSelectedFieldSetId(fieldSet.id)} className={cn("border-2 border-dashed border-transparent", {
       "border-blue-500": isSelected,
       "hover:border-blue-500/50": !isSelected

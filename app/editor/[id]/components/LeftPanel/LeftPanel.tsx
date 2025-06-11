@@ -5,14 +5,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 export default function LeftPanel() {
   return <div className="p-2">
@@ -20,15 +12,7 @@ export default function LeftPanel() {
       <AccordionItem value="basic">
         <AccordionTrigger className="text-sm uppercase font-bold">Basic elements</AccordionTrigger>
         <AccordionContent>
-          {/* <DropdownMenuContent> */}
-          {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem> */}
-          {/* </DropdownMenuContent> */}
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2 ignore-deselect">
             <li className="w-full">
               <Button variant="ghost" size="sm" className="w-full justify-start">
                 Text input

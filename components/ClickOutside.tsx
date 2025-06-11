@@ -2,12 +2,19 @@ import { useEffect } from "react"
 
 import { useRef } from "react"
 
-export function ClickOutside({ children, onClickOutside }: { children: React.ReactNode, onClickOutside: () => void }) {
+export function ClickOutside({ children, onClickOutside, ignoreClass }: { children: React.ReactNode, onClickOutside: () => void, ignoreClass?: string }) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
+      const target = event.target as HTMLElement;
+      const hasIgnoreClass = (element: HTMLElement | null): boolean => {
+        if (!element) return false;
+        if (element.classList.contains(ignoreClass ?? '')) return true;
+        return hasIgnoreClass(element.parentElement);
+      };
+
+      if (ref.current && !ref.current.contains(target) && !hasIgnoreClass(target)) {
         onClickOutside()
       }
     }
@@ -18,7 +25,7 @@ export function ClickOutside({ children, onClickOutside }: { children: React.Rea
       document.removeEventListener("click", handleClickOutside)
       document.removeEventListener("touchstart", handleClickOutside)
     }
-  }, [onClickOutside])
+  }, [onClickOutside, ignoreClass])
 
   return <div ref={ref}>{children}</div>
 }
