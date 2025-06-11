@@ -1,14 +1,17 @@
 import BaseFieldsetLegend from '@/components/baseFormItems/BaseFieldsetLegend'
 import { useState } from 'react'
+import { cn } from '@/lib/utils'
 
 export default function LegendEditable({
   legend,
   index,
   setLegend,
+  className
 }: {
   legend: string
   index: number
   setLegend: (legend: string) => void
+  className?: string
 }) {
   const [isEdit, setIsEdit] = useState(false)
 
@@ -23,7 +26,7 @@ export default function LegendEditable({
             setIsEdit(false)
           }
         }}
-        className='mb-4 flex w-full items-center justify-between gap-2 border-b border-blue-500 pl-4 text-lg font-medium outline-none'
+        className={cn('mb-4 flex w-full items-center justify-between gap-2 border-b border-blue-500 pl-4 text-lg font-medium outline-none', className)}
         autoFocus
       />
     )

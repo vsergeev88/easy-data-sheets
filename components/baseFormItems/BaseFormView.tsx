@@ -23,7 +23,7 @@ export default function BaseFormView({ children }: BaseFormViewProps) {
   // })
 
   return (
-    <div className='mx-auto max-w-[980px] bg-white p-4'>
+    <div className='mx-auto max-w-[980px] bg-white p-4 space-y-4'>
       {children}
       {/* <FormComponent {...form}>
         <h1 className="text-2xl font-bold mb-4 text-center md:text-left">{formInfo.name}</h1>

@@ -7,8 +7,8 @@ export default function AddFieldsetButton({ fieldSetId = null }: { fieldSetId?: 
     <Button
       variant='secondary'
       type='button'
-      className='mt-8 w-full'
+      className='w-full'
       onClick={() => addEmptySection(fieldSetId)}
-    >{`>>> Add new section here`}</Button>
+    >{`>>> Add new section here <<<`}</Button>
   )
 }

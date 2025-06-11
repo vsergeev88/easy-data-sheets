@@ -12,14 +12,13 @@ import { getFormSchema } from '@/components/baseFormItems/utils'
 import { useForm } from 'react-hook-form'
 import { getFormDefaultValues } from '@/components/baseFormItems/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@/components/ui/button'
 import { Form as FormComponent } from '@/components/ui/form'
-import { Field } from '@/lib/types/form'
-const EDITOR_FIELD_COMPONENTS_MAP: Record<FIELD_TYPES, React.FC<Field>> = {
+import SubmitButton from './formItems/SubmitButton'
+const EDITOR_FIELD_COMPONENTS_MAP = {
   ...DEFAULT_FIELD_COMPONENTS_MAP,
   [FIELD_TYPES.TEXT]: TextAreaField,
   [FIELD_TYPES.CHECKBOX]: CheckboxField,
-}
+} as const
 
 function onSubmit(values: FormSchema) {
   console.log(values)
@@ -40,9 +39,9 @@ const FieldSets = ({ formData }: { formData: Form }) => {
               const commonProps = {
                 control: form.control,
               }
-              const FieldComponent = EDITOR_FIELD_COMPONENTS_MAP[field.type]
+              const FieldComponent = EDITOR_FIELD_COMPONENTS_MAP[field.type] as React.FC<any>
               return (
-                <FieldComponent key={field.id} {...commonProps} {...field} fieldId={field.id} />
+                <FieldComponent key={field.id} {...commonProps} {...field} />
               )
             })}
           </Fieldset>
@@ -63,7 +62,7 @@ export default function FormView() {
       <p className='mb-4 text-sm text-gray-500'>{formData.description}</p>
       <FieldSets formData={formData} />
       {!selectedFieldSetId && <AddFieldsetButton />}
-      <Button type='submit'>Submit</Button>
+      <SubmitButton />
     </BaseFormView>
   )
 }

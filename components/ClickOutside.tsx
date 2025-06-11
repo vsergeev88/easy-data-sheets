@@ -6,10 +6,12 @@ export function ClickOutside({
   children,
   onClickOutside,
   ignoreClass,
+  className
 }: {
   children: React.ReactNode
   onClickOutside: () => void
   ignoreClass?: string
+  className?: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -35,5 +37,5 @@ export function ClickOutside({
     }
   }, [onClickOutside, ignoreClass])
 
-  return <div ref={ref}>{children}</div>
+  return <div ref={ref} className={className}>{children}</div>
 }

@@ -12,6 +12,7 @@ type EditorStore = {
   selectedFieldId: string | null
   setSelectedFieldId: (id: string | null) => void
   addEmptySection: (afterId?: string | null) => void
+  removeFieldSet: (sectionId: string) => void
   setLegend: (fieldSetId: string, legend: string) => void
   addField: (fieldSetId: string | null, field: Field) => void
   removeField: (fieldId: string) => void
@@ -58,6 +59,20 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
     set({ formData: { ...formData, fieldSets: updatedFieldSets } })
     set({ selectedFieldSetId: newSection.id })
   },
+  removeFieldSet: (sectionId) => {
+    const { formData } = get()
+    if (!formData) return
+
+    const updatedFieldSets = [...(formData.fieldSets as FieldSet[])]
+    const fieldSetIndex = updatedFieldSets.findIndex(section => section.id === sectionId)
+    if (fieldSetIndex !== -1) {
+      updatedFieldSets.splice(fieldSetIndex, 1)
+    }
+
+    set({ formData: { ...formData, fieldSets: updatedFieldSets } })
+    set({ selectedFieldSetId: null })
+    set({ selectedFieldId: null })
+  },
   setLegend: (fieldSetId, legend) => {
     const { formData } = get()
     if (!formData) return
@@ -71,7 +86,6 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
     set({ formData: { ...formData, fieldSets: updatedFieldSets } })
   },
   addField: (fieldSetId, field) => {
-    console.log('addField', fieldSetId, field)
     const { formData } = get()
     if (!formData) {
       console.error('formData is null')
@@ -80,7 +94,6 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
 
     const updatedFieldSets = [...(formData.fieldSets as FieldSet[])]
     const fieldSetIndex = updatedFieldSets.findIndex(section => section.id === fieldSetId)
-    console.log('fieldSetIndex', fieldSetIndex)
     if (fieldSetIndex !== -1) {
       updatedFieldSets[fieldSetIndex].fields.push(field)
     } else {
