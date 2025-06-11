@@ -8,9 +8,11 @@ type FormItemProps = {
 }
 
 const FormItemWrapper: React.FC<FormItemProps> = ({ children, label, description }) => {
-  return (<BaseFormItemWrapper label={label} description={description}>
-    {children}
-  </BaseFormItemWrapper>)
-};
+  return (
+    <BaseFormItemWrapper label={label} description={description}>
+      {children}
+    </BaseFormItemWrapper>
+  )
+}
 
 export default FormItemWrapper

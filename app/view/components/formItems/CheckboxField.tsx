@@ -1,17 +1,24 @@
 import React, { useState } from 'react'
-import { FormField } from '@/components/ui/form';
-import FormItemWrapper from './FormItemWrapper';
-import { useFormContext, UseFormReturn } from 'react-hook-form';
-import { CheckboxField as CheckboxFieldType } from '@/lib/types/form';
-import BaseCheckboxField from '@/components/baseFormItems/BaseCheckboxField';
+import { FormField } from '@/components/ui/form'
+import FormItemWrapper from './FormItemWrapper'
+import { useFormContext, UseFormReturn } from 'react-hook-form'
+import { CheckboxField as CheckboxFieldType } from '@/lib/types/form'
+import BaseCheckboxField from '@/components/baseFormItems/BaseCheckboxField'
 
 type CheckboxFieldProps = CheckboxFieldType & {
   control: UseFormReturn['control']
 }
 
-const CheckboxField: React.FC<CheckboxFieldProps> = ({ control, label, description, name, items, withCustomField }) => {
-  const [otherValues, setOtherValues] = useState<string[]>([]);
-  const form = useFormContext();
+const CheckboxField: React.FC<CheckboxFieldProps> = ({
+  control,
+  label,
+  description,
+  name,
+  items,
+  withCustomField,
+}) => {
+  const [otherValues, setOtherValues] = useState<string[]>([])
+  const form = useFormContext()
 
   return (
     <FormField
@@ -19,8 +26,8 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({ control, label, descripti
       name={name}
       render={({ field }) => {
         const addOtherValue = (otherValue: string) => {
-          setOtherValues(Array.from(new Set([...otherValues, otherValue])));
-          form.setValue(name, [...field.value, otherValue]);
+          setOtherValues(Array.from(new Set([...otherValues, otherValue])))
+          form.setValue(name, [...field.value, otherValue])
         }
 
         return (
@@ -34,9 +41,8 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({ control, label, descripti
             />
           </FormItemWrapper>
         )
-      }
-      }
+      }}
     />
   )
-};
+}
 export default CheckboxField

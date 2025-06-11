@@ -6,22 +6,22 @@ export default function Editor() {
   const { count, increment, reset } = useCounterStore()
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <h1 className="text-2xl font-bold mb-6">Zustand Counter Example</h1>
+    <div className='flex min-h-screen flex-col items-center justify-center p-4'>
+      <h1 className='mb-6 text-2xl font-bold'>Zustand Counter Example</h1>
 
-      <div className="text-6xl font-bold mb-8">{count}</div>
+      <div className='mb-8 text-6xl font-bold'>{count}</div>
 
-      <div className="flex gap-4">
+      <div className='flex gap-4'>
         <button
           onClick={increment}
-          className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className='rounded-md bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700'
         >
           Increment
         </button>
 
         <button
           onClick={reset}
-          className="px-6 py-3 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+          className='rounded-md bg-gray-600 px-6 py-3 text-white transition-colors hover:bg-gray-700'
         >
           Reset
         </button>

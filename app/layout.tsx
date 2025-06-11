@@ -11,7 +11,7 @@ import {
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { dark } from '@clerk/themes'
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from '@/components/ui/sonner'
 import { MainLogo } from '@/components/MainLogo'
 
 const geistSans = Geist({
@@ -35,14 +35,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider appearance={{
-      baseTheme: dark,
-    }}>
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100 grid grid-rows-[auto_1fr_auto] w-full h-screen`}>
-          <header className="flex justify-between items-center p-4 gap-4 h-16 ">
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
+      <html lang='en'>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} grid h-screen w-full grid-rows-[auto_1fr_auto] bg-gray-100 antialiased`}
+        >
+          <header className='flex h-16 items-center justify-between gap-4 p-4'>
             <MainLogo />
-            <div className="flex items-center gap-4">
+            <div className='flex items-center gap-4'>
               <SignedOut>
                 <SignInButton />
                 <SignUpButton />
@@ -55,10 +59,8 @@ export default function RootLayout({
           {/* <SignedIn>
             <CreateOrganization />
           </SignedIn> */}
-          <main className="bg-white">
-            {children}
-          </main>
-          <footer className="flex justify-left items-center px-4 h-6">
+          <main className='overflow-hidden bg-white'>{children}</main>
+          <footer className='justify-left flex h-6 items-center px-4'>
             <p>2025 © EasyDataSheets.com</p>
           </footer>
           <Toaster />

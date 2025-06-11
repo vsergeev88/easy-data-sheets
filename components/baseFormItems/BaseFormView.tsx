@@ -16,16 +16,14 @@ type BaseFormViewProps = {
   children: React.ReactNode
 }
 
-export default function BaseFormView({
-  children
-}: BaseFormViewProps) {
+export default function BaseFormView({ children }: BaseFormViewProps) {
   // const form = useForm<FormSchema>({
   //   defaultValues: getFormDefaultValues(formData),
   //   resolver: zodResolver(getFormSchema(formData)),
   // })
 
   return (
-    <div className="p-4 max-w-[980px] mx-auto bg-white">
+    <div className='mx-auto max-w-[980px] bg-white p-4'>
       {children}
       {/* <FormComponent {...form}>
         <h1 className="text-2xl font-bold mb-4 text-center md:text-left">{formInfo.name}</h1>

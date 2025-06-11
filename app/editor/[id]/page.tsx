@@ -1,5 +1,5 @@
-import { getDataSheet } from "@/lib/data/dataSheets";
-import EditorClient from "./EditorClient";
+import { getDataSheet } from '@/lib/data/dataSheets'
+import EditorClient from './EditorClient'
 
 async function Editor({ params }: { params: { id: string } }) {
   const { id } = await params
@@ -7,6 +7,5 @@ async function Editor({ params }: { params: { id: string } }) {
 
   return <EditorClient dataSheet={dataSheet} />
 }
-
 
 export default Editor

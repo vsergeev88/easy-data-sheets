@@ -1,14 +1,14 @@
-import { clerkClient } from "@clerk/nextjs/server"
-import { revalidatePath } from "next/cache"
-import { auth } from "@clerk/nextjs/server"
+import { clerkClient } from '@clerk/nextjs/server'
+import { revalidatePath } from 'next/cache'
+import { auth } from '@clerk/nextjs/server'
 import PlanButtons from '@/components/PlanButtons'
 
 async function updateUserPlan(plan: string) {
-  "use server"
+  'use server'
   // We need to get the user ID on the server side within the action
   const { userId } = await auth()
   if (!userId) {
-    throw new Error("User not authenticated")
+    throw new Error('User not authenticated')
   }
 
   try {
@@ -21,11 +21,11 @@ async function updateUserPlan(plan: string) {
     console.log(`User ${userId} plan updated to ${plan}`)
     // Revalidate the path if needed to reflect changes immediately
     // e.g., if another part of the UI depends on this metadata
-    revalidatePath("/plan")
+    revalidatePath('/plan')
   } catch (error) {
-    console.error("Failed to update user plan:", error)
+    console.error('Failed to update user plan:', error)
     // Handle error appropriately, maybe return an error message
-    throw new Error("Failed to update plan")
+    throw new Error('Failed to update plan')
   }
 }
 
@@ -36,9 +36,9 @@ export default async function Plan() {
   }
 
   // Fetch the full user object on the server
-  const client = await clerkClient();
-  const user = await client.users.getUser(userId);
-  const currentPlan = (user.publicMetadata?.plan as string) || null; // Get current plan
+  const client = await clerkClient()
+  const user = await client.users.getUser(userId)
+  const currentPlan = (user.publicMetadata?.plan as string) || null // Get current plan
 
   return (
     <div>

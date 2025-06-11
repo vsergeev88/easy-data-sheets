@@ -1,5 +1,5 @@
 import React from 'react'
-import BaseFieldset from '@/components/baseFormItems/BaseFieldset';
+import BaseFieldset from '@/components/baseFormItems/BaseFieldset'
 
 type FieldsetProps = {
   children: React.ReactNode
@@ -8,8 +8,10 @@ type FieldsetProps = {
 }
 
 const Fieldset: React.FC<FieldsetProps> = ({ children, legend, className }) => {
-  return <BaseFieldset legend={legend} className={className}>
-    {children}
-  </BaseFieldset>;
-};
+  return (
+    <BaseFieldset legend={legend} className={className}>
+      {children}
+    </BaseFieldset>
+  )
+}
 export default Fieldset

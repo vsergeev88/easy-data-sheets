@@ -17,9 +17,9 @@ export default function PlanButtons({ updateUserPlan, currentPlan }: PlanButtons
       // Optionally show a success message (consider a more robust notification system)
       alert(`Plan updated to ${plan}!`)
     } catch (error) {
-      console.error("Error setting plan:", error)
+      console.error('Error setting plan:', error)
       // Optionally show an error message
-      alert("Failed to update plan.")
+      alert('Failed to update plan.')
     } finally {
       setIsLoading(false)
     }
@@ -30,17 +30,20 @@ export default function PlanButtons({ updateUserPlan, currentPlan }: PlanButtons
       <div>
         <h2>Free</h2>
         <p>Free plan for personal use</p>
-        <button onClick={() => handleSetPlan("free")} disabled={isLoading || currentPlan === 'free'}>
+        <button
+          onClick={() => handleSetPlan('free')}
+          disabled={isLoading || currentPlan === 'free'}
+        >
           {currentPlan === 'free' ? 'Current Plan' : 'Choose Free'}
         </button>
       </div>
       <div>
         <h2>Pro</h2>
         <p>Pro plan for professional use</p>
-        <button onClick={() => handleSetPlan("pro")} disabled={isLoading || currentPlan === 'pro'}>
+        <button onClick={() => handleSetPlan('pro')} disabled={isLoading || currentPlan === 'pro'}>
           {currentPlan === 'pro' ? 'Current Plan' : 'Choose Pro'}
         </button>
       </div>
     </>
   )
-} 
+}

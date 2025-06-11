@@ -1,6 +1,6 @@
 export enum FIELD_TYPES {
-  TEXT = "text",
-  CHECKBOX = "checkbox",
+  TEXT = 'text',
+  CHECKBOX = 'checkbox',
 }
 
 export type CommonFieldProps = {

@@ -1,34 +1,43 @@
 import React from 'react'
 
-import {
-  FormDescription,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-
+import { FormDescription, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 
 type BaseFormItemProps = {
   children: React.ReactNode
   label: string
   description?: string
   onLabelClick?: () => void
+  focusable?: boolean
 }
 
-const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({ onLabelClick, children, label, description }) => {
-  return (<FormItem className="border border-gray-300 mb-1 md:mb-0 min-h-[80px] bg-gray-50 gap-0 ">
-    <div className="flex relative sm:flex-row flex-col">
-      <FormLabel className="px-2 pb-1 md:pb-2 md:w-[260px] md:min-w-[260px] flex flex-col justify-start items-start p-2" onClick={onLabelClick}>
-        <div className="text-md">{label}</div>
-        <FormDescription>{description}</FormDescription>
-      </FormLabel>
-      <div className="flex-1 border-l border-gray-300">
-        {children}
+const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({
+  onLabelClick,
+  children,
+  label,
+  description,
+  focusable = true,
+}) => {
+  const handleLabelClick = (e: React.MouseEvent<HTMLLabelElement>) => {
+    if (!focusable) {
+      e.preventDefault()
+    }
+    onLabelClick?.()
+  }
+  return (
+    <FormItem className='relative mb-1 min-h-[80px] gap-0 border border-gray-300 bg-gray-50 md:mb-0'>
+      <div className='relative flex flex-col sm:flex-row'>
+        <FormLabel
+          className='flex flex-col items-start justify-start p-2 px-2 pb-1 md:w-[260px] md:min-w-[260px] md:pb-2'
+          onClick={handleLabelClick}
+        >
+          <div className='text-md'>{label}</div>
+          <FormDescription>{description}</FormDescription>
+        </FormLabel>
+        <div className='flex-1 border-l border-gray-300'>{children}</div>
       </div>
-    </div>
-    <FormMessage className="text-xs px-2 py-1 bg-red-50" />
-  </FormItem>
+      <FormMessage className='bg-red-50 px-2 py-1 text-xs' />
+    </FormItem>
   )
-};
+}
 
 export default BaseFormItemWrapper
