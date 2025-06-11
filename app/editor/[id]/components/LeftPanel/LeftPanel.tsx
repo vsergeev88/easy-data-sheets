@@ -5,39 +5,66 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
+import { TextCursorInput, SquareCheckBig, Text, ChevronDown, PencilRuler } from "lucide-react"
+
+
+
 
 export default function LeftPanel() {
+  const basicItems = [{
+    id: "text-input",
+    title: "Text input",
+    icon: TextCursorInput,
+    onClick: () => {
+      console.log("Text input")
+    }
+  }, {
+    id: "checkbox-radio",
+    title: "Checkbox / Radio",
+    icon: SquareCheckBig,
+    onClick: () => {
+      console.log("Checkbox / Radio")
+    }
+  }, {
+    id: "select",
+    title: "Dropdown / Select",
+    icon: ChevronDown,
+    onClick: () => {
+      console.log("Select")
+    },
+    isSoon: true,
+  }, {
+    id: "drawing",
+    title: "Drawing",
+    icon: PencilRuler,
+    onClick: () => {
+      console.log("Drawing")
+    },
+    isSoon: true,
+  }, {
+    id: "text",
+    title: "Text",
+    icon: Text,
+    onClick: () => {
+      console.log("Text")
+    },
+    isSoon: true,
+  }]
+
   return <div className="p-2">
     <Accordion type="multiple" defaultValue={["basic"]}>
       <AccordionItem value="basic">
         <AccordionTrigger className="text-sm uppercase font-bold">Basic elements</AccordionTrigger>
         <AccordionContent>
           <ul className="flex flex-col gap-2 ignore-deselect">
-            <li className="w-full">
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                Text input
-              </Button>
-            </li>
-            <li className="w-full">
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                Checkbox / Radio
-              </Button>
-            </li>
-            <li className="w-full">
-              <Button variant="ghost" disabled size="sm" className="w-full justify-start">
-                Select (soon)
-              </Button>
-            </li>
-            <li className="w-full">
-              <Button variant="ghost" disabled size="sm" className="w-full justify-start">
-                Drawing (soon)
-              </Button>
-            </li>
-            <li className="w-full">
-              <Button variant="ghost" disabled size="sm" className="w-full justify-start">
-                Text (soon)
-              </Button>
-            </li>
+            {basicItems.map((item) => (
+              <li className="w-full" key={item.id}>
+                <Button variant="ghost" size="sm" className="w-full justify-start" disabled={item.isSoon} onClick={item.onClick}>
+                  <item.icon />
+                  <span>{item.title}</span>
+                </Button>
+              </li>
+            ))}
           </ul>
         </AccordionContent>
       </AccordionItem>
