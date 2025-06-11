@@ -101,6 +101,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
     }
 
     set({ formData: { ...formData, fieldSets: updatedFieldSets } })
+    set({ selectedFieldId: field.id })
   },
   removeField: fieldId => {
     const { formData } = get()

@@ -25,7 +25,10 @@ const Fieldset: React.FC<FieldsetProps> = ({ children, fieldSet, className, inde
       setSelectedFieldId(null)
     }} ignoreClass='ignore-deselect' className='space-y-4'>
       <div
-        onClick={() => setSelectedFieldSetId(fieldSet.id)}
+        onClick={() => {
+          setSelectedFieldSetId(fieldSet.id)
+          // setSelectedFieldId(null)
+        }}
         className={cn('border-2 border-dashed border-transparent', {
           'border-blue-500': isSelected,
           'hover:border-blue-500/50': !isSelected,
@@ -41,13 +44,13 @@ const Fieldset: React.FC<FieldsetProps> = ({ children, fieldSet, className, inde
             className='pr-10'
           />
           {children}
-          <div className='absolute top-0 right-0 flex flex-row items-center justify-between'>
+          {isSelected && <div className='absolute top-0 right-0 flex flex-row items-center justify-between'>
             <Button onClick={() => removeFieldSet(fieldSet.id)}
               size='icon'
               variant='ghost'>
               <Trash2 />
             </Button>
-          </div>
+          </div>}
         </fieldset>
       </div>
       {isSelected && <AddFieldsetButton fieldSetId={fieldSet.id} />}

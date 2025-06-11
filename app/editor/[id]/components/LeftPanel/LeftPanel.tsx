@@ -5,12 +5,12 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
-import { TextCursorInput, SquareCheckBig, Text, ChevronDown, PencilRuler } from 'lucide-react'
+import { TextCursorInput, SquareCheckBig, Text, ChevronDown, PencilRuler, SquareDashed } from 'lucide-react'
 import { useEditorStore } from '@/app/editor/stores/editorStore'
 import { FIELD_TYPES } from '@/lib/types/form'
 
 export default function LeftPanel() {
-  const { addField, selectedFieldSetId } = useEditorStore()
+  const { addField, selectedFieldSetId, addEmptySection } = useEditorStore()
 
   const basicItems = [
     {
@@ -65,14 +65,22 @@ export default function LeftPanel() {
       },
       isSoon: true,
     },
+    // {
+    //   id: 'text',
+    //   title: 'Text',
+    //   icon: Text,
+    //   onClick: () => {
+    //     console.log('Text')
+    //   },
+    //   isSoon: true,
+    // },
     {
-      id: 'text',
-      title: 'Text',
-      icon: Text,
+      id: 'section',
+      title: 'New Section',
+      icon: SquareDashed,
       onClick: () => {
-        console.log('Text')
+        addEmptySection(selectedFieldSetId)
       },
-      isSoon: true,
     },
   ]
 
@@ -95,7 +103,7 @@ export default function LeftPanel() {
                     onClick={item.onClick}
                   >
                     <item.icon />
-                    <span>{item.title}</span>
+                    <span>{item.title} {item.isSoon && <span className='text-xs text-gray-500'>soon</span>}</span>
                   </Button>
                 </li>
               ))}

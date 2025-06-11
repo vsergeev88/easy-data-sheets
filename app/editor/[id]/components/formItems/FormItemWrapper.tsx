@@ -18,9 +18,13 @@ const FormItemWrapper: React.FC<FormItemProps> = ({ children, description, field
   const { removeField, selectedFieldId, setSelectedFieldId } = useEditorStore()
   const isSelected = selectedFieldId === fieldId
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    console.log('handleClick', e)
+    // e.stopPropagation()
     setSelectedFieldId(fieldId)
   }
+
+  console.log('selectedFieldId', selectedFieldId)
 
   return (
     <ClickOutside onClickOutside={() => setSelectedFieldId(null)} ignoreClass='ignore-deselect'>
@@ -34,13 +38,13 @@ const FormItemWrapper: React.FC<FormItemProps> = ({ children, description, field
         <BaseFormItemWrapper description={description}
           focusable={false}
           label={label}>
-          <div className='absolute top-0 right-0 flex flex-row items-center justify-between'>
+          {isSelected && <div className='absolute top-0 right-0 flex flex-row items-center justify-between'>
             <Button onClick={() => removeField(fieldId)}
               size='icon'
               variant='ghost'>
               <Trash2 />
             </Button>
-          </div>
+          </div>}
           <div className='pointer-events-none cursor-default select-none'>{children}</div>
         </BaseFormItemWrapper>
       </div>
