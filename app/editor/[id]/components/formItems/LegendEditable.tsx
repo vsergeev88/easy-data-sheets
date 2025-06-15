@@ -36,7 +36,7 @@ export default function LegendEditable({
     <BaseFieldsetLegend
       legend={legend ?? ''}
       index={index}
-      className='hover:underline hover:cursor-text inline'
+      className={cn('hover:underline hover:cursor-text inline', className)}
       onClick={() => setIsEdit(true)}
     />
   )

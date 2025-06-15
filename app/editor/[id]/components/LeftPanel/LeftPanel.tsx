@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { TextCursorInput, SquareCheckBig, Text, ChevronDown, PencilRuler, SquareDashed } from 'lucide-react'
-import { useEditorStore } from '@/app/editor/stores/editorStore'
+import { addTextInput, useEditorStore } from '@/app/editor/stores/editorStore'
 import { FIELD_TYPES } from '@/lib/types/form'
 
 export default function LeftPanel() {
@@ -18,15 +18,7 @@ export default function LeftPanel() {
       title: 'Text input',
       icon: TextCursorInput,
       onClick: () => {
-        const fieldId = crypto.randomUUID()
-        addField(selectedFieldSetId, {
-          id: fieldId,
-          type: FIELD_TYPES.TEXT,
-          name: fieldId,
-          label: 'Text input',
-          description: 'Enter your text',
-          required: false,
-        })
+        addTextInput(selectedFieldSetId)
       },
     },
     {

@@ -26,9 +26,7 @@ const FieldSets = ({ formData }: { formData: Form }) => {
     <FormComponent {...form}>
       <form onSubmit={onSubmit} className='space-y-4 overflow-y-auto'>
         {formData.fieldSets.map((fieldSet, index) => (
-          <Fieldset key={fieldSet.id} fieldSet={fieldSet} index={index} control={form.control}>
-
-          </Fieldset>
+          <Fieldset key={fieldSet.id} fieldSet={fieldSet} index={index} control={form.control} />
         ))}
       </form>
     </FormComponent>

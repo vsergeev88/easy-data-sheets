@@ -1,7 +1,7 @@
 import { DataSheet } from '@/lib/data/dataSheets'
 import { create } from 'zustand'
 import { FALLBACK_FORM_DATA } from './fallbackFormData'
-import { Field, FieldSet, Form } from '@/lib/types/form'
+import { Field, FIELD_TYPES, FieldSet, Form } from '@/lib/types/form'
 
 type EditorStore = {
   formData: Form | null
@@ -22,6 +22,7 @@ type EditorStore = {
     fieldId,
     toFieldSetId,
   }: { fieldId: string, toFieldSetId: string, toFieldIndex: number }) => void
+  getIsSingleFieldSet: () =>boolean
 }
 
 export const useEditorStore = create<EditorStore>((set, get) => {
@@ -47,6 +48,11 @@ export const useEditorStore = create<EditorStore>((set, get) => {
   selectedFieldSetId: null,
   setSelectedFieldSetId: id => set({ selectedFieldSetId: id }),
   selectedFieldId: null,
+  getIsSingleFieldSet() {
+    const { formData } = get()
+    if (!formData) return false
+    return formData.fieldSets.length === 1
+  },
   setSelectedFieldId: id => set({ selectedFieldId: id }),
   addEmptySection: afterId => {
     const { formData, formInfo } = get()
@@ -177,3 +183,16 @@ export const useEditorStore = create<EditorStore>((set, get) => {
     set({ formData: { ...formData, fieldSets: updatedFieldSets } })
   }
 }})
+
+export const addTextInput = (fieldSetId: string | null) => {
+  const fieldId = crypto.randomUUID()
+  useEditorStore.getState().addField(fieldSetId, {
+    id: fieldId,
+    type: FIELD_TYPES.TEXT,
+    name: fieldId,
+    label: 'Text input',
+    description: 'Enter your text',
+    required: false,
+  })
+  useEditorStore.getState().setSelectedFieldId(fieldId)
+}
