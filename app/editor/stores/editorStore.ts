@@ -16,9 +16,22 @@ type EditorStore = {
   setLegend: (fieldSetId: string, legend: string) => void
   addField: (fieldSetId: string | null, field: Field) => void
   removeField: (fieldId: string) => void
+  duplicateField: (fieldId: string) => void
+  reorderFields: (fieldSetId: string, newFields: Field[]) => void
+  moveField: ({
+    fieldId,
+    toFieldSetId,
+  }: { fieldId: string, toFieldSetId: string, toFieldIndex: number }) => void
 }
 
-export const useEditorStore = create<EditorStore>((set, get) => ({
+export const useEditorStore = create<EditorStore>((set, get) => {
+  const getFieldSetId = (fieldId: string) => {
+    const { formData } = get()
+    const fieldSetId = formData?.fieldSets.find(section => section.fields.some(field => field.id === fieldId))?.id
+    return fieldSetId ?? null
+  }
+
+  return {
   formData: null,
   formInfo: null,
   init: (dataSheet: DataSheet) => {
@@ -108,16 +121,59 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
     if (!formData) return
 
     const updatedFieldSets = [...(formData.fieldSets as FieldSet[])]
-    const fieldSetIndex = updatedFieldSets.findIndex(section =>
-      section.fields.some(field => field.id === fieldId),
-    )
-    if (fieldSetIndex !== -1) {
-      updatedFieldSets[fieldSetIndex].fields = updatedFieldSets[fieldSetIndex].fields.filter(
-        field => field.id !== fieldId,
-      )
+    const fieldSetIndex = updatedFieldSets.findIndex(fieldSet => fieldSet.fields.some(field => field.id === fieldId))
+    if (fieldSetIndex === -1) {
+      console.error('fieldSetIndex is -1, fieldId:', fieldId)
+      return
     }
+
+    updatedFieldSets[fieldSetIndex].fields = updatedFieldSets[fieldSetIndex].fields.filter(
+      field => field.id !== fieldId,
+    )
 
     set({ formData: { ...formData, fieldSets: updatedFieldSets } })
     set({ selectedFieldId: null })
+    console.log('removeField', fieldId)
   },
-}))
+  moveField: ({
+    fieldId,
+    toFieldSetId,
+  }: { fieldId: string, toFieldSetId: string, toFieldIndex: number }) => {
+    const { formData } = get()
+    if (!formData) return
+    // TODO: Implement move field
+  },
+
+  duplicateField: (fieldId: string) => {
+    const { formData } = get()
+    if (!formData) return
+
+    const fieldSetId = getFieldSetId(fieldId)
+    const field = formData.fieldSets.find(section => section.id === fieldSetId)?.fields.find(field => field.id === fieldId)
+    if (!field) return
+
+    const newField = { ...field, id: crypto.randomUUID() }
+    const updatedFieldSets = [...(formData.fieldSets as FieldSet[])]
+    const fieldSetIndex = updatedFieldSets.findIndex(section => section.id === fieldSetId)
+    if (fieldSetIndex !== -1) {
+      const fieldIndex = updatedFieldSets[fieldSetIndex].fields.findIndex(fieldItem => fieldItem.id === field.id)
+      if (fieldIndex !== -1) {
+        updatedFieldSets[fieldSetIndex].fields.splice(fieldIndex, 0, newField)
+      }
+    }
+    set({ formData: { ...formData, fieldSets: updatedFieldSets } })
+  },
+
+  reorderFields: (fieldSetId, newFields) => {
+    const { formData } = get()
+    if (!formData) return
+
+    const updatedFieldSets = [...(formData.fieldSets as FieldSet[])]
+    const fieldSetIndex = updatedFieldSets.findIndex(section => section.id === fieldSetId)
+    if (fieldSetIndex !== -1) {
+      updatedFieldSets[fieldSetIndex].fields = newFields
+    }
+
+    set({ formData: { ...formData, fieldSets: updatedFieldSets } })
+  }
+}})

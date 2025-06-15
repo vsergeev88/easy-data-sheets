@@ -26,7 +26,7 @@ export default function LegendEditable({
             setIsEdit(false)
           }
         }}
-        className={cn('mb-4 flex w-full items-center justify-between gap-2 border-b border-blue-500 pl-4 text-lg font-medium outline-none', className)}
+        className={cn('flex w-full items-center justify-between gap-2 border-b border-blue-500 pl-4 text-lg font-medium outline-none', className)}
         autoFocus
       />
     )
@@ -36,7 +36,7 @@ export default function LegendEditable({
     <BaseFieldsetLegend
       legend={legend ?? ''}
       index={index}
-      className='hover:underline hover:cursor-text'
+      className='hover:underline hover:cursor-text inline'
       onClick={() => setIsEdit(true)}
     />
   )

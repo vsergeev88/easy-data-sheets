@@ -1,4 +1,4 @@
-import { Trash2 } from 'lucide-react'
+import { ArrowDownUp, CopyPlus, CornerDownRight, Trash2 } from 'lucide-react'
 import React from 'react'
 
 import { useEditorStore } from '@/app/editor/stores/editorStore'
@@ -6,6 +6,12 @@ import BaseFormItemWrapper from '@/components/baseFormItems/BaseFormItemWrapper'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ClickOutside } from '@/components/ClickOutside'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { ServiceButton } from '@/components/ServiceButton'
 
 type FormItemProps = {
   children: React.ReactNode
@@ -15,21 +21,18 @@ type FormItemProps = {
 }
 
 const FormItemWrapper: React.FC<FormItemProps> = ({ children, description, fieldId, label }) => {
-  const { removeField, selectedFieldId, setSelectedFieldId } = useEditorStore()
+  const { removeField, selectedFieldId, setSelectedFieldId, duplicateField } = useEditorStore()
   const isSelected = selectedFieldId === fieldId
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log('handleClick', e)
-    // e.stopPropagation()
+    e.stopPropagation()
     setSelectedFieldId(fieldId)
   }
-
-  console.log('selectedFieldId', selectedFieldId)
 
   return (
     <ClickOutside onClickOutside={() => setSelectedFieldId(null)} ignoreClass='ignore-deselect'>
       <div
-        className={cn('border-2 border-dotted border-transparent', {
+        className={cn('border-2 border-transparent w-full', {
           'border-blue-500': isSelected,
           'hover:border-blue-500/50': !isSelected,
         })}
@@ -37,15 +40,25 @@ const FormItemWrapper: React.FC<FormItemProps> = ({ children, description, field
       >
         <BaseFormItemWrapper description={description}
           focusable={false}
+          draggable={true}
           label={label}>
           {isSelected && <div className='absolute top-0 right-0 flex flex-row items-center justify-between'>
-            <Button onClick={() => removeField(fieldId)}
-              size='icon'
-              variant='ghost'>
-              <Trash2 />
-            </Button>
+            <ServiceButton icon={<ArrowDownUp />} tooltip='Move to...' onClick={() => { }} />
+            <ServiceButton icon={<CopyPlus />} tooltip='Duplicate field' onClick={() => {
+              duplicateField(fieldId)
+            }} />
+            <ServiceButton
+              icon={<Trash2 />}
+              variant='destructive'
+              tooltip='Delete field'
+              onClick={(e) => {
+                e.stopPropagation()
+                removeField(fieldId)
+              }}
+              className='hover:text-red-700'
+            />
           </div>}
-          <div className='pointer-events-none cursor-default select-none'>{children}</div>
+          <div className='pointer-events-none select-none'>{children}</div>
         </BaseFormItemWrapper>
       </div>
     </ClickOutside>
