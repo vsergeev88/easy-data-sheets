@@ -11,6 +11,7 @@ import { Control } from 'react-hook-form'
 import { EDITOR_FIELD_COMPONENTS_MAP } from './editorFieldComponentsMap'
 import { useDragAndDrop } from '@formkit/drag-and-drop/react'
 import { ServiceButton } from '@/components/ServiceButton'
+import { confirmDialogManager } from '@/app/stores/confirmDialogStore'
 
 type FieldsetProps = {
   fieldSet: FieldSet
@@ -36,6 +37,21 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index, control
   useEffect(() => {
     setValues(fieldsetFields)
   }, [fieldsetFields, setValues])
+
+  const handleRemoveFieldset = () => {
+    confirmDialogManager.open({
+      title: 'Delete section',
+      description: 'Are you sure you want to delete this section? Content of this section will be lost.',
+      onConfirm: () => {
+        if (getIsSingleFieldSet()) {
+          addEmptySection()
+        }
+        removeFieldSet(fieldSet.id)
+      },
+      confirmText: 'Delete section',
+      variant: 'destructive'
+    })
+  }
 
   return (
     <ClickOutside onClickOutside={() => {
@@ -63,12 +79,7 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index, control
             />
             {isSelected && <div className='flex flex-row items-center justify-between'>
               <ServiceButton
-                onClick={() => {
-                  if (getIsSingleFieldSet()) {
-                    addEmptySection()
-                  }
-                  removeFieldSet(fieldSet.id)
-                }}
+                onClick={handleRemoveFieldset}
                 icon={<Trash2 />}
                 tooltip='Delete section'
                 className='bg-transparent'

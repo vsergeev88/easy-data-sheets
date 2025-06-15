@@ -13,6 +13,7 @@ import './globals.css'
 import { dark } from '@clerk/themes'
 import { Toaster } from '@/components/ui/sonner'
 import { MainLogo } from '@/components/MainLogo'
+import ConfirmDialog from '@/components/ConfirmDialog'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -34,6 +35,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
   return (
     <ClerkProvider
       appearance={{
@@ -64,6 +66,7 @@ export default function RootLayout({
             <p>2025 © EasyDataSheets.com</p>
           </footer>
           <Toaster />
+          <ConfirmDialog />
         </body>
       </html>
     </ClerkProvider>
