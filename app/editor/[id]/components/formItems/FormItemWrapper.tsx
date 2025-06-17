@@ -18,9 +18,10 @@ type FormItemProps = {
   description?: string
   fieldId: string
   label: string
+  required?: boolean
 }
 
-const FormItemWrapper: React.FC<FormItemProps> = ({ children, description, fieldId, label }) => {
+const FormItemWrapper: React.FC<FormItemProps> = ({ children, description, fieldId, label, required = false }) => {
   const { removeField, selectedFieldId, setSelectedFieldId, duplicateField } = useEditorStore()
   const isSelected = selectedFieldId === fieldId
 
@@ -41,7 +42,9 @@ const FormItemWrapper: React.FC<FormItemProps> = ({ children, description, field
         <BaseFormItemWrapper description={description}
           focusable={false}
           draggable={true}
-          label={label}>
+          label={label}
+          required={required}
+        >
           {isSelected && <div className='absolute top-0 right-0 flex flex-row items-center justify-between'>
             <ServiceButton icon={<ArrowDownUp />} tooltip='Move to...' onClick={() => { }} />
             <ServiceButton icon={<CopyPlus />} tooltip='Duplicate field' onClick={() => {

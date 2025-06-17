@@ -5,6 +5,7 @@ import { useEditorStore } from '../stores/editorStore'
 import LeftPanel from './components/LeftPanel'
 import FormView from './components/FormView'
 import { useEffect } from 'react'
+import RightPanel from './components/RightPanel'
 
 type EditorClientProps = {
   dataSheet: DataSheet | null
@@ -19,15 +20,16 @@ export default function EditorClient({ dataSheet = null }: EditorClientProps) {
   }, [dataSheet, init])
 
   return (
-    <div className='grid h-full grid-cols-[280px_1fr_280px] overflow-hidden'>
+    <div className='grid h-full grid-cols-[280px_1fr_340px] overflow-hidden'>
       <div className='h-full border-r border-gray-200'>
         <LeftPanel />
       </div>
       <div className='h-full flex-1 overflow-auto bg-gray-50 py-4'>
-        {/* <pre>{JSON.stringify(dataSheet, null, 2)}</pre> */}
         <FormView />
       </div>
-      <div className='h-full border-l border-gray-200'>right panel</div>
+      <div className='h-full bg-gray-50'>
+        <RightPanel />
+      </div>
     </div>
   )
 }

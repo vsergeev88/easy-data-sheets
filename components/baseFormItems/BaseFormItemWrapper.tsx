@@ -11,6 +11,7 @@ type BaseFormItemProps = {
   onLabelClick?: () => void
   focusable?: boolean
   draggable?: boolean
+  required?: boolean
 }
 
 const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({
@@ -20,6 +21,7 @@ const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({
   description,
   focusable = true,
   draggable = false,
+  required = false,
 }) => {
   const handleLabelClick = (e: React.MouseEvent<HTMLLabelElement>) => {
     if (!focusable) {
@@ -41,7 +43,10 @@ const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({
           })}
           onClick={handleLabelClick}
         >
-          <div className='text-md'>{label}</div>
+          <div className='text-md flex items-center gap-1'>
+            {label}
+            {required && <span className='text-red-500'>*</span>}
+          </div>
           <FormDescription>{description}</FormDescription>
         </FormLabel>
         <div className='flex-1 border-l border-gray-300'>{children}</div>

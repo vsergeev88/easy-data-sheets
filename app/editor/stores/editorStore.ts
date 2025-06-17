@@ -122,6 +122,12 @@ export const useEditorStore = create<EditorStore>((set, get) => {
     set({ formData: { ...formData, fieldSets: updatedFieldSets } })
     set({ selectedFieldId: field.id })
   },
+  getFieldById: (fieldId: string) => {
+    const { formData } = get()
+    if (!formData) return null
+
+    return formData.fieldSets.find(section => section.fields.some(field => field.id === fieldId))?.fields.find(field => field.id === fieldId)
+  },
   removeField: fieldId => {
     const { formData } = get()
     if (!formData) return
@@ -195,4 +201,52 @@ export const addTextInput = (fieldSetId: string | null) => {
     required: false,
   })
   useEditorStore.getState().setSelectedFieldId(fieldId)
+}
+
+export const fieldManager = {
+  setLabel: (fieldId: string, label: string) => {
+    const { formData } = useEditorStore.getState()
+    if (!formData) return
+
+    const updatedFieldSets = [...(formData.fieldSets as FieldSet[])]
+    const fieldSetIndex = updatedFieldSets.findIndex(section => section.fields.some(field => field.id === fieldId))
+    if (fieldSetIndex !== -1) {
+      const field = updatedFieldSets[fieldSetIndex].fields.find(field => field.id === fieldId)
+      if (field) {
+        field.label = label
+      }
+    }
+
+    useEditorStore.setState({ formData: { ...formData, fieldSets: updatedFieldSets } })
+  },
+  setDescription: (fieldId: string, description: string) => {
+    const { formData } = useEditorStore.getState()
+    if (!formData) return
+
+    const updatedFieldSets = [...(formData.fieldSets as FieldSet[])]
+    const fieldSetIndex = updatedFieldSets.findIndex(section => section.fields.some(field => field.id === fieldId))
+    if (fieldSetIndex !== -1) {
+      const field = updatedFieldSets[fieldSetIndex].fields.find(field => field.id === fieldId)
+      if (field) {
+        field.description = description
+      }
+    }
+
+    useEditorStore.setState({ formData: { ...formData, fieldSets: updatedFieldSets } })
+  },
+  setRequired: (fieldId: string, required: boolean) => {
+    const { formData } = useEditorStore.getState()
+    if (!formData) return
+
+    const updatedFieldSets = [...(formData.fieldSets as FieldSet[])]
+    const fieldSetIndex = updatedFieldSets.findIndex(section => section.fields.some(field => field.id === fieldId))
+    if (fieldSetIndex !== -1) {
+      const field = updatedFieldSets[fieldSetIndex].fields.find(field => field.id === fieldId)
+      if (field) {
+        field.required = required
+      }
+    }
+
+    useEditorStore.setState({ formData: { ...formData, fieldSets: updatedFieldSets } })
+  }
 }

@@ -17,6 +17,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   items,
   withCustomField,
   id,
+  required,
 }) => {
   // const [otherValues, setOtherValues] = useState<string[]>([]);
   // const form = useFormContext();
@@ -32,7 +33,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
         // }
 
         return (
-          <FormItemWrapper label={label} description={description} fieldId={id}>
+          <FormItemWrapper label={label} description={description} fieldId={id} required={required}>
             <BaseCheckboxField
               id={id}
               control={control}
