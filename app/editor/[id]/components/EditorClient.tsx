@@ -1,21 +1,17 @@
-'use client'
-
 import { DataSheet } from '@/lib/data/dataSheets'
-import { useEditorStore } from '../stores/editorStore'
-import LeftPanel from './components/LeftPanel'
-import FormView from './components/FormView'
-import { useEffect } from 'react'
-import RightPanel from './components/RightPanel'
+import LeftPanel from './LeftPanel'
+import FormView from './FormView'
+import { Suspense, useEffect } from 'react'
+import RightPanel from './RightPanel'
+import { useEditorAppStore } from '@editorAppStore'
 
-type EditorClientProps = {
-  dataSheet: DataSheet | null
+export type EditorClientProps = {
+  dataSheet: DataSheet
 }
 
-export default function EditorClient({ dataSheet = null }: EditorClientProps) {
-  const { init } = useEditorStore()
-
+export default function EditorClient({ dataSheet }: EditorClientProps) {
+  const { init } = useEditorAppStore()
   useEffect(() => {
-    if (!dataSheet) return
     init(dataSheet)
   }, [dataSheet, init])
 

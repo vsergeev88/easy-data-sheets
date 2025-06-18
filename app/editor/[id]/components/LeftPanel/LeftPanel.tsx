@@ -6,11 +6,12 @@ import {
 } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { TextCursorInput, SquareCheckBig, Text, ChevronDown, PencilRuler, SquareDashed } from 'lucide-react'
-import { addTextInput, useEditorStore } from '@/app/editor/stores/editorStore'
+import { useEditorAppStore } from '@editorAppStore'
 import { FIELD_TYPES } from '@/lib/types/form'
+import { FieldModel } from '@/app/editor/stores/editorAppStore/fieldModel'
 
 export default function LeftPanel() {
-  const { addField, selectedFieldSetId, addEmptySection } = useEditorStore()
+  const { safeFormData } = useEditorAppStore()
 
   const basicItems = [
     {
@@ -18,7 +19,7 @@ export default function LeftPanel() {
       title: 'Text input',
       icon: TextCursorInput,
       onClick: () => {
-        addTextInput(selectedFieldSetId)
+        safeFormData.addTextInput(safeFormData.selectedFieldSetId)
       },
     },
     {
@@ -27,7 +28,7 @@ export default function LeftPanel() {
       icon: SquareCheckBig,
       onClick: () => {
         const fieldId = crypto.randomUUID()
-        addField(selectedFieldSetId, {
+        safeFormData.addField(safeFormData.selectedFieldSetId, FieldModel.create({
           id: fieldId,
           type: FIELD_TYPES.CHECKBOX,
           name: fieldId,
@@ -36,7 +37,7 @@ export default function LeftPanel() {
           required: false,
           items: ['Option 1', 'Option 2', 'Option 3'],
           withCustomField: false,
-        })
+        }))
       },
     },
     {
@@ -71,7 +72,7 @@ export default function LeftPanel() {
       title: 'New Section',
       icon: SquareDashed,
       onClick: () => {
-        addEmptySection(selectedFieldSetId)
+        safeFormData.addEmptyFieldSet(safeFormData.selectedFieldSetId)
       },
     },
   ]

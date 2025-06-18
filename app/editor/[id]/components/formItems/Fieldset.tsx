@@ -1,6 +1,4 @@
 import React, { useMemo, useEffect } from 'react'
-import { addTextInput, useEditorStore } from '@/app/editor/stores/editorStore'
-import { Field, FieldSet } from '@/lib/types/form'
 import { cn } from '@/lib/utils'
 import { ClickOutside } from '@/components/ClickOutside'
 import AddFieldsetButton from '../AddFieldsetButton'
@@ -12,25 +10,29 @@ import { EDITOR_FIELD_COMPONENTS_MAP } from './editorFieldComponentsMap'
 import { useDragAndDrop } from '@formkit/drag-and-drop/react'
 import { ServiceButton } from '@/components/ServiceButton'
 import { confirmDialogManager } from '@/app/stores/confirmDialogStore'
+import { IFieldSetModel } from '@/app/editor/stores/editorAppStore/fieldSetModel'
+import { useEditorAppStore } from '@editorAppStore'
+import { IFieldModel } from '@/app/editor/stores/editorAppStore/fieldModel'
 
 type FieldsetProps = {
-  fieldSet: FieldSet
+  fieldSet: IFieldSetModel
   className?: string
   index: number
   control: Control<any>
 }
 
 const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index, control }) => {
-  const { selectedFieldSetId, setSelectedFieldSetId,
-    setSelectedFieldId, setLegend,
-    removeFieldSet, reorderFields, moveField, getIsSingleFieldSet, addEmptySection } = useEditorStore()
-  const isSelected = selectedFieldSetId === fieldSet.id
+  const { safeFormData } = useEditorAppStore()
+  // const { selectedFieldSetId, setSelectedFieldSetId,
+  //   setSelectedFieldId, setLegend,
+  //   removeFieldSet, reorderFields, moveField, getIsSingleFieldSet, addEmptySection } = useAppEditorStore()
+  const isSelected = safeFormData.selectedFieldSetId === fieldSet.id
 
   const fieldsetFields = useMemo(() => fieldSet.fields, [fieldSet.fields])
 
-  const [parent, fields, setValues] = useDragAndDrop<HTMLDivElement, Field>(fieldsetFields, {
+  const [parent, fields, setValues] = useDragAndDrop<HTMLDivElement, IFieldModel>(fieldSet.fields, {
     onSort: (data) => {
-      reorderFields(fieldSet.id, data.values as Field[])
+      fieldSet.setFields(data.values as IFieldModel[])
     }
   })
 
@@ -43,10 +45,10 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index, control
       title: 'Delete section',
       description: 'Are you sure you want to delete this section? Content of this section will be lost.',
       onConfirm: () => {
-        if (getIsSingleFieldSet()) {
-          addEmptySection()
+        if (safeFormData.isSingleFieldSet) {
+          safeFormData.addEmptyFieldSet(null)
         }
-        removeFieldSet(fieldSet.id)
+        safeFormData.removeFieldSet(fieldSet.id)
       },
       confirmText: 'Delete section',
       variant: 'destructive'
@@ -55,12 +57,12 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index, control
 
   return (
     <ClickOutside onClickOutside={() => {
-      setSelectedFieldSetId(null)
-      setSelectedFieldId(null)
+      safeFormData.setSelectedFieldSetId(null)
+      safeFormData.setSelectedFieldId(null)
     }} ignoreClass='ignore-deselect' className='space-y-4'>
       <div
         onClick={() => {
-          setSelectedFieldSetId(fieldSet.id)
+          safeFormData.setSelectedFieldSetId(fieldSet.id)
         }}
         className={cn('border-2 border-dashed border-transparent', {
           'border-blue-500': isSelected,
@@ -74,7 +76,7 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index, control
             <LegendEditable
               legend={fieldSet.legend ?? ''}
               index={index}
-              setLegend={legend => setLegend(fieldSet.id, legend)}
+              setLegend={legend => fieldSet.setLegend(legend)}
               className='max-w-prose'
             />
             {isSelected && <div className='flex flex-row items-center justify-between'>
@@ -102,7 +104,7 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index, control
               <div className='flex items-center'>
                 Start with adding &nbsp;
                 <Button variant='link' size='sm' className='text-gray-500 p-0 underline underline-offset-4 cursor-pointer hover:text-gray-700'
-                  onClick={() => addTextInput(fieldSet.id)}
+                  onClick={() => safeFormData.addTextInput(fieldSet.id)}
                 >
                   Text Input
                 </Button>

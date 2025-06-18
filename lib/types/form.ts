@@ -6,7 +6,7 @@ export enum FIELD_TYPES {
 export type CommonFieldProps = {
   id: string
   label: string
-  description?: string
+  description: string
   name: string
   type: FIELD_TYPES
   required?: boolean

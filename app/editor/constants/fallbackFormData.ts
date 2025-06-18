@@ -1,4 +1,4 @@
-import { FIELD_TYPES, Form } from '@/lib/types/form'
+import { FIELD_TYPES, FieldSet, Form, TextField } from '@/lib/types/form'
 
 export const FALLBACK_FORM_DATA: Pick<Form, 'fieldSets'> = {
   fieldSets: [
@@ -14,8 +14,14 @@ export const FALLBACK_FORM_DATA: Pick<Form, 'fieldSets'> = {
           value: '',
           required: true,
           name: 'name',
-        },
+        } as TextField,
       ],
     },
   ],
+}
+
+export const EMPTY_FIELD_SET: FieldSet = {
+  id: crypto.randomUUID(),
+  fields: [],
+  legend: 'New section',
 }

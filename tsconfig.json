@@ -26,8 +26,8 @@
       "@/*": [
         "./*"
       ],
-      "@editorStore/*": [
-        "./app/editor/stores/editorStore"
+      "@editorAppStore": [
+        "./app/editor/hooks/useEditorAppStore"
       ]
     }
   },

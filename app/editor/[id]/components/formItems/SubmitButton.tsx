@@ -1,16 +1,16 @@
-import { useEditorStore } from '@/app/editor/stores/editorStore'
+import { useEditorAppStore } from '@editorAppStore'
 import BaseSubmitButton from '@/components/baseFormItems/BaseSubmitButton'
 import { cn } from '@/lib/utils'
 
 export default function SubmitButton() {
-  const { selectedFieldId, setSelectedFieldId, setSelectedFieldSetId, selectedFieldSetId } = useEditorStore()
-  const isSelected = selectedFieldId === 'submit-button' && !selectedFieldSetId
+  const { safeFormData } = useEditorAppStore()
+  const isSelected = safeFormData.selectedFieldId === 'submit-button' && !safeFormData.selectedFieldSetId
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     e.stopPropagation()
-    setSelectedFieldId('submit-button')
-    setSelectedFieldSetId(null)
+    safeFormData.setSelectedFieldId('submit-button')
+    safeFormData.setSelectedFieldSetId(null)
   }
 
   return (

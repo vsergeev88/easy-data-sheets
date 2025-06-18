@@ -1,15 +1,14 @@
 import { ServiceButton } from "@/components/ServiceButton"
-import { useEditorStore } from "@editorStore/editorStore"
+import { useEditorAppStore } from "@editorAppStore"
 import { X } from "lucide-react"
 import { fieldSettingsMap } from "./fieldSettingsMap"
 
 export const FieldSettings = ({ fieldId }: { fieldId: string | null }) => {
-  const { formData, setSelectedFieldId } = useEditorStore()
-  const field = formData?.fieldSets.find(fieldSet => fieldSet.fields.some(field => field.id === fieldId))?.fields.find(field => field.id === fieldId)
+  const { safeFormData } = useEditorAppStore()
 
-  if (!field) return null
+  if (!fieldId) return null
 
-  console.log(field)
+  const field = safeFormData.getFieldById(fieldId)
 
   const FieldSettingsComponent = fieldSettingsMap[field.type]
 
@@ -17,7 +16,7 @@ export const FieldSettings = ({ fieldId }: { fieldId: string | null }) => {
     <div className="flex items-center justify-between text-lg font-medium">
       <h2>Settings</h2>
       <ServiceButton icon={<X />} tooltip="Close" onClick={() => {
-        setSelectedFieldId(null)
+        safeFormData.setSelectedFieldId(null)
       }} />
     </div>
     <div className="mt-4">

@@ -3,10 +3,10 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Field } from "@/lib/types/form"
 import { useState } from "react"
+import { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel"
 
-export const FieldLabelSettings = ({ field }: { field: Field }) => {
+export const FieldLabelSettings = ({ field }: { field: IFieldModel }) => {
   const { label, description } = field
   const [labelValue, setLabelValue] = useState(label)
   const [descriptionValue, setDescriptionValue] = useState(description)

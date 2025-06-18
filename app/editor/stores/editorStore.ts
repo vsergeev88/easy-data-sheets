@@ -1,6 +1,6 @@
 import { DataSheet } from '@/lib/data/dataSheets'
 import { create } from 'zustand'
-import { FALLBACK_FORM_DATA } from './fallbackFormData'
+import { FALLBACK_FORM_DATA } from '../constants/fallbackFormData'
 import { Field, FIELD_TYPES, FieldSet, Form } from '@/lib/types/form'
 
 type EditorStore = {

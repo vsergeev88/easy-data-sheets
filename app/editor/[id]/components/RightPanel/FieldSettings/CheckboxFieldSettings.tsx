@@ -1,8 +1,8 @@
-import { CheckboxField } from "@/lib/types/form"
 import { FieldLabelSettings } from "./FieldLabelSettings"
 import { Label } from "@/components/ui/label"
+import { ICheckboxFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel"
 
-export const CheckboxFieldSettings = ({ field }: { field: CheckboxField }) => {
+export const CheckboxFieldSettings = ({ field }: { field: ICheckboxFieldModel }) => {
   return <div className="flex flex-col gap-4">
     <FieldLabelSettings field={field} />
     <div className="flex flex-col gap-2">
