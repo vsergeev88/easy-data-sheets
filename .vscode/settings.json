@@ -1,7 +1,19 @@
 {
-  "workbench.colorCustomizations": {
-    "activityBar.background": "#401D59",
-    "titleBar.activeBackground": "#5A287C",
-    "titleBar.activeForeground": "#FCFBFE"
-  },
+	"workbench.colorCustomizations": {
+		"activityBar.background": "#401D59",
+		"titleBar.activeBackground": "#5A287C",
+		"titleBar.activeForeground": "#FCFBFE"
+	},
+	"editor.defaultFormatter": "biomejs.biome",
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"quickfix.biome": "explicit",
+		"source.organizeImports.biome": "explicit"
+	},
+	"[css]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[scss]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	}
 }

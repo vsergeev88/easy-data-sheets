@@ -1,1 +1,1 @@
-export { default } from './RightPanel'
+export { default } from "./RightPanel";

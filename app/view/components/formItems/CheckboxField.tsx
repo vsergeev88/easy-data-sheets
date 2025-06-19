@@ -1,48 +1,48 @@
-import React, { useState } from 'react'
-import { FormField } from '@/components/ui/form'
-import FormItemWrapper from './FormItemWrapper'
-import { useFormContext, UseFormReturn } from 'react-hook-form'
-import { CheckboxField as CheckboxFieldType } from '@/lib/types/form'
-import BaseCheckboxField from '@/components/baseFormItems/BaseCheckboxField'
+import React, { useState } from "react";
+import { FormField } from "@/components/ui/form";
+import FormItemWrapper from "./FormItemWrapper";
+import { useFormContext, UseFormReturn } from "react-hook-form";
+import { CheckboxField as CheckboxFieldType } from "@/lib/types/form";
+import BaseCheckboxField from "@/components/baseFormItems/BaseCheckboxField";
 
 type CheckboxFieldProps = CheckboxFieldType & {
-  control: UseFormReturn['control']
-}
+	control: UseFormReturn["control"];
+};
 
 const CheckboxField: React.FC<CheckboxFieldProps> = ({
-  control,
-  label,
-  description,
-  name,
-  items,
-  withCustomField,
+	control,
+	label,
+	description,
+	name,
+	items,
+	withCustomField,
 }) => {
-  const [otherValues, setOtherValues] = useState<string[]>([])
-  const form = useFormContext()
+	const [otherValues, setOtherValues] = useState<string[]>([]);
+	const form = useFormContext();
 
-  return (
-    <FormField
-      control={control}
-      name={name}
-      render={({ field }) => {
-        const addOtherValue = (otherValue: string) => {
-          setOtherValues(Array.from(new Set([...otherValues, otherValue])))
-          form.setValue(name, [...field.value, otherValue])
-        }
+	return (
+		<FormField
+			control={control}
+			name={name}
+			render={({ field }) => {
+				const addOtherValue = (otherValue: string) => {
+					setOtherValues(Array.from(new Set([...otherValues, otherValue])));
+					form.setValue(name, [...field.value, otherValue]);
+				};
 
-        return (
-          <FormItemWrapper label={label} description={description}>
-            <BaseCheckboxField
-              control={control}
-              withCustomField={withCustomField}
-              onAddOtherValue={addOtherValue}
-              items={[...items, ...otherValues]}
-              name={name}
-            />
-          </FormItemWrapper>
-        )
-      }}
-    />
-  )
-}
-export default CheckboxField
+				return (
+					<FormItemWrapper label={label} description={description}>
+						<BaseCheckboxField
+							control={control}
+							withCustomField={withCustomField}
+							onAddOtherValue={addOtherValue}
+							items={[...items, ...otherValues]}
+							name={name}
+						/>
+					</FormItemWrapper>
+				);
+			}}
+		/>
+	);
+};
+export default CheckboxField;

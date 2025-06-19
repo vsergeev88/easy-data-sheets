@@ -1,1 +1,1 @@
-export * from './editorAppStore'
+export * from "./editorAppStore";

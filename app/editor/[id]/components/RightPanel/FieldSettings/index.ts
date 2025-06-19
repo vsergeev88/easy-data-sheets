@@ -1,1 +1,1 @@
-export { FieldSettings } from './FieldSettings'
+export { FieldSettings } from "./FieldSettings";
