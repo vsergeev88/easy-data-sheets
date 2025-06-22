@@ -1,5 +1,6 @@
-import { getUserId } from "../utils/user";
 import { sql } from "../utils/sql";
+import { getUserId } from "../utils/user";
+import { supportLegacyDataSheet } from "./supportLegacyData";
 
 export type DataSheet = {
 	id: string;
@@ -24,7 +25,7 @@ export async function createDataSheet(
 
 	const userId = await getUserId();
 
-	await sql`INSERT INTO data_sheets (id, name, data, created_at, updated_at, user_id,  published, company_id) VALUES (${id}, ${name}, ${dataString}, ${createdAt}, ${updatedAt}, ${userId}, false, ${companyId ?? null})`;
+	await sql`INSERT INTO data_sheets (id, name, data, created_at, updated_at, user_id, published, company_id) VALUES (${id}, ${name}, ${dataString}, ${createdAt}, ${updatedAt}, ${userId}, false, ${companyId ?? null})`;
 
 	// Construct the DataSheet object to return
 	const newDataSheet: DataSheet = {
@@ -49,7 +50,16 @@ export async function getDataSheets(): Promise<DataSheet[]> {
 }
 
 export async function getDataSheet(dataSheetId: string): Promise<DataSheet> {
-	const [dataSheet] =
-		await sql`SELECT * FROM data_sheets WHERE id = ${dataSheetId}`;
-	return dataSheet as DataSheet;
+	const [dataSheet] =	await sql`SELECT * FROM data_sheets WHERE id = ${dataSheetId}`;
+	const dataSheetFormatted: DataSheet = {
+		id: dataSheet.id,
+		name: dataSheet.name,
+		createdAt: new Date(dataSheet.created_at),
+		updatedAt: new Date(dataSheet.updated_at),
+		userId: dataSheet.user_id,
+		published: dataSheet.published,
+		companyId: dataSheet.company_id,
+		data: dataSheet.data,
+	};
+	return supportLegacyDataSheet(dataSheetFormatted) as DataSheet;
 }

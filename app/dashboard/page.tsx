@@ -1,7 +1,7 @@
-import { CreateNewDataSheetButton } from "@/components/CreateNewDataSheetButton";
-import { getDataSheets } from "@/lib/data/dataSheets";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import Link from "next/link";
+import { CreateNewDataSheetButton } from "@/components/CreateNewDataSheetButton";
+import { getDataSheets } from "@/lib/data/dataSheets";
 
 export default async function Dashboard() {
 	const { userId } = await auth();

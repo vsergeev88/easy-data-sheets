@@ -1,11 +1,10 @@
 "use client";
 
-import { Suspense } from "react";
 import {
-	editorAppStore,
 	EditorAppStoreContext,
+	editorAppStore,
 } from "../stores/editorAppStore/editorAppStore";
-import EditorClient, { EditorClientProps } from "./components/EditorClient";
+import EditorClient, { type EditorClientProps } from "./components/EditorClient";
 
 export const EditorClientApp = ({ dataSheet }: EditorClientProps) => {
 	if (!dataSheet) return <div>No data sheet</div>;

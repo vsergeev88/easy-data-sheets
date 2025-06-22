@@ -1,50 +1,41 @@
-import React from "react";
-
+import { GripVertical } from "lucide-react";
+import { observer } from "mobx-react-lite";
+import type React from "react";
+import type { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 import {
 	FormDescription,
 	FormItem,
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { GripVertical } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type BaseFormItemProps = {
 	children: React.ReactNode;
-	label: string;
-	description?: string;
-	onLabelClick?: () => void;
-	focusable?: boolean;
-	draggable?: boolean;
-	required?: boolean;
+	field: IFieldModel;
 };
 
 const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({
-	onLabelClick,
-	children,
-	label,
-	description,
-	focusable = true,
-	draggable = false,
-	required = false,
+	field,
+	children
 }) => {
 	const handleLabelClick = (e: React.MouseEvent<HTMLLabelElement>) => {
-		if (!focusable) {
+		if (!field.focusable) {
 			e.preventDefault();
 		}
-		onLabelClick?.();
+		// onLabelClick?.();
 	};
 	return (
 		<FormItem
 			className={cn(
 				"relative mb-1 min-h-[80px] gap-0 border border-gray-300 bg-gray-50 md:mb-0",
 				{
-					"cursor-grab": draggable,
+					"cursor-grab": field.draggable,
 				},
 			)}
 		>
 			<div className="relative flex flex-col sm:flex-row">
-				{draggable && (
+				{field.draggable && (
 					<div className="h-full flex items-center justify-center w-8 text-gray-300">
 						<GripVertical className="w-6 h-6" />
 					</div>
@@ -53,16 +44,16 @@ const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({
 					className={cn(
 						"flex flex-col items-start justify-start p-2 px-2 pb-1 md:w-[260px] md:min-w-[260px] md:pb-2",
 						{
-							"cursor-grab": draggable,
+							"cursor-grab": field.draggable,
 						},
 					)}
 					onClick={handleLabelClick}
 				>
 					<div className="text-md flex items-center gap-1">
-						{label}
-						{required && <span className="text-red-500">*</span>}
+						{field.label}
+						{field.required && <span className="text-red-500">*</span>}
 					</div>
-					<FormDescription>{description}</FormDescription>
+					<FormDescription>{field.description}</FormDescription>
 				</FormLabel>
 				<div className="flex-1 border-l border-gray-300">{children}</div>
 			</div>
@@ -71,4 +62,4 @@ const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({
 	);
 };
 
-export default BaseFormItemWrapper;
+export default observer(BaseFormItemWrapper);

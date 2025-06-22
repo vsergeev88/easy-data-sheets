@@ -1,12 +1,12 @@
-import { fieldManager } from "@/app/editor/stores/editorStore";
+import { observer } from "mobx-react-lite";
+import { useState } from "react";
+import type { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
-import { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 
-export const FieldLabelSettings = ({ field }: { field: IFieldModel }) => {
+const FieldLabelSettings = ({ field }: { field: IFieldModel }) => {
 	const { label, description } = field;
 	const [labelValue, setLabelValue] = useState(label);
 	const [descriptionValue, setDescriptionValue] = useState(description);
@@ -24,7 +24,7 @@ export const FieldLabelSettings = ({ field }: { field: IFieldModel }) => {
 					value={labelValue}
 					onChange={(e) => setLabelValue(e.target.value)}
 					onBlur={() => {
-						fieldManager.setLabel(field.id, labelValue);
+						field.setLabel(labelValue);
 					}}
 				/>
 			</div>
@@ -38,7 +38,7 @@ export const FieldLabelSettings = ({ field }: { field: IFieldModel }) => {
 					value={descriptionValue}
 					onChange={(e) => setDescriptionValue(e.target.value)}
 					onBlur={() => {
-						fieldManager.setDescription(field.id, descriptionValue ?? "");
+						field.setDescription(descriptionValue ?? "");
 					}}
 				/>
 			</div>
@@ -47,7 +47,7 @@ export const FieldLabelSettings = ({ field }: { field: IFieldModel }) => {
 					id="required"
 					checked={field.required}
 					onCheckedChange={(checked) => {
-						fieldManager.setRequired(field.id, Boolean(checked));
+						field.setRequired(Boolean(checked));
 					}}
 				/>
 				<Label htmlFor="required" className="text-sm font-normal">
@@ -57,3 +57,5 @@ export const FieldLabelSettings = ({ field }: { field: IFieldModel }) => {
 		</div>
 	);
 };
+
+export default observer(FieldLabelSettings);

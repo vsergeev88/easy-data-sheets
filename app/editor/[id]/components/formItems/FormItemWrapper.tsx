@@ -1,39 +1,28 @@
-import { ArrowDownUp, CopyPlus, CornerDownRight, Trash2 } from "lucide-react";
-import React from "react";
-
 import { useEditorAppStore } from "@editorAppStore";
+import { ArrowDownUp, CopyPlus, Trash2 } from "lucide-react";
+import { observer } from "mobx-react-lite";
+import type React from "react";
+import type { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 import BaseFormItemWrapper from "@/components/baseFormItems/BaseFormItemWrapper";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { ClickOutside } from "@/components/ClickOutside";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { ServiceButton } from "@/components/ServiceButton";
+import { cn } from "@/lib/utils";
 
 type FormItemProps = {
 	children: React.ReactNode;
-	description?: string;
-	fieldId: string;
-	label: string;
-	required?: boolean;
+	field: IFieldModel;
 };
 
 const FormItemWrapper: React.FC<FormItemProps> = ({
 	children,
-	description,
-	fieldId,
-	label,
-	required = false,
+	field
 }) => {
 	const { safeFormData } = useEditorAppStore();
-	const isSelected = safeFormData.selectedFieldId === fieldId;
+	const isSelected = safeFormData.selectedFieldId === field.id;
 
 	const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		safeFormData.setSelectedFieldId(fieldId);
+		safeFormData.setSelectedFieldId(field.id);
 	};
 
 	return (
@@ -42,31 +31,31 @@ const FormItemWrapper: React.FC<FormItemProps> = ({
 			ignoreClass="ignore-deselect"
 		>
 			<div
-				className={cn("border-2 border-transparent w-full", {
+				className={cn("border-2 border-transparent w-full ignore-deselect", {
 					"border-blue-500": isSelected,
 					"hover:border-blue-500/50": !isSelected,
 				})}
 				onClick={handleClick}
 			>
 				<BaseFormItemWrapper
-					description={description}
+					description={field.description}
 					focusable={false}
 					draggable={true}
-					label={label}
-					required={required}
+					label={field.label}
+					required={field.required}
 				>
 					{isSelected && (
 						<div className="absolute top-0 right-0 flex flex-row items-center justify-between">
 							<ServiceButton
 								icon={<ArrowDownUp />}
 								tooltip="Move to..."
-								onClick={() => {}}
+								onClick={() => { }}
 							/>
 							<ServiceButton
 								icon={<CopyPlus />}
 								tooltip="Duplicate field"
 								onClick={() => {
-									safeFormData.duplicateField(fieldId);
+									safeFormData.duplicateField(field.id);
 								}}
 							/>
 							<ServiceButton
@@ -75,7 +64,7 @@ const FormItemWrapper: React.FC<FormItemProps> = ({
 								tooltip="Delete field"
 								onClick={(e) => {
 									e.stopPropagation();
-									safeFormData.removeField(fieldId);
+									safeFormData.removeField(field.id);
 								}}
 								className="hover:text-red-700"
 							/>
@@ -88,4 +77,4 @@ const FormItemWrapper: React.FC<FormItemProps> = ({
 	);
 };
 
-export default FormItemWrapper;
+export default observer(FormItemWrapper);

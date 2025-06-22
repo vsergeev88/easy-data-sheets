@@ -1,5 +1,5 @@
-import { FieldLabelSettings } from "./FieldLabelSettings";
-import { ITextFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import type { ITextFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import FieldLabelSettings from "./FieldLabelSettings";
 
 export const TextInputSettings = ({ field }: { field: ITextFieldModel }) => {
 	return (

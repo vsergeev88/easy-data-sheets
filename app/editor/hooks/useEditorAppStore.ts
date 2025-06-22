@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import {
 	EditorAppStoreContext,
-	type IEditorAppStore,
 } from "../stores/editorAppStore";
 
 export const useEditorAppStore = () => {

@@ -1,5 +1,5 @@
+import { cast, type Instance, types } from "mobx-state-tree";
 import { FIELD_TYPES } from "@/lib/types/form";
-import { Instance, types } from "mobx-state-tree";
 
 export const BaseFieldModel = types
 	.model({
@@ -12,6 +12,9 @@ export const BaseFieldModel = types
 			types.literal(FIELD_TYPES.CHECKBOX),
 		),
 		required: types.optional(types.boolean, false),
+		disabled: types.optional(types.boolean, false),
+		focusable: types.optional(types.boolean, true),
+		draggable: types.optional(types.boolean, false),
 	})
 	.actions((self) => ({
 		setLabel: (label: string): void => {
@@ -28,7 +31,14 @@ export interface IBaseFieldModel extends Instance<typeof BaseFieldModel> {}
 
 export const TextFieldModel = BaseFieldModel.named("TextFieldModel").props({
 	type: types.literal(FIELD_TYPES.TEXT),
-});
+	placeholder: types.optional(types.string, ""),
+	disabled: types.optional(types.boolean, false),
+	value: types.optional(types.string, ""),
+}).actions((self) => ({
+	setValue: (value: string): void => {
+		self.value = value;
+	},
+}));
 export interface ITextFieldModel extends Instance<typeof TextFieldModel> {}
 
 export const CheckboxFieldModel = BaseFieldModel.named(
@@ -37,7 +47,12 @@ export const CheckboxFieldModel = BaseFieldModel.named(
 	type: types.literal(FIELD_TYPES.CHECKBOX),
 	items: types.array(types.string),
 	withCustomField: types.optional(types.boolean, false),
-});
+	value: types.optional(types.array(types.string), []),
+}).actions((self) => ({
+	setValue: (value: string[]): void => {
+		self.value = cast(value);
+	},
+}));
 export interface ICheckboxFieldModel
 	extends Instance<typeof CheckboxFieldModel> {}
 

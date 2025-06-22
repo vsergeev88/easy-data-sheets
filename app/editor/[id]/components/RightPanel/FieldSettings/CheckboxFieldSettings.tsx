@@ -1,6 +1,6 @@
-import { FieldLabelSettings } from "./FieldLabelSettings";
+import type { ICheckboxFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 import { Label } from "@/components/ui/label";
-import { ICheckboxFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import FieldLabelSettings from "./FieldLabelSettings";
 
 export const CheckboxFieldSettings = ({
 	field,

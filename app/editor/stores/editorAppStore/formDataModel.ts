@@ -1,9 +1,9 @@
-import { FIELD_TYPES, FieldSet } from "@/lib/types/form";
-import { cast, getSnapshot, Instance, types } from "mobx-state-tree";
-import { FieldSetModel, IFieldSetModel } from "./fieldSetModel";
-import { FormStyleModel } from "./formStyleModel";
+import { cast, getSnapshot, type Instance, types } from "mobx-state-tree";
+import { FIELD_TYPES, type FieldSet } from "@/lib/types/form";
 import { EMPTY_FIELD_SET } from "../../constants/fallbackFormData";
-import { FieldModel, IFieldModel } from "./fieldModel";
+import { FieldModel, type IFieldModel } from "./fieldModel";
+import { FieldSetModel, type IFieldSetModel } from "./fieldSetModel";
+import { FormStyleModel } from "./formStyleModel";
 
 interface IVolatile {
 	selectedFieldSetId: string | null;
@@ -14,6 +14,7 @@ export const FormDataModel = types
 	.model({
 		formStyle: types.maybeNull(FormStyleModel),
 		fieldSets: types.array(FieldSetModel),
+		description: types.maybeNull(types.string),
 	})
 	.volatile<IVolatile>(() => ({
 		selectedFieldSetId: null,

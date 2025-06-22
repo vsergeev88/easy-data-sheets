@@ -1,31 +1,29 @@
-import React, { useMemo, useEffect } from "react";
-import { cn } from "@/lib/utils";
-import { ClickOutside } from "@/components/ClickOutside";
-import AddFieldsetButton from "../AddFieldsetButton";
-import LegendEditable from "./LegendEditable";
-import { Button } from "@/components/ui/button";
-import { CornerDownRight, Trash2 } from "lucide-react";
-import { Control } from "react-hook-form";
-import { EDITOR_FIELD_COMPONENTS_MAP } from "./editorFieldComponentsMap";
-import { useDragAndDrop } from "@formkit/drag-and-drop/react";
-import { ServiceButton } from "@/components/ServiceButton";
-import { confirmDialogManager } from "@/app/stores/confirmDialogStore";
-import { IFieldSetModel } from "@/app/editor/stores/editorAppStore/fieldSetModel";
 import { useEditorAppStore } from "@editorAppStore";
-import { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import { useDragAndDrop } from "@formkit/drag-and-drop/react";
+import { CornerDownRight, Trash2 } from "lucide-react";
+import type React from "react";
+import { useEffect, useMemo } from "react";
+import type { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import type { IFieldSetModel } from "@/app/editor/stores/editorAppStore/fieldSetModel";
+import { confirmDialogManager } from "@/app/stores/confirmDialogStore";
+import { ClickOutside } from "@/components/ClickOutside";
+import { ServiceButton } from "@/components/ServiceButton";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import AddFieldsetButton from "../AddFieldsetButton";
+import { EDITOR_FIELD_COMPONENTS_MAP } from "./editorFieldComponentsMap";
+import LegendEditable from "./LegendEditable";
 
 type FieldsetProps = {
 	fieldSet: IFieldSetModel;
 	className?: string;
 	index: number;
-	control: Control<any>;
 };
 
 const Fieldset: React.FC<FieldsetProps> = ({
 	fieldSet,
 	className,
 	index,
-	control,
 }) => {
 	const { safeFormData } = useEditorAppStore();
 	// const { selectedFieldSetId, setSelectedFieldSetId,
@@ -35,7 +33,7 @@ const Fieldset: React.FC<FieldsetProps> = ({
 
 	const fieldsetFields = useMemo(() => fieldSet.fields, [fieldSet.fields]);
 
-	const [parent, fields, setValues] = useDragAndDrop<
+	const [parent, draggableFields, setValues] = useDragAndDrop<
 		HTMLDivElement,
 		IFieldModel
 	>(fieldSet.fields, {
@@ -106,19 +104,16 @@ const Fieldset: React.FC<FieldsetProps> = ({
 							</div>
 						)}
 					</div>
-					{fields.length > 0 ? (
+					{draggableFields.length > 0 ? (
 						<div ref={parent} className="">
-							{fields.map((field) => {
-								const commonProps = { control };
+							{draggableFields.map((field) => {
 								const FieldComponent = EDITOR_FIELD_COMPONENTS_MAP[
 									field.type
-								] as React.FC<any>;
+								] as React.FC<{ field: IFieldModel }>;
 								return (
 									<FieldComponent
 										key={field.id}
-										data-label={field.id}
-										{...commonProps}
-										{...field}
+										field={field}
 									/>
 								);
 							})}

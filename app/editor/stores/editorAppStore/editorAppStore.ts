@@ -1,10 +1,10 @@
-import { DataSheet } from "@/lib/data/dataSheets";
-import { Form } from "@/lib/types/form";
-import { Instance, types } from "mobx-state-tree";
+import { type Instance, types } from "mobx-state-tree";
 import React from "react";
+import type { DataSheet } from "@/lib/data/dataSheets";
+import type { Form } from "@/lib/types/form";
 import { FALLBACK_FORM_DATA } from "../../constants/fallbackFormData";
-import { FormDataModel, IFormDataModel } from "./formDataModel";
-import { FormInfoModel, IFormInfoModel } from "./formInfoModel";
+import { FormDataModel, type IFormDataModel } from "./formDataModel";
+import { FormInfoModel, type IFormInfoModel } from "./formInfoModel";
 
 const EditorAppModel = types
 	.model({
@@ -36,6 +36,8 @@ const EditorAppModel = types
 				formData.fieldSets = [...FALLBACK_FORM_DATA.fieldSets];
 			}
 			self.formData = FormDataModel.create(formData);
+			formInfo.createdAt = new Date(formInfo.createdAt);
+			formInfo.updatedAt = new Date(formInfo.updatedAt);
 			self.formInfo = FormInfoModel.create(formInfo);
 			self.isInitialized = true;
 		},
