@@ -4,6 +4,7 @@ import { EMPTY_FIELD_SET } from "../../constants/fallbackFormData";
 import { FieldModel, type IFieldModel } from "./fieldModel";
 import { FieldSetModel, type IFieldSetModel } from "./fieldSetModel";
 import { FormStyleModel } from "./formStyleModel";
+import { SubmitButtonModel } from "./submitButtonModel";
 
 interface IVolatile {
 	selectedFieldSetId: string | null;
@@ -15,6 +16,10 @@ export const FormDataModel = types
 		formStyle: types.maybeNull(FormStyleModel),
 		fieldSets: types.array(FieldSetModel),
 		description: types.maybeNull(types.string),
+		submitButton: types.optional(SubmitButtonModel, () => SubmitButtonModel.create({
+			type: "submit-button",
+			label: "Submit",
+		})),
 	})
 	.volatile<IVolatile>(() => ({
 		selectedFieldSetId: null,

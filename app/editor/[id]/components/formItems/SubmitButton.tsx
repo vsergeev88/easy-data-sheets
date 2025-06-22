@@ -29,7 +29,7 @@ function SubmitButton() {
 				}
 			}}
 		>
-			<BaseSubmitButton />
+			<BaseSubmitButton label={safeFormData.submitButton?.label} />
 		</div>
 	);
 }

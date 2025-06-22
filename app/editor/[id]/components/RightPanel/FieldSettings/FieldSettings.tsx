@@ -1,7 +1,6 @@
 import { useEditorAppStore } from "@editorAppStore";
 import { X } from "lucide-react";
 import { observer } from "mobx-react-lite";
-import type { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 import { ServiceButton } from "@/components/ServiceButton";
 import { fieldSettingsMap } from "./fieldSettingsMap";
 
@@ -10,9 +9,9 @@ const FieldSettings = ({ fieldId }: { fieldId: string | null }) => {
 
 	if (!fieldId) return null;
 
-	const field = fieldId === "submit-button" ? { type: "submit" } : safeFormData.getFieldById(fieldId);
+	const field = fieldId === "submit-button" ? safeFormData.submitButton : safeFormData.getFieldById(fieldId);
 
-	const FieldSettingsComponent = fieldId === "submit-button" ? () => <div>Submit button</div> : fieldSettingsMap[field.type] as React.FC<{ field: IFieldModel }>;
+	const FieldSettingsComponent = fieldSettingsMap[field.type];
 
 	return (
 		<div className="p-4 bg-background border-gray-200 border">

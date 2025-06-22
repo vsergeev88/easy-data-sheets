@@ -1,5 +1,5 @@
-import { cast, Instance, types } from "mobx-state-tree";
-import { FieldModel, IFieldModel } from "./fieldModel";
+import { cast, type Instance, types } from "mobx-state-tree";
+import { FieldModel, type IFieldModel } from "./fieldModel";
 
 export const FieldSetModel = types
 	.model({
