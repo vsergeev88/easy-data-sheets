@@ -7,15 +7,15 @@ import FieldSettings from "./FieldSettings";
 import PublishSettings from "./PublishSettings";
 
 const RightPanel = () => {
-	const { safeFormData } = useEditorAppStore();
+	const { safeFormData, saveAndPublish, isSaving } = useEditorAppStore();
 
 	return (
 		<div className="h-full py-4 px-2 ignore-deselect">
 			<div className="flex items-center justify-center mb-2 gap-2">
 				<Tooltip message="Preview data sheet">
-					<Button variant="outline" className=""> <Eye /> Preview</Button>
+					<Button variant="outline" className="" disabled={isSaving}> <Eye /> Preview</Button>
 				</Tooltip>
-				<Button variant="default" className="flex-1"> <Save /> Save & Publish</Button>
+				<Button variant="default" className="flex-1" onClick={() => saveAndPublish()} disabled={isSaving}> <Save /> Save & Publish</Button>
 			</div>
 			{safeFormData.selectedFieldId ? <FieldSettings fieldId={safeFormData.selectedFieldId} /> : <PublishSettings />}
 		</div>

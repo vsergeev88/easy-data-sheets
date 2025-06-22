@@ -1,4 +1,4 @@
-import { applySnapshot, type Instance, types } from "mobx-state-tree";
+import { applySnapshot, flow, type Instance, types } from "mobx-state-tree";
 import React from "react";
 import type { DataSheet } from "@/lib/data/dataSheets";
 import type { Form } from "@/lib/types/form";
@@ -12,12 +12,13 @@ const EditorAppModel = types
 		formInfo: types.optional(types.maybeNull(FormInfoModel), null),
 	})
 	.volatile(() => ({
+		isSaving: false,
 		isInitialized: false,
-		isPublishSettingsOpen: false,
+		shouldShowShareOptions: false,
 	}))
 	.actions((self) => ({
-		setIsPublishSettingsOpen: (isPublishSettingsOpen: boolean) => {
-			self.isPublishSettingsOpen = isPublishSettingsOpen;
+		setShouldShowShareOptions: (shouldShowShareOptions: boolean) => {
+			self.shouldShowShareOptions = shouldShowShareOptions;
 		},
 	}))
 	.views((self) => ({
@@ -57,6 +58,13 @@ const EditorAppModel = types
 				self.formData = FormDataModel.create(formData);
 			}
 		},
+		saveAndPublish: flow(function* () {
+			self.isSaving = true;
+			yield new Promise((resolve) => setTimeout(resolve, 1000));
+			self.isSaving = false;
+			self.formInfo?.setUpdatedAt(new Date());
+			self.shouldShowShareOptions = true;
+		}),
 	}));
 
 export const editorAppStore = EditorAppModel.create({});

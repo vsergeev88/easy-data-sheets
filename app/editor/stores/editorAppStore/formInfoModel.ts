@@ -8,5 +8,9 @@ export const FormInfoModel = types.model({
 	userId: types.string,
 	published: types.boolean,
 	companyId: types.maybeNull(types.string),
-});
+}).actions((self) => ({
+	setUpdatedAt: (updatedAt: Date) => {
+		self.updatedAt = updatedAt;
+	},
+}));
 export interface IFormInfoModel extends Instance<typeof FormInfoModel> {}
