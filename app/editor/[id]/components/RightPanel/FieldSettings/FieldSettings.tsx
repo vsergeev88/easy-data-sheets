@@ -3,15 +3,23 @@ import { X } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { ServiceButton } from "@/components/ServiceButton";
 import { fieldSettingsMap } from "./fieldSettingsMap";
+import SubmitButtonSettings from "./SubmitButtonSettings";
 
 const FieldSettings = ({ fieldId }: { fieldId: string | null }) => {
 	const { safeFormData } = useEditorAppStore();
 
 	if (!fieldId) return null;
 
-	const field = fieldId === "submit-button" ? safeFormData.submitButton : safeFormData.getFieldById(fieldId);
+	const getFieldSettingsComponent = () => {
+		if (fieldId === "submit-button") {
+			return <SubmitButtonSettings />;
+		}
 
-	const FieldSettingsComponent = fieldSettingsMap[field.type];
+		// At this point, field is guaranteed to be a regular field, not submit button
+		const regularField = safeFormData.getFieldById(fieldId);
+		const FieldSettingsComponent = fieldSettingsMap[regularField.type] as React.ComponentType<{ field: any }>;
+		return <FieldSettingsComponent field={regularField} />;
+	}
 
 	return (
 		<div className="p-4 bg-background border-gray-200 border">
@@ -26,7 +34,7 @@ const FieldSettings = ({ fieldId }: { fieldId: string | null }) => {
 				/>
 			</div>
 			<div className="mt-4">
-				<FieldSettingsComponent field={field} />
+				{getFieldSettingsComponent()}
 			</div>
 		</div>
 	);

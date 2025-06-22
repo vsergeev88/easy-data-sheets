@@ -47,9 +47,9 @@ const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({
 						}
 					}}
 				>
-					<div className="text-md flex items-center gap-1">
-						{field.label}
+					<div className="text-md flex items-center gap-1 font-semibold">
 						{field.required && <span className="text-red-500">*</span>}
+						{field.label}
 					</div>
 					<p>{field.description}</p>
 				</div>

@@ -20,7 +20,11 @@ export default function BaseFieldsetLegend({
 				className,
 			)}
 			onClick={onClick}
-			tabIndex={0}
+			onKeyDown={(e) => {
+				if (e.key === "Enter") {
+					onClick?.();
+				}
+			}}
 		>
 			{`${index + 1}. ${legend}`}
 		</div>

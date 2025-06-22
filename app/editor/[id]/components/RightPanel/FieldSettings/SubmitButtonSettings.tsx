@@ -1,6 +1,7 @@
 import { useEditorAppStore } from "@editorAppStore";
 import { observer } from "mobx-react-lite";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const SubmitButtonSettings = () => {
   const { safeFormData } = useEditorAppStore();
@@ -10,7 +11,10 @@ const SubmitButtonSettings = () => {
   const submitButton = safeFormData.submitButton;
 
   return <div>
-    <Input value={submitButton?.label} onChange={(e) => submitButton?.setLabel(e.target.value)} />
+    <Label htmlFor="label" className="text-sm font-medium">
+      Label
+    </Label>
+    <Input id="label" value={submitButton?.label} onChange={(e) => submitButton?.setLabel(e.target.value)} />
   </div>;
 };
 
