@@ -1,1 +1,1 @@
-export { FieldSettings } from "./FieldSettings";
+export { default } from "./FieldSettings";

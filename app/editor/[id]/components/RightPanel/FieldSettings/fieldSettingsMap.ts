@@ -1,12 +1,8 @@
-import { Field, FIELD_TYPES } from "@/lib/types/form";
+import { FIELD_TYPES } from "@/lib/types/form";
+import CheckboxFieldSettings from "./CheckboxFieldSettings";
 import { TextInputSettings } from "./TextInputFieldSettings";
-import { CheckboxFieldSettings } from "./CheckboxFieldSettings";
-import { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 
-export const fieldSettingsMap: Record<
-	FIELD_TYPES,
-	React.FC<{ field: IFieldModel }>
-> = {
+export const fieldSettingsMap = {
 	[FIELD_TYPES.TEXT]: TextInputSettings,
 	[FIELD_TYPES.CHECKBOX]: CheckboxFieldSettings,
-};
+} as const;

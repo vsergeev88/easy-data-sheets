@@ -1,8 +1,9 @@
+import { observer } from "mobx-react-lite";
 import type { ICheckboxFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 import { Label } from "@/components/ui/label";
 import FieldLabelSettings from "./FieldLabelSettings";
 
-export const CheckboxFieldSettings = ({
+const CheckboxFieldSettings = ({
 	field,
 }: {
 	field: ICheckboxFieldModel;
@@ -23,3 +24,5 @@ export const CheckboxFieldSettings = ({
 		</div>
 	);
 };
+
+export default observer(CheckboxFieldSettings);

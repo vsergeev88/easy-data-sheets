@@ -1,6 +1,6 @@
 import { useEditorAppStore } from "@editorAppStore";
 import { observer } from "mobx-react-lite";
-import { FieldSettings } from "./FieldSettings/";
+import FieldSettings from "./FieldSettings";
 
 const RightPanel = () => {
 	const { safeFormData } = useEditorAppStore();

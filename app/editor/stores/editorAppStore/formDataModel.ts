@@ -109,7 +109,7 @@ export const FormDataModel = types
 	}))
 	.actions((self) => ({
 		addEmptyFieldSet: (afterId: string | null): void => {
-			self.addFieldSet(EMPTY_FIELD_SET, afterId);
+			self.addFieldSet({ ...EMPTY_FIELD_SET, id: crypto.randomUUID() }, afterId);
 		},
 		duplicateField: (fieldId: string): void => {
 			const fieldSetId = self.getFieldSetIdByFieldId(fieldId);

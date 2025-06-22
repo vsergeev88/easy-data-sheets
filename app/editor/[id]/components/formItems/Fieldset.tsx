@@ -60,8 +60,6 @@ const Fieldset: React.FC<FieldsetProps> = ({
 		});
 	};
 
-	console.log('draggableFields', draggableFields);
-
 	return (
 		<ClickOutside
 			onClickOutside={() => {
@@ -115,7 +113,6 @@ const Fieldset: React.FC<FieldsetProps> = ({
 								const FieldComponent = EDITOR_FIELD_COMPONENTS_MAP[
 									field.type
 								] as React.FC<{ field: IFieldModel }>;
-								console.log('field', field);
 								return (
 									<FieldComponent
 										key={field.id}

@@ -20,8 +20,7 @@ export const FALLBACK_FORM_DATA: Pick<Form, "fieldSets"> = {
 	],
 };
 
-export const EMPTY_FIELD_SET: FieldSet = {
-	id: crypto.randomUUID(),
+export const EMPTY_FIELD_SET: Omit<FieldSet, "id"> = {
 	fields: [],
 	legend: "New section",
 };

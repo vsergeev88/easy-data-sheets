@@ -8,8 +8,6 @@ import { Textarea } from "@/components/ui/textarea";
 
 const FieldLabelSettings = ({ field }: { field: IFieldModel }) => {
 	const { label, description } = field;
-	const [labelValue, setLabelValue] = useState(label);
-	const [descriptionValue, setDescriptionValue] = useState(description);
 
 	return (
 		<div className="flex flex-col gap-4">
@@ -21,10 +19,10 @@ const FieldLabelSettings = ({ field }: { field: IFieldModel }) => {
 					type="text"
 					id="label"
 					className="w-full p-2 border border-gray-300"
-					value={labelValue}
-					onChange={(e) => setLabelValue(e.target.value)}
+					value={label}
+					onChange={(e) => field.setLabel(e.target.value)}
 					onBlur={() => {
-						field.setLabel(labelValue);
+						field.setLabel(label);
 					}}
 				/>
 			</div>
@@ -35,10 +33,10 @@ const FieldLabelSettings = ({ field }: { field: IFieldModel }) => {
 				<Textarea
 					id="description"
 					className="w-full p-2 border border-gray-300"
-					value={descriptionValue}
-					onChange={(e) => setDescriptionValue(e.target.value)}
+					value={description}
+					onChange={(e) => field.setDescription(e.target.value)}
 					onBlur={() => {
-						field.setDescription(descriptionValue ?? "");
+						field.setDescription(description ?? "");
 					}}
 				/>
 			</div>
