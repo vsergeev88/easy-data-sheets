@@ -1,6 +1,7 @@
 import { useEditorAppStore } from "@editorAppStore";
 import { useDragAndDrop } from "@formkit/drag-and-drop/react";
 import { CornerDownRight, Trash2 } from "lucide-react";
+import { observer } from "mobx-react-lite";
 import type React from "react";
 import { useEffect, useMemo } from "react";
 import type { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
@@ -26,9 +27,6 @@ const Fieldset: React.FC<FieldsetProps> = ({
 	index,
 }) => {
 	const { safeFormData } = useEditorAppStore();
-	// const { selectedFieldSetId, setSelectedFieldSetId,
-	//   setSelectedFieldId, setLegend,
-	//   removeFieldSet, reorderFields, moveField, getIsSingleFieldSet, addEmptySection } = useAppEditorStore()
 	const isSelected = safeFormData.selectedFieldSetId === fieldSet.id;
 
 	const fieldsetFields = useMemo(() => fieldSet.fields, [fieldSet.fields]);
@@ -62,6 +60,8 @@ const Fieldset: React.FC<FieldsetProps> = ({
 		});
 	};
 
+	console.log('draggableFields', draggableFields);
+
 	return (
 		<ClickOutside
 			onClickOutside={() => {
@@ -74,6 +74,11 @@ const Fieldset: React.FC<FieldsetProps> = ({
 			<div
 				onClick={() => {
 					safeFormData.setSelectedFieldSetId(fieldSet.id);
+				}}
+				onKeyDown={(e) => {
+					if (e.key === "Enter") {
+						safeFormData.setSelectedFieldSetId(fieldSet.id);
+					}
 				}}
 				className={cn("border-2 border-dashed border-transparent", {
 					"border-blue-500": isSelected,
@@ -110,6 +115,7 @@ const Fieldset: React.FC<FieldsetProps> = ({
 								const FieldComponent = EDITOR_FIELD_COMPONENTS_MAP[
 									field.type
 								] as React.FC<{ field: IFieldModel }>;
+								console.log('field', field);
 								return (
 									<FieldComponent
 										key={field.id}
@@ -153,4 +159,4 @@ const Fieldset: React.FC<FieldsetProps> = ({
 		</ClickOutside>
 	);
 };
-export default Fieldset;
+export default observer(Fieldset);

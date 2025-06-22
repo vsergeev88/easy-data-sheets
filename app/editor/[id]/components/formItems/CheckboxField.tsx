@@ -1,11 +1,10 @@
 import type React from "react";
-import type { ICheckboxFieldModel, IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import type { ICheckboxFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 import BaseCheckboxField from "@/components/baseFormItems/BaseCheckboxField";
-import type { CheckboxField as CheckboxFieldType } from "@/lib/types/form";
 import FormItemWrapper from "./FormItemWrapper";
 
-type CheckboxFieldProps = CheckboxFieldType & {
-	field: IFieldModel;
+type CheckboxFieldProps = {
+	field: ICheckboxFieldModel;
 };
 
 const CheckboxField: React.FC<CheckboxFieldProps> = ({
@@ -16,7 +15,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
 			field={field}
 		>
 			<BaseCheckboxField
-				field={field as ICheckboxFieldModel}
+				field={field}
 			/>
 		</FormItemWrapper>
 	);

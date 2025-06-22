@@ -1,11 +1,11 @@
+import { observer } from "mobx-react-lite";
 import type React from "react";
-import type { IFieldModel, ITextFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import type { ITextFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 import BaseTextAreaField from "@/components/baseFormItems/BaseTextAreaField";
-import type { TextField } from "@/lib/types/form";
 import FormItemWrapper from "./FormItemWrapper";
 
-type TextAreaFieldProps = TextField & {
-	field: IFieldModel;
+type TextAreaFieldProps = {
+	field: ITextFieldModel;
 };
 
 const TextAreaField: React.FC<TextAreaFieldProps> = ({
@@ -15,8 +15,8 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
 		<FormItemWrapper
 			field={field}
 		>
-			<BaseTextAreaField field={field as ITextFieldModel} />
+			<BaseTextAreaField field={field} />
 		</FormItemWrapper>
 	);
 };
-export default TextAreaField;
+export default observer(TextAreaField);

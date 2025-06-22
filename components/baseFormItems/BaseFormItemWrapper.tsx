@@ -2,12 +2,6 @@ import { GripVertical } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import type React from "react";
 import type { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
-import {
-	FormDescription,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 
 type BaseFormItemProps = {
@@ -19,14 +13,13 @@ const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({
 	field,
 	children
 }) => {
-	const handleLabelClick = (e: React.MouseEvent<HTMLLabelElement>) => {
+	const handleLabelClick = (e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>) => {
 		if (!field.focusable) {
 			e.preventDefault();
 		}
-		// onLabelClick?.();
 	};
 	return (
-		<FormItem
+		<div
 			className={cn(
 				"relative mb-1 min-h-[80px] gap-0 border border-gray-300 bg-gray-50 md:mb-0",
 				{
@@ -40,7 +33,7 @@ const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({
 						<GripVertical className="w-6 h-6" />
 					</div>
 				)}
-				<FormLabel
+				<div
 					className={cn(
 						"flex flex-col items-start justify-start p-2 px-2 pb-1 md:w-[260px] md:min-w-[260px] md:pb-2",
 						{
@@ -48,17 +41,22 @@ const BaseFormItemWrapper: React.FC<BaseFormItemProps> = ({
 						},
 					)}
 					onClick={handleLabelClick}
+					onKeyDown={(e) => {
+						if (e.key === "Enter") {
+							handleLabelClick(e);
+						}
+					}}
 				>
 					<div className="text-md flex items-center gap-1">
 						{field.label}
 						{field.required && <span className="text-red-500">*</span>}
 					</div>
-					<FormDescription>{field.description}</FormDescription>
-				</FormLabel>
+					<p>{field.description}</p>
+				</div>
 				<div className="flex-1 border-l border-gray-300">{children}</div>
 			</div>
-			<FormMessage className="bg-red-50 px-2 py-1 text-xs" />
-		</FormItem>
+			{field.errorText && <p className="bg-red-50 px-2 py-1 text-xs" >{field.errorText}</p>}
+		</div>
 	);
 };
 

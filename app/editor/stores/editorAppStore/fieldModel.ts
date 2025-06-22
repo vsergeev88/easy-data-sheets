@@ -15,6 +15,7 @@ export const BaseFieldModel = types
 		disabled: types.optional(types.boolean, false),
 		focusable: types.optional(types.boolean, true),
 		draggable: types.optional(types.boolean, false),
+		errorText: types.optional(types.string, ""),
 	})
 	.actions((self) => ({
 		setLabel: (label: string): void => {
@@ -37,6 +38,9 @@ export const TextFieldModel = BaseFieldModel.named("TextFieldModel").props({
 }).actions((self) => ({
 	setValue: (value: string): void => {
 		self.value = value;
+	},
+	onChange: (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+		self.value = e.target.value;
 	},
 }));
 export interface ITextFieldModel extends Instance<typeof TextFieldModel> {}

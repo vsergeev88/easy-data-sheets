@@ -1,34 +1,21 @@
-import React from "react";
-import FormItemWrapper from "./FormItemWrapper";
-import { FormField } from "@/components/ui/form";
-import { UseFormReturn } from "react-hook-form";
+import type React from "react";
+import type { ITextFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 import BaseTextAreaField from "@/components/baseFormItems/BaseTextAreaField";
+import FormItemWrapper from "./FormItemWrapper";
 
 type TextAreaFieldProps = {
-	control: UseFormReturn["control"];
-	label: string;
-	description?: string;
-	name: string;
-	placeholder?: string;
+	field: ITextFieldModel;
 };
 
 const TextAreaField: React.FC<TextAreaFieldProps> = ({
-	control,
-	label,
-	description,
-	name,
-	placeholder,
+	field
 }) => {
 	return (
-		<FormField
-			control={control}
-			name={name}
-			render={({ field }) => (
-				<FormItemWrapper label={label} description={description}>
-					<BaseTextAreaField field={field} placeholder={placeholder} />
-				</FormItemWrapper>
-			)}
-		/>
-	);
+
+		<FormItemWrapper field={field}>
+			<BaseTextAreaField field={field} />
+		</FormItemWrapper>
+	)
+
 };
 export default TextAreaField;

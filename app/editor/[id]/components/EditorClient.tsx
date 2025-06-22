@@ -1,4 +1,5 @@
 import { useEditorAppStore } from "@editorAppStore";
+import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import type { DataSheet } from "@/lib/data/dataSheets";
 import FormView from "./FormView";
@@ -9,16 +10,17 @@ export type EditorClientProps = {
 	dataSheet: DataSheet;
 };
 
-export default function EditorClient({ dataSheet }: EditorClientProps) {
-	const { init, isInitialized } = useEditorAppStore();
-	useEffect(() => {
-		if (!isInitialized) {
-			console.log("init", dataSheet);
-			init(dataSheet);
-		}
-	}, [init, isInitialized, dataSheet]);
+function EditorClient({ dataSheet }: EditorClientProps) {
+	const editorAppStore = useEditorAppStore();
 
-	if (!isInitialized) {
+	useEffect(() => {
+		if (!editorAppStore.isInitialized) {
+			console.log("init", dataSheet);
+			editorAppStore.init(dataSheet);
+		}
+	}, [editorAppStore, dataSheet]);
+
+	if (!editorAppStore.isInitialized) {
 		return null;
 	}
 
@@ -36,3 +38,5 @@ export default function EditorClient({ dataSheet }: EditorClientProps) {
 		</div>
 	);
 }
+
+export default observer(EditorClient);

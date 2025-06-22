@@ -20,7 +20,7 @@ const FormItemWrapper: React.FC<FormItemProps> = ({
 	const { safeFormData } = useEditorAppStore();
 	const isSelected = safeFormData.selectedFieldId === field.id;
 
-	const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+	const handleClick = (e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		safeFormData.setSelectedFieldId(field.id);
 	};
@@ -36,13 +36,14 @@ const FormItemWrapper: React.FC<FormItemProps> = ({
 					"hover:border-blue-500/50": !isSelected,
 				})}
 				onClick={handleClick}
+				onKeyDown={(e) => {
+					if (e.key === "Enter") {
+						handleClick(e);
+					}
+				}}
 			>
 				<BaseFormItemWrapper
-					description={field.description}
-					focusable={false}
-					draggable={true}
-					label={field.label}
-					required={field.required}
+					field={field}
 				>
 					{isSelected && (
 						<div className="absolute top-0 right-0 flex flex-row items-center justify-between">
