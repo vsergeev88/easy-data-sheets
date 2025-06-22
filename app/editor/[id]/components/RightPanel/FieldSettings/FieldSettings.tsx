@@ -5,10 +5,8 @@ import { ServiceButton } from "@/components/ServiceButton";
 import { fieldSettingsMap } from "./fieldSettingsMap";
 import SubmitButtonSettings from "./SubmitButtonSettings";
 
-const FieldSettings = ({ fieldId }: { fieldId: string | null }) => {
+const FieldSettings = ({ fieldId }: { fieldId: string }) => {
 	const { safeFormData } = useEditorAppStore();
-
-	if (!fieldId) return null;
 
 	const getFieldSettingsComponent = () => {
 		if (fieldId === "submit-button") {

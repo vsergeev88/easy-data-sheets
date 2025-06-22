@@ -1,19 +1,23 @@
 import { useEditorAppStore } from "@editorAppStore";
-import { Save, Share2 } from "lucide-react";
+import { Eye, Save, Share2 } from "lucide-react";
 import { observer } from "mobx-react-lite";
+import { Tooltip } from "@/components/Tooltip";
 import { Button } from "@/components/ui/button";
 import FieldSettings from "./FieldSettings";
+import PublishSettings from "./PublishSettings";
 
 const RightPanel = () => {
 	const { safeFormData } = useEditorAppStore();
 
 	return (
 		<div className="h-full py-4 px-2 ignore-deselect">
-			<div className="flex flex-col items-center justify-end mb-4 gap-2">
-				<Button variant="default" size="lg" className="w-full"> <Save /> Save & Publish</Button>
-				<Button variant="link" size="lg" className="w-full"><Share2 /> Publish settings</Button>
+			<div className="flex items-center justify-center mb-2 gap-2">
+				<Tooltip message="Preview data sheet">
+					<Button variant="outline" className=""> <Eye /> Preview</Button>
+				</Tooltip>
+				<Button variant="default" className="flex-1"> <Save /> Save & Publish</Button>
 			</div>
-			<FieldSettings fieldId={safeFormData.selectedFieldId} />
+			{safeFormData.selectedFieldId ? <FieldSettings fieldId={safeFormData.selectedFieldId} /> : <PublishSettings />}
 		</div>
 	);
 };

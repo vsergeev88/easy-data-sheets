@@ -11,7 +11,7 @@ const SubmitButtonSettings = () => {
   const submitButton = safeFormData.submitButton;
 
   return <div>
-    <Label htmlFor="label" className="text-sm font-medium">
+    <Label htmlFor="label" className="text-sm font-medium mb-2">
       Label
     </Label>
     <Input id="label" value={submitButton?.label} onChange={(e) => submitButton?.setLabel(e.target.value)} />
