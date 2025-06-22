@@ -10,14 +10,11 @@ function SubmitButton() {
 		!safeFormData.selectedFieldSetId;
 
 	const handleClick = (e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>) => {
-		console.log('handleClick', e);
 		e.preventDefault();
 		e.stopPropagation();
 		safeFormData.setSelectedFieldId("submit-button");
 		safeFormData.setSelectedFieldSetId(null);
 	};
-
-	console.log('isSelected', isSelected);
 
 	return (
 		<div

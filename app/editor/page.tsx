@@ -13,6 +13,7 @@ export default function Editor() {
 
 			<div className="flex gap-4">
 				<button
+					type="button"
 					onClick={increment}
 					className="rounded-md bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700"
 				>
@@ -20,6 +21,7 @@ export default function Editor() {
 				</button>
 
 				<button
+					type="button"
 					onClick={reset}
 					className="rounded-md bg-gray-600 px-6 py-3 text-white transition-colors hover:bg-gray-700"
 				>

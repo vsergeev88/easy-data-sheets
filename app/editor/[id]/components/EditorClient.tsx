@@ -29,7 +29,7 @@ function EditorClient({ dataSheet }: EditorClientProps) {
 			<div className="h-full border-r border-gray-200">
 				<LeftPanel />
 			</div>
-			<div className="h-full flex-1 overflow-auto bg-gray-50 py-4">
+			<div className="h-full pl-2 flex-1 overflow-auto bg-gray-50 py-4">
 				<FormView />
 			</div>
 			<div className="h-full bg-gray-50">
