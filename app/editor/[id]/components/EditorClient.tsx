@@ -2,6 +2,7 @@ import { useEditorAppStore } from "@editorAppStore";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import type { DataSheet } from "@/lib/data/dataSheets";
+import { useLocalAutosave } from "../../hooks/useLocalAutosave";
 import FormView from "./FormView";
 import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
@@ -15,10 +16,11 @@ function EditorClient({ dataSheet }: EditorClientProps) {
 
 	useEffect(() => {
 		if (!editorAppStore.isInitialized) {
-			console.log("init", dataSheet);
 			editorAppStore.init(dataSheet);
 		}
 	}, [editorAppStore, dataSheet]);
+
+	useLocalAutosave(dataSheet.id);
 
 	if (!editorAppStore.isInitialized) {
 		return null;

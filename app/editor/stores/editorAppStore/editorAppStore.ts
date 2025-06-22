@@ -1,4 +1,4 @@
-import { type Instance, types } from "mobx-state-tree";
+import { applySnapshot, type Instance, types } from "mobx-state-tree";
 import React from "react";
 import type { DataSheet } from "@/lib/data/dataSheets";
 import type { Form } from "@/lib/types/form";
@@ -13,6 +13,12 @@ const EditorAppModel = types
 	})
 	.volatile(() => ({
 		isInitialized: false,
+		isPublishSettingsOpen: false,
+	}))
+	.actions((self) => ({
+		setIsPublishSettingsOpen: (isPublishSettingsOpen: boolean) => {
+			self.isPublishSettingsOpen = isPublishSettingsOpen;
+		},
 	}))
 	.views((self) => ({
 		get safeFormData(): IFormDataModel {
@@ -40,6 +46,16 @@ const EditorAppModel = types
 			formInfo.updatedAt = new Date(formInfo.updatedAt);
 			self.formInfo = FormInfoModel.create(formInfo);
 			self.isInitialized = true;
+		},
+		setFormData: (formData: Form) => {
+			self.formData = FormDataModel.create(formData);
+		},
+		replaceFormData: (formData: Form) => {
+			if (self.formData) {
+				applySnapshot(self.formData, formData);
+			} else {
+				self.formData = FormDataModel.create(formData);
+			}
 		},
 	}));
 

@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
 import type { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";

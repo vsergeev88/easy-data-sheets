@@ -24,7 +24,7 @@ const FieldSettings = ({ fieldId }: { fieldId: string | null }) => {
 	return (
 		<div className="p-4 bg-background border-gray-200 border">
 			<div className="flex items-center justify-between text-lg font-medium">
-				<h2>Settings</h2>
+				<h2>Field settings</h2>
 				<ServiceButton
 					icon={<X />}
 					tooltip="Close"
