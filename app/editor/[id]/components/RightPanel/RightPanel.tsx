@@ -10,14 +10,29 @@ const RightPanel = () => {
 	const { safeFormData, saveAndPublish, isSaving } = useEditorAppStore();
 
 	return (
-		<div className="h-full py-4 px-2 ignore-deselect">
-			<div className="flex items-center justify-center mb-2 gap-2">
+		<div className="ignore-deselect h-full px-2 py-4">
+			<div className="mb-2 flex items-center justify-center gap-2">
 				<Tooltip message="Preview data sheet">
-					<Button variant="outline" className="" disabled={isSaving}> <Eye /> Preview</Button>
+					<Button className="" disabled={isSaving} variant="outline">
+						{" "}
+						<Eye /> Preview
+					</Button>
 				</Tooltip>
-				<Button variant="default" className="flex-1" onClick={() => saveAndPublish()} disabled={isSaving}> <Save /> Save & Publish</Button>
+				<Button
+					className="flex-1"
+					disabled={isSaving}
+					onClick={() => saveAndPublish()}
+					variant="default"
+				>
+					{" "}
+					<Save /> Save & Publish
+				</Button>
 			</div>
-			{safeFormData.selectedFieldId ? <FieldSettings fieldId={safeFormData.selectedFieldId} /> : <PublishSettings />}
+			{safeFormData.selectedFieldId ? (
+				<FieldSettings fieldId={safeFormData.selectedFieldId} />
+			) : (
+				<PublishSettings />
+			)}
 		</div>
 	);
 };
