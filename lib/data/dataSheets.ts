@@ -16,7 +16,7 @@ export type DataSheet = {
 export async function createDataSheet(
 	name: string,
 	data?: Record<string, unknown>,
-	companyId?: string,
+	companyId?: string
 ): Promise<DataSheet> {
 	const id = crypto.randomUUID();
 	const createdAt = new Date();
@@ -50,7 +50,8 @@ export async function getDataSheets(): Promise<DataSheet[]> {
 }
 
 export async function getDataSheet(dataSheetId: string): Promise<DataSheet> {
-	const [dataSheet] =	await sql`SELECT * FROM data_sheets WHERE id = ${dataSheetId}`;
+	const [dataSheet] =
+		await sql`SELECT * FROM data_sheets WHERE id = ${dataSheetId}`;
 	const dataSheetFormatted: DataSheet = {
 		id: dataSheet.id,
 		name: dataSheet.name,
@@ -62,4 +63,17 @@ export async function getDataSheet(dataSheetId: string): Promise<DataSheet> {
 		data: dataSheet.data,
 	};
 	return supportLegacyDataSheet(dataSheetFormatted) as DataSheet;
+}
+
+export async function updateDataSheet(
+	dataSheet: DataSheet
+): Promise<DataSheet> {
+	const userId = await getUserId();
+	await sql`UPDATE data_sheets SET name = ${dataSheet.name}, data = ${dataSheet.data}, updated_at = ${dataSheet.updatedAt}, published = ${dataSheet.published} WHERE id = ${dataSheet.id} AND user_id = ${userId}`;
+	return dataSheet;
+}
+
+export async function deleteDataSheet(dataSheetId: string): Promise<void> {
+	const userId = await getUserId();
+	await sql`DELETE FROM data_sheets WHERE id = ${dataSheetId} AND user_id = ${userId}`;
 }

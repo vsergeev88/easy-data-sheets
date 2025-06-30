@@ -2,6 +2,7 @@ import { applySnapshot, flow, type Instance, types } from "mobx-state-tree";
 import React from "react";
 import type { DataSheet } from "@/lib/data/dataSheets";
 import type { Form } from "@/lib/types/form";
+import { updateDataSheetClient } from "@/lib/utils/client-api";
 import { FALLBACK_FORM_DATA } from "../../constants/fallbackFormData";
 import { FormDataModel, type IFormDataModel } from "./formDataModel";
 import { FormInfoModel, type IFormInfoModel } from "./formInfoModel";
@@ -58,12 +59,27 @@ const EditorAppModel = types
 				self.formData = FormDataModel.create(formData);
 			}
 		},
-		saveAndPublish: flow(function* () {
+		save: flow(function* () {
 			self.isSaving = true;
-			yield new Promise((resolve) => setTimeout(resolve, 1000));
-			self.isSaving = false;
-			self.formInfo?.setUpdatedAt(new Date());
-			self.shouldShowShareOptions = true;
+			try {
+				const dataSheet = {
+					...self.formInfo,
+					data: JSON.stringify(self.formData),
+				} as DataSheet;
+
+				const result = yield updateDataSheetClient(dataSheet);
+
+				if (result.success && result.data) {
+					self.formInfo?.setUpdatedAt(new Date(result.data.updatedAt));
+					self.shouldShowShareOptions = true;
+				} else {
+					// Можно добавить уведомление об ошибке
+				}
+			} catch {
+				// Можно добавить уведомление об ошибке
+			} finally {
+				self.isSaving = false;
+			}
 		}),
 	}));
 
