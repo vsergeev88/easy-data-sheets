@@ -21,14 +21,16 @@ export const FormDataModel = BareFormDataModel.named("FormDataModel")
   })
   .views((self) => ({
     getFirstFieldsetInViewport(): IFieldSetModel | undefined {
-      return self.fieldSets.find((fieldSet) => fieldSet.isInViewPort);
+      return self.fieldSets.find((fieldSet) => fieldSet.isInViewPort) as
+        | IFieldSetModel
+        | undefined;
     },
     getFieldSetById: (fieldSetId: string): IFieldSetModel => {
       const fieldSet = self.fieldSets.find((set) => set.id === fieldSetId);
       if (!fieldSet) {
         throw new Error(`Field set with id ${fieldSetId} not found`);
       }
-      return fieldSet;
+      return fieldSet as IFieldSetModel;
     },
     getFieldSetIdByFieldId: (fieldId: string): string => {
       const fieldSetId = self.fieldSets.find((fieldSet) =>
@@ -85,11 +87,12 @@ export const FormDataModel = BareFormDataModel.named("FormDataModel")
     addField: (fieldSetId: string | null, field: IFieldModel): void => {
       const fieldSet = fieldSetId
         ? self.getFieldSetById(fieldSetId)
-        : (self.getFirstFieldsetInViewport() ?? self.fieldSets.at(-1));
+        : (self.getFirstFieldsetInViewport() ??
+          (self.fieldSets.at(-1) as IFieldSetModel));
       if (!fieldSet) {
         throw new Error("Field set not found");
       }
-      fieldSet.addField(field);
+      (fieldSet as IFieldSetModel).addField(field);
       self.setSelectedFieldId(field.id);
       self.setSelectedFieldSetId(fieldSet.id);
     },

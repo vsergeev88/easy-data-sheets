@@ -1,6 +1,6 @@
 import { type Instance, types } from "mobx-state-tree";
 import { FIELD_TYPES } from "@/lib/types/form";
-import { BaseFieldModel } from "../bareFieldModel";
+import { BaseFieldModel } from "../baseFieldModel";
 
 export const BareTextFieldModel = BaseFieldModel.named("TextFieldModel")
   .props({
