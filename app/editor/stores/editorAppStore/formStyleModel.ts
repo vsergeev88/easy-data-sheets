@@ -1,7 +1,5 @@
-import { type Instance, types } from "mobx-state-tree";
+import type { Instance } from "mobx-state-tree";
+import { BareFormStyleModel } from "../bareStores/bareFormStyleModel";
 
-export const FormStyleModel = types.model({
-	primaryColor: types.maybeNull(types.string),
-	secondaryColor: types.maybeNull(types.string),
-});
+export const FormStyleModel = BareFormStyleModel.named("FormStyleModel");
 export interface IFormStyleModel extends Instance<typeof FormStyleModel> {}
