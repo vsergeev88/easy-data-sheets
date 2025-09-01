@@ -1,16 +1,12 @@
-import { type Instance, types } from "mobx-state-tree";
+import type { Instance } from "mobx-state-tree";
+import { BareFormInfoModel } from "@/app/stores/bareStores/bareFormInfoModel";
 
-export const FormInfoModel = types.model({
-	id: types.identifier,
-	name: types.string,
-	createdAt: types.Date,
-	updatedAt: types.Date,
-	userId: types.string,
-	published: types.boolean,
-	companyId: types.maybeNull(types.string),
-}).actions((self) => ({
-	setUpdatedAt: (updatedAt: Date) => {
-		self.updatedAt = updatedAt;
-	},
+export const EditorFormInfoModel = BareFormInfoModel.named(
+  "FormInfoModel"
+).actions((self) => ({
+  setUpdatedAt: (updatedAt: Date) => {
+    self.updatedAt = updatedAt;
+  },
 }));
-export interface IFormInfoModel extends Instance<typeof FormInfoModel> {}
+export interface IEditorFormInfoModel
+  extends Instance<typeof EditorFormInfoModel> {}

@@ -1,5 +1,5 @@
 import { type Instance, types } from "mobx-state-tree";
-import { BareTextFieldModel } from "@/app/stores/bareStores/fields/bareTextFieldModel";
+import { BareTextFieldModel } from "../../../../stores/bareStores/fields/bareTextFieldModel";
 import { BaseEditorFieldModel } from "../baseEditorFieldModel";
 
 export const TextFieldModel = types

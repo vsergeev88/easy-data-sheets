@@ -1,5 +1,5 @@
 import type { Instance } from "mobx-state-tree";
-import { BareSubmitButtonModel } from "../../bareStores/fields/bareSubmitButtonModel";
+import { BareSubmitButtonModel } from "@/app/stores/bareStores/fields/bareSubmitButtonModel";
 
 export const SubmitButtonModel = BareSubmitButtonModel.named(
   "SubmitButtonModel"

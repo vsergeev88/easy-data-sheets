@@ -1,16 +1,21 @@
 import { cast, getSnapshot, type Instance, types } from "mobx-state-tree";
+import { EMPTY_FIELD_SET } from "@/app/editor/constants/fallbackFormData";
+import { BareFormDataModel } from "@/app/stores/bareStores/bareFormDataModel";
 import { FIELD_TYPES, type FieldSet } from "@/lib/types/form";
-import { EMPTY_FIELD_SET } from "../../constants/fallbackFormData";
-import { BareFormDataModel } from "../bareStores/bareFormDataModel";
 import { FieldModel, type IFieldModel } from "./fieldModel";
-import { FieldSetModel, type IFieldSetModel } from "./fieldSetModel";
+import {
+  EditorFieldSetModel,
+  type IEditorFieldSetModel,
+} from "./fieldSetModel";
 import { SubmitButtonModel } from "./fields/submitButtonModel";
 import { FormStyleModel } from "./formStyleModel";
 
-export const FormDataModel = BareFormDataModel.named("FormDataModel")
+export const EditorFormDataModel = BareFormDataModel.named(
+  "EditorFormDataModel"
+)
   .props({
     formStyle: types.maybeNull(FormStyleModel),
-    fieldSets: types.array(FieldSetModel),
+    fieldSets: types.array(EditorFieldSetModel),
     description: types.maybeNull(types.string),
     submitButton: types.optional(SubmitButtonModel, () =>
       SubmitButtonModel.create({
@@ -20,17 +25,17 @@ export const FormDataModel = BareFormDataModel.named("FormDataModel")
     ),
   })
   .views((self) => ({
-    getFirstFieldsetInViewport(): IFieldSetModel | undefined {
+    getFirstFieldsetInViewport(): IEditorFieldSetModel | undefined {
       return self.fieldSets.find((fieldSet) => fieldSet.isInViewPort) as
-        | IFieldSetModel
+        | IEditorFieldSetModel
         | undefined;
     },
-    getFieldSetById: (fieldSetId: string): IFieldSetModel => {
+    getFieldSetById: (fieldSetId: string): IEditorFieldSetModel => {
       const fieldSet = self.fieldSets.find((set) => set.id === fieldSetId);
       if (!fieldSet) {
         throw new Error(`Field set with id ${fieldSetId} not found`);
       }
-      return fieldSet as IFieldSetModel;
+      return fieldSet as IEditorFieldSetModel;
     },
     getFieldSetIdByFieldId: (fieldId: string): string => {
       const fieldSetId = self.fieldSets.find((fieldSet) =>
@@ -55,8 +60,8 @@ export const FormDataModel = BareFormDataModel.named("FormDataModel")
   }))
   .actions((self) => ({
     addFieldSet: (fieldSet: FieldSet, afterId: string | null): void => {
-      const newFieldSet = FieldSetModel.create(fieldSet);
-      const updatedFieldSets = [...self.fieldSets] as IFieldSetModel[];
+      const newFieldSet = EditorFieldSetModel.create(fieldSet);
+      const updatedFieldSets = [...self.fieldSets] as IEditorFieldSetModel[];
       if (afterId) {
         const afterIndex = self.fieldSets.findIndex(
           (set) => set.id === afterId
@@ -71,7 +76,7 @@ export const FormDataModel = BareFormDataModel.named("FormDataModel")
       self.setSelectedFieldSetId(newFieldSet.id);
     },
     removeFieldSet: (fieldSetId: string): void => {
-      const updatedFieldSets = [...self.fieldSets] as IFieldSetModel[];
+      const updatedFieldSets = [...self.fieldSets] as IEditorFieldSetModel[];
       const fieldSetIndex = updatedFieldSets.findIndex(
         (fieldSet) => fieldSet.id === fieldSetId
       );
@@ -88,11 +93,11 @@ export const FormDataModel = BareFormDataModel.named("FormDataModel")
       const fieldSet = fieldSetId
         ? self.getFieldSetById(fieldSetId)
         : (self.getFirstFieldsetInViewport() ??
-          (self.fieldSets.at(-1) as IFieldSetModel));
+          (self.fieldSets.at(-1) as IEditorFieldSetModel));
       if (!fieldSet) {
         throw new Error("Field set not found");
       }
-      (fieldSet as IFieldSetModel).addField(field);
+      (fieldSet as IEditorFieldSetModel).addField(field);
       self.setSelectedFieldId(field.id);
       self.setSelectedFieldSetId(fieldSet.id);
     },
@@ -150,4 +155,5 @@ export const FormDataModel = BareFormDataModel.named("FormDataModel")
       self.setSelectedFieldId(fieldId);
     },
   }));
-export interface IFormDataModel extends Instance<typeof FormDataModel> {}
+export interface IEditorFormDataModel
+  extends Instance<typeof EditorFormDataModel> {}

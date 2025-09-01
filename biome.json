@@ -18,6 +18,9 @@
       "recommended": true,
       "a11y": {
         "noStaticElementInteractions": "off"
+      },
+      "suspicious": {
+        "noConsole": "warn"
       }
     },
     "domains": {
@@ -37,7 +40,5 @@
       }
     }
   },
-  "extends": [
-    "ultracite"
-  ]
+  "extends": ["ultracite"]
 }

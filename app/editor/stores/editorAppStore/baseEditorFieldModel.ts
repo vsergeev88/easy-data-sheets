@@ -1,5 +1,5 @@
 import type { Instance } from "mobx-state-tree";
-import { BaseFieldModel } from "../bareStores/baseFieldModel";
+import { BaseFieldModel } from "@/app/stores/bareStores/baseFieldModel";
 
 export const BaseEditorFieldModel = BaseFieldModel.named(
   "BaseEditorFieldModel"

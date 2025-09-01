@@ -1,5 +1,5 @@
 import { type Instance, types } from "mobx-state-tree";
-import { BareCheckboxFieldModel } from "@/app/stores/bareStores/fields/bareCheckboxFieldModel";
+import { BareCheckboxFieldModel } from "../../../../stores/bareStores/fields/bareCheckboxFieldModel";
 import { BaseEditorFieldModel } from "../baseEditorFieldModel";
 
 export const CheckboxFieldModel = types
