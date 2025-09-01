@@ -20,7 +20,8 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@editorAppStore": ["./app/editor/hooks/useEditorAppStore"]
+      "@editorAppStore": ["./app/editor/hooks/useEditorAppStore"],
+      "@viewAppStore": ["./app/view/hooks/useViewAppStore"]
     },
     "strictNullChecks": true
   },
