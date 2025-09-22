@@ -50,7 +50,12 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index }) => {
 							] as React.FC<{
 								field: IViewFieldModel;
 							}>;
-							return <FieldComponent field={field} key={field.id} />;
+							return (
+								<FieldComponent
+									field={field as IViewFieldModel}
+									key={field.id}
+								/>
+							);
 						})}
 					</div>
 				</fieldset>

@@ -13,7 +13,6 @@ export type ViewClientProps = {
 };
 
 function ViewClient({ dataSheet }: ViewClientProps) {
-	console.log("==== >>> dataSheet", dataSheet);
 	const viewAppStore = useViewAppStore();
 
 	useEffect(() => {

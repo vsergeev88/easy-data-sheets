@@ -1,5 +1,8 @@
 import type React from "react";
 import type { IBareTextFieldModel } from "@/app/stores/bareStores/fields/bareTextFieldModel";
+
+import { observer } from "mobx-react-lite";
+
 import { Textarea } from "@/components/ui/textarea";
 
 type BaseTextAreaFieldProps = {
@@ -7,7 +10,6 @@ type BaseTextAreaFieldProps = {
 };
 const BaseTextAreaField: React.FC<BaseTextAreaFieldProps> = ({ field }) => {
 	return (
-		// <FormControl>
 		<Textarea
 			className="h-full min-h-[80px] bg-white pr-10"
 			disabled={field.disabled}
@@ -17,7 +19,6 @@ const BaseTextAreaField: React.FC<BaseTextAreaFieldProps> = ({ field }) => {
 			placeholder={field.placeholder}
 			value={field.value ?? ""}
 		/>
-		// </FormControl>
 	);
 };
-export default BaseTextAreaField;
+export default observer(BaseTextAreaField);

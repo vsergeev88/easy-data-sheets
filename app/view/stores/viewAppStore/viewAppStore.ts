@@ -34,7 +34,6 @@ const ViewAppModel = types
     init: (dataSheet: DataSheet) => {
       const { data, ...formInfo } = dataSheet;
       const formData = JSON.parse(data) as Form;
-      console.log("==== >>> formData", formData);
       if (!formData.fieldSets?.length) {
         throw new Error("fieldSets are empty");
       }
