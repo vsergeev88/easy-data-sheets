@@ -1,7 +1,11 @@
+"use client";
+
+import type { DataSheet } from "@/lib/data/dataSheets";
+
 import { useViewAppStore } from "@viewAppStore";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import type { DataSheet } from "@/lib/data/dataSheets";
+
 import FormView from "../components/FormView/FormView";
 
 export type ViewClientProps = {
@@ -9,6 +13,7 @@ export type ViewClientProps = {
 };
 
 function ViewClient({ dataSheet }: ViewClientProps) {
+	console.log("==== >>> dataSheet", dataSheet);
 	const viewAppStore = useViewAppStore();
 
 	useEffect(() => {
@@ -22,11 +27,9 @@ function ViewClient({ dataSheet }: ViewClientProps) {
 	}
 
 	return (
-		<div className="grid h-full grid-cols-[280px_1fr_340px] overflow-hidden xl:grid-cols-[280px_1fr_400px]">
-			<div className="overflow-hidden bg-gray-50 py-4 pl-2">
-				<div className="h-full overflow-auto pb-6">
-					<FormView />
-				</div>
+		<div className="h-full overflow-hidden bg-gray-50 py-4 pl-2">
+			<div className="h-full overflow-auto pb-6">
+				<FormView />
 			</div>
 		</div>
 	);

@@ -1,11 +1,12 @@
 import { getDataSheet } from "@/lib/data/dataSheets";
-import FormView from "../components/FormView/FormView";
+
+import { ViewClientApp } from "./ViewClientApp";
 
 async function ViewPage({ params }: { params: { id: string } }) {
 	const { id } = await params;
-	const { data, ...formInfo } = await getDataSheet(id);
+	const dataSheet = await getDataSheet(id);
 
-	return <FormView formData={JSON.parse(data)} formInfo={formInfo} />;
+	return <ViewClientApp dataSheet={dataSheet} />;
 }
 
 export default ViewPage;

@@ -1,10 +1,13 @@
 "use client";
-import { toast } from "sonner";
-import SubmitButton from "@/app/editor/[id]/components/formItems/SubmitButton";
-import BaseFormView from "@/components/baseFormItems/BaseFormView";
 import type { FormSchema } from "@/components/baseFormItems/types";
+
+import { toast } from "sonner";
+
+import BaseFormView from "@/components/baseFormItems/BaseFormView";
+
 import { useViewAppStore } from "../../hooks/useViewAppStore";
 import Fieldset from "../formItems/Fieldset";
+import SubmitButton from "../formItems/SubmitButton";
 
 function onSubmit(values: FormSchema) {
 	console.log(values);

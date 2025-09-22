@@ -1,19 +1,23 @@
+import type React from "react";
+import type { IViewFieldModel } from "../../stores/viewAppStore/fieldModel";
+import type { IViewFieldSetModel } from "../../stores/viewAppStore/fieldSetModel";
+
 import { useViewAppStore } from "@viewAppStore";
 import { observer } from "mobx-react-lite";
-import type React from "react";
+
 import { ClickOutside } from "@/components/ClickOutside";
-import type { Field, FieldSet } from "@/lib/types/form";
 import { cn } from "@/lib/utils";
+
 import { VIEW_FIELD_COMPONENTS_MAP } from "./viewFieldComponentsMap";
 
 type FieldsetProps = {
-	fieldSet: FieldSet;
+	fieldSet: IViewFieldSetModel;
 	className?: string;
+	index: number;
 };
 
 const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className }) => {
 	const { safeFormData } = useViewAppStore();
-	const isSelected = safeFormData.selectedFieldSetId === fieldSet.id;
 
 	return (
 		<ClickOutside
@@ -24,12 +28,7 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className }) => {
 				safeFormData.setSelectedFieldId(null);
 			}}
 		>
-			<div
-				className={cn("border-2 border-transparent border-dashed", {
-					"border-blue-500": isSelected,
-					"hover:border-blue-500/50": !isSelected,
-				})}
-			>
+			<div className={cn("border-2 border-transparent border-dashed")}>
 				<fieldset
 					className={cn(
 						"relative border border-gray-300 bg-gray-300 p-4 px-1 py-1",
@@ -44,7 +43,7 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className }) => {
 							const FieldComponent = VIEW_FIELD_COMPONENTS_MAP[
 								field.type
 							] as React.FC<{
-								field: Field;
+								field: IViewFieldModel;
 							}>;
 							return <FieldComponent field={field} key={field.id} />;
 						})}
