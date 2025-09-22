@@ -1,5 +1,6 @@
 "use client";
 import type { FormSchema } from "@/components/baseFormItems/types";
+import type { IEditorFieldSetModel } from "../stores/editorAppStore/fieldSetModel";
 
 import { useEditorAppStore } from "@editorAppStore";
 import { observer } from "mobx-react-lite";
@@ -29,7 +30,11 @@ function FormView() {
 			<p className="mb-4 text-gray-500 text-sm">{formData.description}</p>
 			<form className="space-y-4 overflow-y-auto" onSubmit={onSubmit}>
 				{formData.fieldSets.map((fieldSet, index) => (
-					<Fieldset fieldSet={fieldSet} index={index} key={fieldSet.id} />
+					<Fieldset
+						fieldSet={fieldSet as IEditorFieldSetModel}
+						index={index}
+						key={fieldSet.id}
+					/>
 				))}
 			</form>
 			{!formData.selectedFieldSetId && <AddFieldsetButton />}

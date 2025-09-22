@@ -1,53 +1,55 @@
+import type { IEditorFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+
 import { observer } from "mobx-react-lite";
-import type { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-const FieldLabelSettings = ({ field }: { field: IFieldModel }) => {
+const FieldLabelSettings = ({ field }: { field: IEditorFieldModel }) => {
 	const { label, description } = field;
 
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="flex flex-col gap-2">
-				<Label htmlFor="label" className="text-sm font-medium">
+				<Label className="font-medium text-sm" htmlFor="label">
 					Label
 				</Label>
 				<Input
-					type="text"
+					className="w-full border border-gray-300 p-2"
 					id="label"
-					className="w-full p-2 border border-gray-300"
-					value={label}
-					onChange={(e) => field.setLabel(e.target.value)}
 					onBlur={() => {
 						field.setLabel(label);
 					}}
+					onChange={(e) => field.setLabel(e.target.value)}
+					type="text"
+					value={label}
 				/>
 			</div>
 			<div className="flex flex-col gap-2">
-				<Label htmlFor="description" className="text-sm font-medium">
+				<Label className="font-medium text-sm" htmlFor="description">
 					Description
 				</Label>
 				<Textarea
+					className="w-full border border-gray-300 p-2"
 					id="description"
-					className="w-full p-2 border border-gray-300"
-					value={description}
-					onChange={(e) => field.setDescription(e.target.value)}
 					onBlur={() => {
 						field.setDescription(description ?? "");
 					}}
+					onChange={(e) => field.setDescription(e.target.value)}
+					value={description}
 				/>
 			</div>
-			<div className="flex gap-2 items-center">
+			<div className="flex items-center gap-2">
 				<Checkbox
-					id="required"
 					checked={field.required}
+					id="required"
 					onCheckedChange={(checked) => {
 						field.setRequired(Boolean(checked));
 					}}
 				/>
-				<Label htmlFor="required" className="text-sm font-normal">
+				<Label className="font-normal text-sm" htmlFor="required">
 					Required
 				</Label>
 			</div>

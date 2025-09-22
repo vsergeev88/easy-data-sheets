@@ -1,18 +1,25 @@
+import type { ICheckboxFieldModel } from "@/app/editor/stores/editorAppStore/fields/checkboxFieldModel";
+
 import { observer } from "mobx-react-lite";
-import type { ICheckboxFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+
 import { Label } from "@/components/ui/label";
+
 import FieldLabelSettings from "./FieldLabelSettings";
 
-const CheckboxFieldSettings = ({ field }: { field: ICheckboxFieldModel }) => {
+export type CheckboxFieldSettingsProps = {
+	field: ICheckboxFieldModel;
+};
+
+const CheckboxFieldSettings = ({ field }: CheckboxFieldSettingsProps) => {
 	return (
 		<div className="flex flex-col gap-4">
 			<FieldLabelSettings field={field} />
 			<div className="flex flex-col gap-2">
-				<Label htmlFor="items" className="text-sm font-medium">
+				<Label className="font-medium text-sm" htmlFor="items">
 					Items
 				</Label>
 				{field.items.map((item) => (
-					<div key={item} className="flex gap-2 items-center">
+					<div className="flex items-center gap-2" key={item}>
 						{item}
 					</div>
 				))}
