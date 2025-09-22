@@ -4,11 +4,11 @@ import { ViewFieldSetModel as FieldSetModel } from "./fieldSetModel";
 import { ViewFormStyleModel as FormStyleModel } from "./formStyleModel";
 
 export const ViewFormDataModel = BareFormDataModel.named(
-  "ViewFormDataModel"
+	"ViewFormDataModel"
 ).props({
-  formStyle: types.maybeNull(FormStyleModel),
-  fieldSets: types.array(FieldSetModel),
+	formStyle: types.maybeNull(FormStyleModel),
+	fieldSets: types.array(FieldSetModel),
 });
 
 export interface IViewFormDataModel
-  extends Instance<typeof ViewFormDataModel> {}
+	extends Instance<typeof ViewFormDataModel> {}

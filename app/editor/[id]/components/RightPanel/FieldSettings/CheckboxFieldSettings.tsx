@@ -3,11 +3,7 @@ import type { ICheckboxFieldModel } from "@/app/editor/stores/editorAppStore/fie
 import { Label } from "@/components/ui/label";
 import FieldLabelSettings from "./FieldLabelSettings";
 
-const CheckboxFieldSettings = ({
-	field,
-}: {
-	field: ICheckboxFieldModel;
-}) => {
+const CheckboxFieldSettings = ({ field }: { field: ICheckboxFieldModel }) => {
 	return (
 		<div className="flex flex-col gap-4">
 			<FieldLabelSettings field={field} />

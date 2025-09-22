@@ -1,4 +1,9 @@
-import { FIELD_TYPES, type FieldSet, type Form, type TextField } from "@/lib/types/form";
+import {
+	FIELD_TYPES,
+	type FieldSet,
+	type Form,
+	type TextField,
+} from "@/lib/types/form";
 
 export const FALLBACK_FORM_DATA: Pick<Form, "fieldSets"> = {
 	fieldSets: [

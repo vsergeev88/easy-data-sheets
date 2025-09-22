@@ -3,8 +3,8 @@ import { BareCheckboxFieldModel } from "../../../../stores/bareStores/fields/bar
 import { BaseEditorFieldModel } from "../baseEditorFieldModel";
 
 export const CheckboxFieldModel = types
-  .compose(BaseEditorFieldModel, BareCheckboxFieldModel)
-  .named("CheckboxFieldModel");
+	.compose(BaseEditorFieldModel, BareCheckboxFieldModel)
+	.named("CheckboxFieldModel");
 
 export interface ICheckboxFieldModel
-  extends Instance<typeof CheckboxFieldModel> {}
+	extends Instance<typeof CheckboxFieldModel> {}

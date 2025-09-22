@@ -3,7 +3,7 @@ import { BareCheckboxFieldModel } from "./fields/bareCheckboxFieldModel";
 import { BareTextFieldModel } from "./fields/bareTextFieldModel";
 
 export const BareFieldModel = types.union(
-  BareTextFieldModel,
-  BareCheckboxFieldModel
+	BareTextFieldModel,
+	BareCheckboxFieldModel
 );
 export type IBareFieldModel = Instance<typeof BareFieldModel>;

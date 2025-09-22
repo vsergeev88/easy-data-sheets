@@ -28,7 +28,7 @@ export default function LegendEditable({
 				}}
 				className={cn(
 					"flex w-full items-center justify-between gap-2 border-b border-blue-500 pl-4 text-lg font-medium outline-none",
-					className,
+					className
 				)}
 				// biome-ignore lint: needed here
 				autoFocus

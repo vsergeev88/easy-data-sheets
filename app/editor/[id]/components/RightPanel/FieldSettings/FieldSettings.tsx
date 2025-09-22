@@ -15,9 +15,11 @@ const FieldSettings = ({ fieldId }: { fieldId: string }) => {
 
 		// At this point, field is guaranteed to be a regular field, not submit button
 		const regularField = safeFormData.getFieldById(fieldId);
-		const FieldSettingsComponent = fieldSettingsMap[regularField.type] as React.ComponentType<{ field: any }>;
+		const FieldSettingsComponent = fieldSettingsMap[
+			regularField.type
+		] as React.ComponentType<{ field: any }>;
 		return <FieldSettingsComponent field={regularField} />;
-	}
+	};
 
 	return (
 		<div className="p-4 bg-background border-gray-200 border">
@@ -31,9 +33,7 @@ const FieldSettings = ({ fieldId }: { fieldId: string }) => {
 					}}
 				/>
 			</div>
-			<div className="mt-4">
-				{getFieldSettingsComponent()}
-			</div>
+			<div className="mt-4">{getFieldSettingsComponent()}</div>
 		</div>
 	);
 };
