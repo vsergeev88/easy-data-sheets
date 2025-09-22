@@ -1,12 +1,12 @@
 "use client";
 
+import EditorClient, {
+	type EditorClientProps,
+} from "../components/EditorClient";
 import {
 	EditorAppStoreContext,
 	editorAppStore,
 } from "../stores/editorAppStore/editorAppStore";
-import EditorClient, {
-	type EditorClientProps,
-} from "./components/EditorClient";
 
 export const EditorClientApp = ({ dataSheet }: EditorClientProps) => {
 	if (!dataSheet) {

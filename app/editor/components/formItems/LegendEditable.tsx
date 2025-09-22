@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import BaseFieldsetLegend from "@/components/baseFormItems/BaseFieldsetLegend";
 import { cn } from "@/lib/utils";
 
@@ -10,7 +11,7 @@ export default function LegendEditable({
 }: {
 	legend: string;
 	index: number;
-	setLegend: (legend: string) => void;
+	setLegend: (nextLegend: string) => void;
 	className?: string;
 }) {
 	const [isEdit, setIsEdit] = useState(false);
@@ -18,29 +19,28 @@ export default function LegendEditable({
 	if (isEdit) {
 		return (
 			<input
-				value={legend}
-				onChange={(e) => setLegend(e.target.value)}
+				autoFocus
+				className={cn(
+					"flex w-full items-center justify-between gap-2 border-blue-500 border-b pl-4 font-medium text-lg outline-none",
+					className
+				)}
 				onBlur={() => setIsEdit(false)}
+				onChange={(e) => setLegend(e.target.value)}
 				onKeyDown={(e) => {
 					if (e.key === "Enter") {
 						setIsEdit(false);
 					}
 				}}
-				className={cn(
-					"flex w-full items-center justify-between gap-2 border-b border-blue-500 pl-4 text-lg font-medium outline-none",
-					className
-				)}
-				// biome-ignore lint: needed here
-				autoFocus
+				value={legend}
 			/>
 		);
 	}
 
 	return (
 		<BaseFieldsetLegend
-			legend={legend ?? ""}
+			className={cn("inline hover:cursor-text hover:underline", className)}
 			index={index}
-			className={cn("hover:underline hover:cursor-text inline", className)}
+			legend={legend ?? ""}
 			onClick={() => setIsEdit(true)}
 		/>
 	);

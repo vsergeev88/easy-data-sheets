@@ -1,13 +1,16 @@
+import type { DataSheet } from "@/lib/data/dataSheets";
+
 import { useEditorAppStore } from "@editorAppStore";
 import { Eye, Palette, Redo, Sparkles, Undo } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
+
 import { PremiumIcon } from "@/components/PremiumIcon";
 import { ServiceButton } from "@/components/ServiceButton";
 import { Tooltip } from "@/components/Tooltip";
 import { Button } from "@/components/ui/button";
-import type { DataSheet } from "@/lib/data/dataSheets";
-import { useAutosave } from "../../hooks/useAutosave";
+
+import { useAutosave } from "../hooks/useAutosave";
 import FormView from "./FormView";
 import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";

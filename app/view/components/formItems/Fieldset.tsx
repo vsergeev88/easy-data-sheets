@@ -5,6 +5,7 @@ import type { IViewFieldSetModel } from "../../stores/viewAppStore/fieldSetModel
 import { useViewAppStore } from "@viewAppStore";
 import { observer } from "mobx-react-lite";
 
+import BaseFieldsetLegend from "@/components/baseFormItems/BaseFieldsetLegend";
 import { ClickOutside } from "@/components/ClickOutside";
 import { cn } from "@/lib/utils";
 
@@ -16,7 +17,7 @@ type FieldsetProps = {
 	index: number;
 };
 
-const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className }) => {
+const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index }) => {
 	const { safeFormData } = useViewAppStore();
 
 	return (
@@ -36,7 +37,11 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className }) => {
 					)}
 				>
 					<div className="my-1 flex min-h-10 flex-row items-center justify-between gap-4">
-						<div className="max-w-prose">{fieldSet.legend ?? ""}</div>
+						<BaseFieldsetLegend
+							className={cn("inline", className)}
+							index={index}
+							legend={fieldSet.legend ?? ""}
+						/>
 					</div>
 					<div className="">
 						{fieldSet.fields.map((field) => {
