@@ -1,23 +1,21 @@
 import type React from "react";
-import type { ITextFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import type { IBareTextFieldModel } from "@/app/stores/bareStores/fields/bareTextFieldModel";
 import { Textarea } from "@/components/ui/textarea";
 
 type BaseTextAreaFieldProps = {
-	field: ITextFieldModel;
+	field: IBareTextFieldModel;
 };
-const BaseTextAreaField: React.FC<BaseTextAreaFieldProps> = ({
-	field,
-}) => {
+const BaseTextAreaField: React.FC<BaseTextAreaFieldProps> = ({ field }) => {
 	return (
 		// <FormControl>
 		<Textarea
-			value={field.value ?? ""}
+			className="h-full min-h-[80px] bg-white pr-10"
+			disabled={field.disabled}
 			onChange={(e) => {
 				field.onChange?.(e);
 			}}
 			placeholder={field.placeholder}
-			className="h-full min-h-[80px] bg-white pr-10"
-			disabled={field.disabled}
+			value={field.value ?? ""}
 		/>
 		// </FormControl>
 	);

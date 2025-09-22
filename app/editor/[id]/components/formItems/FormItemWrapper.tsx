@@ -2,7 +2,7 @@ import { useEditorAppStore } from "@editorAppStore";
 import { ArrowDownUp, CopyPlus, Trash2 } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import type React from "react";
-import type { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import type { IBareFieldModel } from "@/app/stores/bareStores/bareFieldModel";
 import BaseFormItemWrapper from "@/components/baseFormItems/BaseFormItemWrapper";
 import { ClickOutside } from "@/components/ClickOutside";
 import { ServiceButton } from "@/components/ServiceButton";
@@ -10,28 +10,27 @@ import { cn } from "@/lib/utils";
 
 type FormItemProps = {
 	children: React.ReactNode;
-	field: IFieldModel;
+	field: IBareFieldModel;
 };
 
-const FormItemWrapper: React.FC<FormItemProps> = ({
-	children,
-	field
-}) => {
+const FormItemWrapper: React.FC<FormItemProps> = ({ children, field }) => {
 	const { safeFormData } = useEditorAppStore();
 	const isSelected = safeFormData.selectedFieldId === field.id;
 
-	const handleClick = (e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>) => {
+	const handleClick = (
+		e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>
+	) => {
 		e.stopPropagation();
 		safeFormData.setSelectedFieldId(field.id);
 	};
 
 	return (
 		<ClickOutside
-			onClickOutside={() => safeFormData.setSelectedFieldId(null)}
 			ignoreClass="ignore-deselect"
+			onClickOutside={() => safeFormData.setSelectedFieldId(null)}
 		>
 			<div
-				className={cn("border-2 border-transparent w-full ignore-deselect", {
+				className={cn("ignore-deselect w-full border-2 border-transparent", {
 					"border-blue-500": isSelected,
 					"hover:border-blue-500/50": !isSelected,
 				})}
@@ -42,32 +41,30 @@ const FormItemWrapper: React.FC<FormItemProps> = ({
 					}
 				}}
 			>
-				<BaseFormItemWrapper
-					field={field}
-				>
+				<BaseFormItemWrapper field={field}>
 					{isSelected && (
 						<div className="absolute top-0 right-0 flex flex-row items-center justify-between">
 							<ServiceButton
 								icon={<ArrowDownUp />}
+								onClick={() => {}}
 								tooltip="Move to..."
-								onClick={() => { }}
 							/>
 							<ServiceButton
 								icon={<CopyPlus />}
-								tooltip="Duplicate field"
 								onClick={() => {
 									safeFormData.duplicateField(field.id);
 								}}
+								tooltip="Duplicate field"
 							/>
 							<ServiceButton
+								className="hover:text-red-700"
 								icon={<Trash2 />}
-								variant="destructive"
-								tooltip="Delete field"
 								onClick={(e) => {
 									e.stopPropagation();
 									safeFormData.removeField(field.id);
 								}}
-								className="hover:text-red-700"
+								tooltip="Delete field"
+								variant="destructive"
 							/>
 						</div>
 					)}

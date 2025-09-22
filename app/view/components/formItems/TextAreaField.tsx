@@ -1,21 +1,17 @@
 import type React from "react";
-import type { ITextFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import type { IBareTextFieldModel } from "@/app/stores/bareStores/fields/bareTextFieldModel";
 import BaseTextAreaField from "@/components/baseFormItems/BaseTextAreaField";
 import FormItemWrapper from "./FormItemWrapper";
 
-type TextAreaFieldProps = {
-	field: ITextFieldModel;
+export type ViewTextAreaFieldProps = {
+	field: IBareTextFieldModel;
 };
 
-const TextAreaField: React.FC<TextAreaFieldProps> = ({
-	field
-}) => {
+const TextAreaField: React.FC<ViewTextAreaFieldProps> = ({ field }) => {
 	return (
-
 		<FormItemWrapper field={field}>
 			<BaseTextAreaField field={field} />
 		</FormItemWrapper>
-	)
-
+	);
 };
 export default TextAreaField;

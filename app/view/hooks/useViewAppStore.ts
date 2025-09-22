@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ViewAppStoreContext } from "@/app/view/stores/viewAppStore";
 
-export const useEditorAppStore = () => {
+export const useViewAppStore = () => {
   const store = useContext(ViewAppStoreContext);
   if (!store) {
     throw new Error(

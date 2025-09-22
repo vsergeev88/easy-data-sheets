@@ -1,21 +1,14 @@
 import type React from "react";
-import type { IFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import type { IBareFieldModel } from "@/app/stores/bareStores/bareFieldModel";
 import BaseFormItemWrapper from "@/components/baseFormItems/BaseFormItemWrapper";
 
 type FormItemProps = {
-	field: IFieldModel;
+	field: IBareFieldModel;
 	children: React.ReactNode;
 };
 
-const FormItemWrapper: React.FC<FormItemProps> = ({
-	field,
-	children
-}) => {
-	return (
-		<BaseFormItemWrapper field={field}>
-			{children}
-		</BaseFormItemWrapper>
-	);
+const FormItemWrapper: React.FC<FormItemProps> = ({ field, children }) => {
+	return <BaseFormItemWrapper field={field}>{children}</BaseFormItemWrapper>;
 };
 
 export default FormItemWrapper;

@@ -1,6 +1,7 @@
 import { cast, type Instance, types } from "mobx-state-tree";
-import { BareFieldSetModel } from "../../../stores/bareStores/bareFieldSetModel";
-import { FieldModel, type IFieldModel } from "./fieldModel";
+
+import { BareFieldSetModel } from "@/app/stores/bareStores/bareFieldSetModel";
+import { FieldModel, type IEditorFieldModel } from "./fieldModel";
 
 export const EditorFieldSetModel = BareFieldSetModel.named(
   "EditorFieldSetModel"
@@ -12,12 +13,12 @@ export const EditorFieldSetModel = BareFieldSetModel.named(
     setLegend: (legend: string): void => {
       self.legend = legend;
     },
-    setFields: (fields: IFieldModel[]): void => {
+    setFields: (fields: IEditorFieldModel[]): void => {
       self.fields = cast(fields);
     },
   }))
   .actions((self) => ({
-    addField: (field: IFieldModel): void => {
+    addField: (field: IEditorFieldModel): void => {
       self.fields.push(FieldModel.create(field));
     },
     setLegend: (legend: string): void => {

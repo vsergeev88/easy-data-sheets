@@ -1,6 +1,6 @@
-import React from "react";
+import type React from "react";
+import type { FieldSet } from "@/lib/types/form";
 import { cn } from "@/lib/utils";
-import { FieldSet } from "@/lib/types/form";
 
 export type BaseFieldsetProps = {
 	children: React.ReactNode;
@@ -14,7 +14,7 @@ const BaseFieldset: React.FC<BaseFieldsetProps> = ({ children, className }) => {
 		<fieldset
 			className={cn(
 				"relative border border-gray-300 bg-gray-300 p-4 px-1 py-1 pb-0",
-				className,
+				className
 			)}
 		>
 			{children}

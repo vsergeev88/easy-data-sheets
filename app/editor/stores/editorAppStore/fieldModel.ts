@@ -3,4 +3,4 @@ import { CheckboxFieldModel } from "./fields/checkboxFieldModel";
 import { TextFieldModel } from "./fields/textFieldModel";
 
 export const FieldModel = types.union(TextFieldModel, CheckboxFieldModel);
-export type IFieldModel = Instance<typeof FieldModel>;
+export type IEditorFieldModel = Instance<typeof FieldModel>;

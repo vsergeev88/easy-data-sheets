@@ -19,6 +19,9 @@
       "a11y": {
         "noStaticElementInteractions": "off"
       },
+      "nursery": {
+        "noNoninteractiveElementInteractions": "warn"
+      },
       "suspicious": {
         "noConsole": "warn"
       }
@@ -36,7 +39,23 @@
     "enabled": true,
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              {
+                "type": true
+              },
+              ":BLANK_LINE:",
+              [":PACKAGE:"],
+              ":BLANK_LINE:",
+              [":ALIAS:"],
+              ":BLANK_LINE:",
+              [":PATH:"],
+              ":BLANK_LINE:"
+            ]
+          }
+        }
       }
     }
   },
