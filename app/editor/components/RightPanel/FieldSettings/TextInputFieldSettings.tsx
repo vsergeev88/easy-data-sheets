@@ -1,7 +1,12 @@
-import type { ITextFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import type { ITextFieldModel } from "@/app/editor/stores/editorAppStore/fields/textFieldModel";
+
 import FieldLabelSettings from "./FieldLabelSettings";
 
-export const TextInputSettings = ({ field }: { field: ITextFieldModel }) => {
+export type TextInputSettingsProps = {
+	field: ITextFieldModel;
+};
+
+export const TextInputSettings = ({ field }: TextInputSettingsProps) => {
 	return (
 		<div>
 			<FieldLabelSettings field={field} />

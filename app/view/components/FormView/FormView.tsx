@@ -1,5 +1,6 @@
 "use client";
 import type { FormSchema } from "@/components/baseFormItems/types";
+import type { IViewFieldSetModel } from "../../stores/viewAppStore/fieldSetModel";
 
 import { toast } from "sonner";
 
@@ -35,7 +36,11 @@ export default function FormView() {
 			<p className="mb-4 text-gray-500 text-sm">{formData.description}</p>
 			<form className="space-y-4 overflow-y-auto" onSubmit={onSubmit}>
 				{formData.fieldSets.map((fieldSet, index) => (
-					<Fieldset fieldSet={fieldSet} index={index} key={fieldSet.id} />
+					<Fieldset
+						fieldSet={fieldSet as IViewFieldSetModel}
+						index={index}
+						key={fieldSet.id}
+					/>
 				))}
 			</form>
 			<SubmitButton />

@@ -1,17 +1,16 @@
-import type { IEditorFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
-
 import { FIELD_TYPES } from "@/lib/types/form";
 
 import CheckboxFieldSettings, {
   type CheckboxFieldSettingsProps,
 } from "./CheckboxFieldSettings";
-import { TextInputSettings } from "./TextInputFieldSettings";
+import {
+  TextInputSettings,
+  type TextInputSettingsProps,
+} from "./TextInputFieldSettings";
 
-export const fieldSettingsMap: Record<
-  FIELD_TYPES,
-  React.ComponentType<{ field: IEditorFieldModel }>
-> = {
-  [FIELD_TYPES.TEXT]: TextInputSettings,
+export const fieldSettingsMap = {
+  [FIELD_TYPES.TEXT]:
+    TextInputSettings as React.ComponentType<TextInputSettingsProps>,
   [FIELD_TYPES.CHECKBOX]:
     CheckboxFieldSettings as React.ComponentType<CheckboxFieldSettingsProps>,
-};
+} as const;
