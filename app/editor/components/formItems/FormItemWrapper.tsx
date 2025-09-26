@@ -1,8 +1,10 @@
+import type React from "react";
+import type { IBareFieldModel } from "@/app/stores/bareStores/bareFieldModel";
+
 import { useEditorAppStore } from "@editorAppStore";
 import { ArrowDownUp, CopyPlus, Trash2 } from "lucide-react";
 import { observer } from "mobx-react-lite";
-import type React from "react";
-import type { IBareFieldModel } from "@/app/stores/bareStores/bareFieldModel";
+
 import BaseFormItemWrapper from "@/components/baseFormItems/BaseFormItemWrapper";
 import { ClickOutside } from "@/components/ClickOutside";
 import { ServiceButton } from "@/components/ServiceButton";
@@ -15,13 +17,18 @@ type FormItemProps = {
 
 const FormItemWrapper: React.FC<FormItemProps> = ({ children, field }) => {
 	const { safeFormData } = useEditorAppStore();
-	const isSelected = safeFormData.selectedFieldId === field.id;
+	// Store field.id in a local variable to prevent accessing removed MST nodes
+	const fieldId = field.id;
+	const isSelected = safeFormData.selectedFieldId === fieldId;
 
-	const handleClick = (
-		e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>
-	) => {
+	// Early return if field is no longer valid (has been removed from tree)
+	if (!fieldId) {
+		return null;
+	}
+
+	const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		safeFormData.setSelectedFieldId(field.id);
+		safeFormData.setSelectedFieldId(fieldId);
 	};
 
 	return (
@@ -30,29 +37,29 @@ const FormItemWrapper: React.FC<FormItemProps> = ({ children, field }) => {
 			onClickOutside={() => safeFormData.setSelectedFieldId(null)}
 		>
 			<div
-				className={cn("ignore-deselect w-full border-2 border-transparent", {
-					"border-blue-500": isSelected,
-					"hover:border-blue-500/50": !isSelected,
-				})}
-				onClick={handleClick}
-				onKeyDown={(e) => {
-					if (e.key === "Enter") {
-						handleClick(e);
+				className={cn(
+					"ignore-deselect w-full border-2 border-transparent text-left",
+					{
+						"border-blue-500": isSelected,
+						"hover:border-blue-500/50": !isSelected,
 					}
-				}}
+				)}
+				onClick={handleClick}
 			>
 				<BaseFormItemWrapper field={field}>
 					{isSelected && (
 						<div className="absolute top-0 right-0 flex flex-row items-center justify-between">
 							<ServiceButton
 								icon={<ArrowDownUp />}
-								onClick={() => {}}
+								onClick={() => {
+									// TODO: Implement move functionality
+								}}
 								tooltip="Move to..."
 							/>
 							<ServiceButton
 								icon={<CopyPlus />}
 								onClick={() => {
-									safeFormData.duplicateField(field.id);
+									safeFormData.duplicateField(fieldId);
 								}}
 								tooltip="Duplicate field"
 							/>
@@ -61,7 +68,7 @@ const FormItemWrapper: React.FC<FormItemProps> = ({ children, field }) => {
 								icon={<Trash2 />}
 								onClick={(e) => {
 									e.stopPropagation();
-									safeFormData.removeField(field.id);
+									safeFormData.removeField(fieldId);
 								}}
 								tooltip="Delete field"
 								variant="destructive"

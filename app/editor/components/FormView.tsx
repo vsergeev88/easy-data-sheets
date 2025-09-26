@@ -13,7 +13,7 @@ import Fieldset from "./formItems/Fieldset";
 import SubmitButton from "./formItems/SubmitButton";
 
 function FormView() {
-	const { formData, formInfo } = useEditorAppStore();
+	const { formData, safeFormData, formInfo } = useEditorAppStore();
 
 	if (!(formData && formInfo)) {
 		return <div>Loading...</div>;
@@ -32,17 +32,17 @@ function FormView() {
 				text={formInfo.name}
 			/>
 			<br />
-			{formData.description && (
+			{safeFormData.description && (
 				<EditableText
 					className="mb-4 text-gray-500 text-sm"
 					inputClassName="text-gray-500 text-sm"
 					lines={3}
-					setText={(text) => formData.setDescription(text)}
-					text={formData.description}
+					setText={(text) => safeFormData.setDescription(text)}
+					text={safeFormData.description}
 				/>
 			)}
 			<form className="space-y-4 overflow-y-auto" onSubmit={onSubmit}>
-				{formData.fieldSets.map((fieldSet, index) => (
+				{safeFormData.fieldSets.map((fieldSet, index) => (
 					<Fieldset
 						fieldSet={fieldSet as IEditorFieldSetModel}
 						index={index}
@@ -50,7 +50,7 @@ function FormView() {
 					/>
 				))}
 			</form>
-			{!formData.selectedFieldSetId && <AddFieldsetButton />}
+			{!safeFormData.selectedFieldSetId && <AddFieldsetButton />}
 			<SubmitButton />
 		</BaseFormView>
 	);

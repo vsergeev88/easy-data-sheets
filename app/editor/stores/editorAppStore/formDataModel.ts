@@ -107,10 +107,10 @@ export const EditorFormDataModel = BareFormDataModel.named(
       self.setSelectedFieldSetId(fieldSet.id);
     },
     removeField: (fieldId: string): void => {
+      self.setSelectedFieldId(null);
       const targetFieldSetId = self.getFieldSetIdByFieldId(fieldId);
       const fieldSet = self.getFieldSetById(targetFieldSetId);
       fieldSet.removeField(fieldId);
-      self.setSelectedFieldId(null);
     },
   }))
   .actions((self) => ({
