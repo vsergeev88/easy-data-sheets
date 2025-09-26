@@ -6,6 +6,7 @@ import { useEditorAppStore } from "@editorAppStore";
 import { observer } from "mobx-react-lite";
 
 import BaseFormView from "@/components/baseFormItems/BaseFormView";
+import { EditableText } from "@/components/EditableText";
 
 import AddFieldsetButton from "./AddFieldsetButton";
 import Fieldset from "./formItems/Fieldset";
@@ -24,10 +25,22 @@ function FormView() {
 
 	return (
 		<BaseFormView>
-			<h1 className="mb-4 text-center font-bold text-2xl md:text-left">
-				{formInfo.name}
-			</h1>
-			<p className="mb-4 text-gray-500 text-sm">{formData.description}</p>
+			<EditableText
+				className="mb-4 text-center font-bold text-2xl md:text-left"
+				inputClassName="md:text-2xl font-bold"
+				setText={(text) => formInfo.setName(text)}
+				text={formInfo.name}
+			/>
+			<br />
+			{formData.description && (
+				<EditableText
+					className="mb-4 text-gray-500 text-sm"
+					inputClassName="text-gray-500 text-sm"
+					lines={3}
+					setText={(text) => formData.setDescription(text)}
+					text={formData.description}
+				/>
+			)}
 			<form className="space-y-4 overflow-y-auto" onSubmit={onSubmit}>
 				{formData.fieldSets.map((fieldSet, index) => (
 					<Fieldset

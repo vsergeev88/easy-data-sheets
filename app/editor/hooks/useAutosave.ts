@@ -1,63 +1,62 @@
 import { onSnapshot } from "mobx-state-tree";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+
 import { useEditorAppStore } from "./useEditorAppStore";
 
 const AUTOSAVE_DELAY = 3000;
 
 export const useAutosave = () => {
-	const editorAppStore = useEditorAppStore();
-	const skipSavingRef = useRef(false);
-	const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const editorAppStore = useEditorAppStore();
+  const skipSavingRef = useRef(false);
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isAutosaveEnabled = useRef(true);
 
-	const isAutosaveEnabled = useRef(true);
+  // Set up autosave listener
+  useEffect(() => {
+    if (
+      !(
+        editorAppStore.isInitialized &&
+        editorAppStore.formData &&
+        isAutosaveEnabled.current
+      )
+    ) {
+      return;
+    }
 
-	// Debounced save function
-	const debouncedSave = useCallback(() => {
-		if (saveTimeoutRef.current) {
-			clearTimeout(saveTimeoutRef.current);
-		}
+    const debouncedSave = () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
 
-		saveTimeoutRef.current = setTimeout(() => {
-			if (!skipSavingRef.current) {
-				editorAppStore.save();
-			}
-		}, AUTOSAVE_DELAY);
-	}, [editorAppStore]);
+      saveTimeoutRef.current = setTimeout(() => {
+        if (!skipSavingRef.current) {
+          editorAppStore.save();
+        }
+      }, AUTOSAVE_DELAY);
+    };
 
-	// Set up autosave listener
-	useEffect(() => {
-		if (
-			!(
-				editorAppStore.isInitialized &&
-				editorAppStore.formData &&
-				isAutosaveEnabled.current
-			)
-		) {
-			return;
-		}
+    const disposer = onSnapshot(editorAppStore.formData, () => {
+      if (skipSavingRef.current) {
+        return;
+      }
 
-		const disposer = onSnapshot(editorAppStore.formData, () => {
-			if (skipSavingRef.current) {
-				return;
-			}
+      debouncedSave();
+    });
 
-			debouncedSave();
-		});
+    return () => {
+      disposer();
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+    };
+  }, [editorAppStore.isInitialized, editorAppStore.formData, editorAppStore]);
 
-		return () => {
-			disposer();
-			if (saveTimeoutRef.current) {
-				clearTimeout(saveTimeoutRef.current);
-			}
-		};
-	}, [editorAppStore, debouncedSave]);
-
-	// Cleanup timeout on unmount
-	useEffect(() => {
-		return () => {
-			if (saveTimeoutRef.current) {
-				clearTimeout(saveTimeoutRef.current);
-			}
-		};
-	}, []);
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+    };
+  }, []);
 };

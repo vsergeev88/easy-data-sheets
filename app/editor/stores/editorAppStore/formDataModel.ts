@@ -61,6 +61,9 @@ export const EditorFormDataModel = BareFormDataModel.named(
     },
   }))
   .actions((self) => ({
+    setDescription: (description: string) => {
+      self.description = description;
+    },
     addFieldSet: (fieldSet: FieldSet, afterId: string | null): void => {
       const newFieldSet = EditorFieldSetModel.create(fieldSet);
       const updatedFieldSets = [...self.fieldSets] as IEditorFieldSetModel[];

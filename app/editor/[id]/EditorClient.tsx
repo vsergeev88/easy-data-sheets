@@ -5,15 +5,16 @@ import { Eye, Palette, Redo, Sparkles, Undo } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 
-import { PremiumIcon } from "@/components/PremiumIcon";
+// import { PremiumIcon } from "@/components/PremiumIcon";
 import { ServiceButton } from "@/components/ServiceButton";
-import { Tooltip } from "@/components/Tooltip";
-import { Button } from "@/components/ui/button";
 
+// import { Tooltip } from "@/components/Tooltip";
+// import { Button } from "@/components/ui/button";
+
+import FormView from "../components/FormView";
+import LeftPanel from "../components/LeftPanel";
+import RightPanel from "../components/RightPanel";
 import { useAutosave } from "../hooks/useAutosave";
-import FormView from "./FormView";
-import LeftPanel from "./LeftPanel";
-import RightPanel from "./RightPanel";
 
 export type EditorClientProps = {
 	dataSheet: DataSheet;

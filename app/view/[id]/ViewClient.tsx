@@ -6,7 +6,7 @@ import { useViewAppStore } from "@viewAppStore";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 
-import FormView from "../components/FormView/FormView";
+import FormView from "../components/FormView";
 
 export type ViewClientProps = {
 	dataSheet: DataSheet;
@@ -26,9 +26,14 @@ function ViewClient({ dataSheet }: ViewClientProps) {
 	}
 
 	return (
-		<div className="h-full overflow-hidden bg-gray-50 py-4 pl-2">
+		<div className="h-screen bg-gray-50 py-10 pl-2">
 			<div className="h-full overflow-auto pb-6">
 				<FormView />
+				<div className="mt-2 flex w-full justify-center">
+					<a className="text-center text-gray-500 text-xs" href="/">
+						Powered by EasyDataSheets.com
+					</a>
+				</div>
 			</div>
 		</div>
 	);
