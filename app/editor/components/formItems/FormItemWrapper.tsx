@@ -26,7 +26,9 @@ const FormItemWrapper: React.FC<FormItemProps> = ({ children, field }) => {
 		return null;
 	}
 
-	const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+	const handleClick = (
+		e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>
+	) => {
 		e.stopPropagation();
 		safeFormData.setSelectedFieldId(fieldId);
 	};
@@ -45,6 +47,11 @@ const FormItemWrapper: React.FC<FormItemProps> = ({ children, field }) => {
 					}
 				)}
 				onClick={handleClick}
+				onKeyDown={(e) => {
+					if (e.key === "Enter") {
+						handleClick(e);
+					}
+				}}
 			>
 				<BaseFormItemWrapper field={field}>
 					{isSelected && (
