@@ -9,7 +9,6 @@ import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
@@ -39,8 +38,7 @@ const PreviewButton = () => {
 				</Button>
 			</Tooltip>
 			<Dialog onOpenChange={setOpen} open={open}>
-				<DialogTrigger asChild />
-				<DialogContent className="min-h-[90vh] min-w-[90vw] grid-cols-[1fr] grid-rows-[auto_1fr] gap-0">
+				<DialogContent className="z-[9999] min-h-[90vh] min-w-[90vw] grid-cols-[1fr] grid-rows-[auto_1fr] gap-0">
 					<DialogHeader className="flex flex-row items-center justify-between px-4 py-2">
 						<DialogTitle>Preview Datasheet</DialogTitle>
 						<div className="flex items-center gap-2">

@@ -4,6 +4,7 @@ import type { IBareCheckboxFieldModel } from "@/app/stores/bareStores/fields/bar
 import { observer } from "mobx-react-lite";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 import CustomField from "./CustomField";
 
@@ -19,19 +20,20 @@ const BaseCheckboxField: React.FC<BaseCheckboxFieldProps> = ({ field }) => {
 					className="flex w-full flex-row items-start space-x-3 space-y-0"
 					key={item}
 				>
-					<div>
-						<Checkbox
-							checked={field.value?.includes(item)}
-							onCheckedChange={(checked) => {
-								return checked
-									? field.setValue([...field.value, item])
-									: field.setValue(
-											field.value?.filter((value: string) => value !== item)
-										);
-							}}
-						/>
-					</div>
-					<div className="font-normal text-sm">{item}</div>
+					<Checkbox
+						checked={field.value?.includes(item)}
+						id={item}
+						onCheckedChange={(checked) => {
+							return checked
+								? field.setValue([...field.value, item])
+								: field.setValue(
+										field.value?.filter((value: string) => value !== item)
+									);
+						}}
+					/>
+					<Label className="font-normal text-sm" htmlFor={item}>
+						{item}
+					</Label>
 				</div>
 			))}
 			{field.withCustomField && (

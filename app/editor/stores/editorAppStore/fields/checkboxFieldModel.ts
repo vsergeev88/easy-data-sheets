@@ -34,6 +34,9 @@ export const CheckboxFieldModel = types
       nextItems[index] = nextItem;
       self.items = cast(nextItems);
     },
+    setItems: (items: string[]): void => {
+      self.items = cast(items);
+    },
   }));
 
 export interface ICheckboxFieldModel

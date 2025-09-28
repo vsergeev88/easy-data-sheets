@@ -107,7 +107,7 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index }) => {
 						)}
 					</div>
 					{draggableFields.length > 0 ? (
-						<div className="" ref={parent}>
+						<div ref={parent}>
 							{draggableFields.map((field) => {
 								const FieldComponent = EDITOR_FIELD_COMPONENTS_MAP[
 									field.type
