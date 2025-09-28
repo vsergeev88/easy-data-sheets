@@ -37,6 +37,9 @@ export const CheckboxFieldModel = types
     setItems: (items: string[]): void => {
       self.items = cast(items);
     },
+    setMultipleChoice: (value: boolean): void => {
+      self.multipleChoice = value;
+    },
   }));
 
 export interface ICheckboxFieldModel

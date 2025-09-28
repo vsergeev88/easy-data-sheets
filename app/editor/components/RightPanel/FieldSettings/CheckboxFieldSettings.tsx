@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 
 import { EditableText } from "@/components/EditableText";
 import { ServiceButton } from "@/components/ServiceButton";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 import FieldLabelSettings from "./FieldLabelSettings";
 
@@ -36,6 +36,26 @@ const CheckboxFieldSettings = ({ field }: CheckboxFieldSettingsProps) => {
 	return (
 		<div className="ignore-deselect flex flex-col gap-4">
 			<FieldLabelSettings field={field} />
+			<div className="flex items-center space-x-2">
+				<Switch
+					checked={field.withCustomField}
+					id="withCustomField"
+					onCheckedChange={(checked) => {
+						field.setWithCustomField(Boolean(checked));
+					}}
+				/>
+				<Label htmlFor="withCustomField">With Custom Field</Label>
+			</div>
+			<div className="flex items-center space-x-2">
+				<Switch
+					checked={field.multipleChoice}
+					id="withCustomField"
+					onCheckedChange={(checked) => {
+						field.setMultipleChoice(Boolean(checked));
+					}}
+				/>
+				<Label htmlFor="multipleChoice">Multiple choice</Label>
+			</div>
 			<div className="flex flex-col gap-2">
 				<Label className="font-medium text-sm" htmlFor="items">
 					Items
@@ -77,18 +97,6 @@ const CheckboxFieldSettings = ({ field }: CheckboxFieldSettingsProps) => {
 						size="sm"
 						tooltip="Add item"
 					/>
-				</div>
-				<div className="flex items-center gap-2">
-					<Checkbox
-						checked={field.withCustomField}
-						id="withCustomField"
-						onCheckedChange={(checked) => {
-							field.setWithCustomField(Boolean(checked));
-						}}
-					/>
-					<Label className="font-normal text-sm" htmlFor="withCustomField">
-						With Custom Field
-					</Label>
 				</div>
 			</div>
 		</div>
