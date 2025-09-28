@@ -26,7 +26,7 @@ function ViewClient({ dataSheet }: ViewClientProps) {
 	}
 
 	return (
-		<div className="h-screen bg-gray-50 py-10 pl-2">
+		<div className="h-screen bg-gray-50 py-2 pl-2 md:py-10">
 			<div className="h-full overflow-auto pb-6">
 				<FormView />
 				<div className="mt-2 flex w-full justify-center">
