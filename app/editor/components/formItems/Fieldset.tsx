@@ -139,7 +139,7 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index }) => {
 									size="sm"
 									variant="link"
 								>
-									Use section template{" "}
+									Use section template
 								</Button>
 							</div>
 						</div>

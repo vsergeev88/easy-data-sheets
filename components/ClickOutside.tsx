@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export function ClickOutside({
 	children,
@@ -19,8 +17,12 @@ export function ClickOutside({
 		const handleClickOutside = (event: MouseEvent | TouchEvent) => {
 			const target = event.target as HTMLElement;
 			const hasIgnoreClass = (element: HTMLElement | null): boolean => {
-				if (!element) return false;
-				if (element.classList.contains(ignoreClass ?? "")) return true;
+				if (!element) {
+					return false;
+				}
+				if (element.classList.contains(ignoreClass ?? "")) {
+					return true;
+				}
 				return hasIgnoreClass(element.parentElement);
 			};
 
@@ -42,7 +44,7 @@ export function ClickOutside({
 	}, [onClickOutside, ignoreClass]);
 
 	return (
-		<div ref={ref} className={className}>
+		<div className={className} ref={ref}>
 			{children}
 		</div>
 	);

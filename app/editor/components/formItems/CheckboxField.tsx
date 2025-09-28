@@ -1,6 +1,8 @@
 import type React from "react";
 import type { IBareCheckboxFieldModel } from "@/app/stores/bareStores/fields/bareCheckboxFieldModel";
+
 import BaseCheckboxField from "@/components/baseFormItems/BaseCheckboxField";
+
 import FormItemWrapper from "./FormItemWrapper";
 
 export type EditorCheckboxFieldProps = {

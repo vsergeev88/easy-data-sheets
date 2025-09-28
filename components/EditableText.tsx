@@ -4,20 +4,21 @@ import { cn } from "@/lib/utils";
 
 type EditableTextProps = {
 	text: string;
-	setText: (nextText: string) => void;
 	className?: string;
 	inputClassName?: string;
 	lines?: number;
+	onBlur?: (nextText: string) => void;
 };
 
 export const EditableText: React.FC<EditableTextProps> = ({
 	text,
-	setText,
+	onBlur,
 	className,
 	inputClassName,
 	lines = 1,
 }) => {
 	const [isEdit, setIsEdit] = useState(false);
+	const [localText, setLocalText] = useState(text);
 
 	if (!isEdit) {
 		return (
@@ -34,32 +35,29 @@ export const EditableText: React.FC<EditableTextProps> = ({
 				}}
 				type="button"
 			>
-				{text}
+				{localText}
 			</button>
 		);
 	}
 
+	const commonProps = {
+		autoFocus: true,
+		className: cn("w-full", inputClassName),
+		onBlur: () => {
+			setIsEdit(false);
+			onBlur?.(localText);
+		},
+		onChange: (
+			e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+		) => {
+			setLocalText(e.target.value);
+		},
+		value: localText,
+	};
+
 	if (lines > 1) {
-		return (
-			<textarea
-				autoFocus
-				className={cn("w-full", inputClassName)}
-				onBlur={() => setIsEdit(false)}
-				onChange={(e) => setText(e.target.value)}
-				rows={lines}
-				value={text}
-			/>
-		);
+		return <textarea {...commonProps} rows={lines} />;
 	}
 
-	return (
-		<input
-			autoFocus
-			className={cn("w-full", inputClassName)}
-			onBlur={() => setIsEdit(false)}
-			onChange={(e) => setText(e.target.value)}
-			type="text"
-			value={text}
-		/>
-	);
+	return <input {...commonProps} type="text" />;
 };

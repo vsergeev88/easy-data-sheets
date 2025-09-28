@@ -28,7 +28,7 @@ function FormView() {
 			<EditableText
 				className="mb-4 text-center font-bold text-2xl md:text-left"
 				inputClassName="md:text-2xl font-bold"
-				setText={(text) => formInfo.setName(text)}
+				onBlur={(text) => formInfo.setName(text)}
 				text={formInfo.name}
 			/>
 			<br />
@@ -37,7 +37,7 @@ function FormView() {
 					className="mb-4 text-gray-500 text-sm"
 					inputClassName="text-gray-500 text-sm"
 					lines={3}
-					setText={(text) => safeFormData.setDescription(text)}
+					onBlur={(text) => safeFormData.setDescription(text)}
 					text={safeFormData.description}
 				/>
 			)}

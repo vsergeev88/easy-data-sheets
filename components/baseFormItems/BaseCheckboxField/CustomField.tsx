@@ -1,8 +1,10 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function CustomField({
 	onAddOtherValue,
@@ -15,20 +17,20 @@ export default function CustomField({
 		<div className="flex w-full flex-row items-center space-x-2">
 			<div className="flex w-full items-center space-x-2">
 				<Input
-					type="text"
-					placeholder="Other"
-					value={otherValue}
 					className="max-w-lg"
 					onChange={(e) => setOtherValue(e.target.value)}
+					placeholder="Other"
+					type="text"
+					value={otherValue}
 				/>
 				<Button
-					variant="outline"
-					type="button"
 					disabled={!otherValue}
 					onClick={() => {
 						onAddOtherValue?.(otherValue);
 						setOtherValue("");
 					}}
+					type="button"
+					variant="outline"
 				>
 					<PlusIcon /> Add
 				</Button>

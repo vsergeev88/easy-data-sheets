@@ -1,7 +1,10 @@
-import { observer } from "mobx-react-lite";
 import type React from "react";
 import type { IBareCheckboxFieldModel } from "@/app/stores/bareStores/fields/bareCheckboxFieldModel";
+
+import { observer } from "mobx-react-lite";
+
 import { Checkbox } from "@/components/ui/checkbox";
+
 import CustomField from "./CustomField";
 
 type BaseCheckboxFieldProps = {
@@ -33,8 +36,9 @@ const BaseCheckboxField: React.FC<BaseCheckboxFieldProps> = ({ field }) => {
 			))}
 			{field.withCustomField && (
 				<CustomField
-					onAddOtherValue={() => {
-						field.setValue([...field.value, ""]);
+					onAddOtherValue={(otherValue) => {
+						field.addItem(otherValue);
+						field.setValue([...field.value, otherValue]);
 					}}
 				/>
 			)}
