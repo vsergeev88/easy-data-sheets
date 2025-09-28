@@ -1,4 +1,4 @@
-import { Eye, Monitor, Save, Smartphone, X } from "lucide-react";
+import { Eye, Monitor, Smartphone } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 
@@ -19,7 +19,7 @@ const PreviewButton = () => {
 	const [open, setOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
 
-	const { safeFormData, save, isSaving, safeFormInfo } = useEditorAppStore();
+	const { save, isSaving, safeFormInfo } = useEditorAppStore();
 
 	const handlePreview = async () => {
 		await save();
@@ -75,7 +75,7 @@ const PreviewButton = () => {
 					>
 						<iframe
 							className="size-full rounded-2xl"
-							src={`/view/${safeFormInfo.id}`}
+							src={`/view/${safeFormInfo.id}?demo=true`}
 							title="Preview Datasheet"
 						/>
 					</div>

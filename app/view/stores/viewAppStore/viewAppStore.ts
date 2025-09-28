@@ -29,6 +29,9 @@ const ViewAppModel = types
       }
       return self.formInfo;
     },
+    get isDemo(): boolean {
+      return window.location.search.includes("demo=true");
+    },
   }))
   .actions((self) => ({
     init: (dataSheet: DataSheet) => {
@@ -47,7 +50,7 @@ const ViewAppModel = types
       self.isSubmitting = true;
       try {
         yield new Promise((resolve) => {
-          console.log("submitDatasheet");
+          console.log("submitDatasheet -- isDemo", self.isDemo);
           resolve(true);
         });
       } catch {

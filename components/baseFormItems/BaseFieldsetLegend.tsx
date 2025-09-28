@@ -16,7 +16,7 @@ export default function BaseFieldsetLegend({
 	return (
 		<div
 			className={cn(
-				"flex w-full items-center justify-between gap-2 text-lg font-medium select-none",
+				"flex w-full select-none items-center justify-between gap-2 pl-4 font-medium text-lg",
 				className
 			)}
 			onClick={onClick}
