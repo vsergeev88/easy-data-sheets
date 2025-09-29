@@ -1,9 +1,10 @@
 import { type Instance, types } from "mobx-state-tree";
-import { BareCheckboxFieldModel } from "./fields/bareCheckboxFieldModel";
+
+import { BareChoiceFieldModel } from "./fields/bareChoiceFieldModel";
 import { BareTextFieldModel } from "./fields/bareTextFieldModel";
 
 export const BareFieldModel = types.union(
-	BareTextFieldModel,
-	BareCheckboxFieldModel
+  BareTextFieldModel,
+  BareChoiceFieldModel
 );
 export type IBareFieldModel = Instance<typeof BareFieldModel>;

@@ -1,9 +1,16 @@
 export const FIELD_TYPES = {
   TEXT: "text",
-  CHECKBOX: "checkbox",
+  CHOICE: "choice",
 };
 
 export type FieldTypes = (typeof FIELD_TYPES)[keyof typeof FIELD_TYPES];
+
+export const CHOICE_TYPES = {
+  RADIO: "radio",
+  CHECKBOX: "checkbox",
+};
+
+export type ChoiceTypes = (typeof CHOICE_TYPES)[keyof typeof CHOICE_TYPES];
 
 export type CommonFieldProps = {
   id: string;
@@ -18,13 +25,13 @@ export type TextField = CommonFieldProps & {
   type: "text";
 };
 
-export type CheckboxField = CommonFieldProps & {
-  type: "checkbox";
+export type ChoiceField = CommonFieldProps & {
+  type: "choice";
   items: string[];
   withCustomField?: boolean;
 };
 
-export type Field = TextField | CheckboxField;
+export type Field = TextField | ChoiceField;
 
 export type FieldSet = {
   id: string;

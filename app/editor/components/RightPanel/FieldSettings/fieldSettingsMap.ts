@@ -1,8 +1,8 @@
 import { FIELD_TYPES } from "@/lib/types/form";
 
-import CheckboxFieldSettings, {
-  type CheckboxFieldSettingsProps,
-} from "./CheckboxFieldSettings";
+import ChoiceFieldSettings, {
+  type ChoiceFieldSettingsProps,
+} from "./ChoiceFieldSettings";
 import {
   TextInputSettings,
   type TextInputSettingsProps,
@@ -11,6 +11,6 @@ import {
 export const fieldSettingsMap = {
   [FIELD_TYPES.TEXT]:
     TextInputSettings as React.ComponentType<TextInputSettingsProps>,
-  [FIELD_TYPES.CHECKBOX]:
-    CheckboxFieldSettings as React.ComponentType<CheckboxFieldSettingsProps>,
+  [FIELD_TYPES.CHOICE]:
+    ChoiceFieldSettings as React.ComponentType<ChoiceFieldSettingsProps>,
 } as const;

@@ -1,12 +1,11 @@
 import { type Instance, types } from "mobx-state-tree";
 
-import { BareCheckboxFieldModel } from "@/app/stores/bareStores/fields/bareCheckboxFieldModel";
+import { BareChoiceFieldModel } from "@/app/stores/bareStores/fields/bareChoiceFieldModel";
 
 import { BaseViewFieldModel } from "../baseViewFieldModel";
 
-export const CheckboxFieldModel = types
-  .compose(BaseViewFieldModel, BareCheckboxFieldModel)
-  .named("CheckboxFieldModel");
+export const ChoiceFieldModel = types
+  .compose(BaseViewFieldModel, BareChoiceFieldModel)
+  .named("ChoiceFieldModel");
 
-export interface ICheckboxFieldModel
-  extends Instance<typeof CheckboxFieldModel> {}
+export interface IChoiceFieldModel extends Instance<typeof ChoiceFieldModel> {}

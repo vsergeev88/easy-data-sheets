@@ -124,3 +124,7 @@
     @apply bg-transparent border-none p-0 m-0;
   }
 }
+
+#clerk-components {
+  display: none;
+}

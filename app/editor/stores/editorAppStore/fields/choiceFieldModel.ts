@@ -1,12 +1,12 @@
 import { cast, type Instance, types } from "mobx-state-tree";
 
-import { BareCheckboxFieldModel } from "@/app/stores/bareStores/fields/bareCheckboxFieldModel";
+import { BareChoiceFieldModel } from "@/app/stores/bareStores/fields/bareChoiceFieldModel";
 
 import { BaseEditorFieldModel } from "../baseEditorFieldModel";
 
-export const CheckboxFieldModel = types
-  .compose(BaseEditorFieldModel, BareCheckboxFieldModel)
-  .named("CheckboxFieldModel")
+export const ChoiceFieldModel = types
+  .compose(BaseEditorFieldModel, BareChoiceFieldModel)
+  .named("ChoiceFieldModel")
   .actions((self) => ({
     removeItem: (index: number): void => {
       const nextItems = [...self.items];
@@ -37,10 +37,6 @@ export const CheckboxFieldModel = types
     setItems: (items: string[]): void => {
       self.items = cast(items);
     },
-    setMultipleChoice: (value: boolean): void => {
-      self.multipleChoice = value;
-    },
   }));
 
-export interface ICheckboxFieldModel
-  extends Instance<typeof CheckboxFieldModel> {}
+export interface IChoiceFieldModel extends Instance<typeof ChoiceFieldModel> {}

@@ -11,7 +11,14 @@ export default function BaseSubmitButton({
 }: BaseSubmitButtonProps) {
 	return (
 		<div className="flex justify-end">
-			<Button onClick={onSubmit} size="lg" type="submit">
+			<Button
+				onClick={(e) => {
+					e.preventDefault();
+					onSubmit?.(e);
+				}}
+				size="lg"
+				type="submit"
+			>
 				{label}
 			</Button>
 		</div>

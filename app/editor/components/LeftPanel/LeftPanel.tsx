@@ -1,3 +1,14 @@
+import { useEditorAppStore } from "@editorAppStore";
+import {
+	ChevronDown,
+	PencilRuler,
+	SquareCheckBig,
+	SquareDashed,
+	// Text,
+	TextCursorInput,
+} from "lucide-react";
+
+import { FieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 import {
 	Accordion,
 	AccordionContent,
@@ -5,17 +16,7 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import {
-	TextCursorInput,
-	SquareCheckBig,
-	Text,
-	ChevronDown,
-	PencilRuler,
-	SquareDashed,
-} from "lucide-react";
-import { useEditorAppStore } from "@editorAppStore";
-import { FIELD_TYPES } from "@/lib/types/form";
-import { FieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
+import { CHOICE_TYPES, FIELD_TYPES } from "@/lib/types/form";
 
 export default function LeftPanel() {
 	const { safeFormData } = useEditorAppStore();
@@ -30,8 +31,8 @@ export default function LeftPanel() {
 			},
 		},
 		{
-			id: "checkbox-radio",
-			title: "Checkbox / Radio",
+			id: "text-choice",
+			title: "Choice (text)",
 			icon: SquareCheckBig,
 			onClick: () => {
 				const fieldId = crypto.randomUUID();
@@ -39,9 +40,10 @@ export default function LeftPanel() {
 					safeFormData.selectedFieldSetId,
 					FieldModel.create({
 						id: fieldId,
-						type: FIELD_TYPES.CHECKBOX,
+						type: FIELD_TYPES.CHOICE,
+						choiceType: CHOICE_TYPES.CHECKBOX,
 						name: fieldId,
-						label: "Checkbox / Radio",
+						label: "Choice (text)",
 						description: "Select one or more options",
 						required: false,
 						items: ["Option 1", "Option 2", "Option 3"],
@@ -89,9 +91,9 @@ export default function LeftPanel() {
 
 	return (
 		<div className="p-2">
-			<Accordion type="multiple" defaultValue={["basic"]}>
+			<Accordion defaultValue={["basic"]} type="multiple">
 				<AccordionItem value="basic">
-					<AccordionTrigger className="text-sm font-bold uppercase">
+					<AccordionTrigger className="font-bold text-sm uppercase">
 						Basic elements
 					</AccordionTrigger>
 					<AccordionContent>
@@ -99,17 +101,17 @@ export default function LeftPanel() {
 							{basicItems.map((item) => (
 								<li className="w-full" key={item.id}>
 									<Button
-										variant="ghost"
-										size="sm"
 										className="w-full justify-start"
 										disabled={item.isSoon}
 										onClick={item.onClick}
+										size="sm"
+										variant="ghost"
 									>
 										<item.icon />
 										<span>
 											{item.title}{" "}
 											{item.isSoon && (
-												<span className="text-xs text-gray-500">soon</span>
+												<span className="text-gray-500 text-xs">soon</span>
 											)}
 										</span>
 									</Button>
@@ -119,25 +121,25 @@ export default function LeftPanel() {
 					</AccordionContent>
 				</AccordionItem>
 				<AccordionItem value="templates">
-					<AccordionTrigger className="text-sm font-bold uppercase">
+					<AccordionTrigger className="font-bold text-sm uppercase">
 						Section Templates
 					</AccordionTrigger>
 					<AccordionContent>
 						<ul className="flex flex-col gap-2">
 							<li className="w-full">
 								<Button
-									variant="ghost"
-									size="sm"
 									className="w-full justify-start"
+									size="sm"
+									variant="ghost"
 								>
 									Empty Section
 								</Button>
 							</li>
 							<li className="w-full">
 								<Button
-									variant="ghost"
-									size="sm"
 									className="w-full justify-start"
+									size="sm"
+									variant="ghost"
 								>
 									Customer Contacts
 								</Button>
@@ -145,9 +147,9 @@ export default function LeftPanel() {
 
 							<li className="w-full">
 								<Button
-									variant="ghost"
-									size="sm"
 									className="w-full justify-start"
+									size="sm"
+									variant="ghost"
 								>
 									Delivery Address
 								</Button>
@@ -155,9 +157,9 @@ export default function LeftPanel() {
 
 							<li className="w-full">
 								<Button
-									variant="ghost"
-									size="sm"
 									className="w-full justify-start"
+									size="sm"
+									variant="ghost"
 								>
 									External Sizing
 								</Button>
@@ -167,12 +169,12 @@ export default function LeftPanel() {
 				</AccordionItem>
 				<AccordionItem value="colors">
 					<AccordionTrigger
+						className="pointer-events-none font-bold text-sm uppercase opacity-30"
 						disabled
-						className="pointer-events-none text-sm font-bold uppercase opacity-30"
 					>
 						Branding colors (soon)
 					</AccordionTrigger>
-					<AccordionContent></AccordionContent>
+					<AccordionContent />
 				</AccordionItem>
 			</Accordion>
 		</div>

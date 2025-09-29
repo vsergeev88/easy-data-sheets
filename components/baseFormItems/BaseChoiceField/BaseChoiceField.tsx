@@ -1,20 +1,21 @@
 import type React from "react";
-import type { IBareCheckboxFieldModel } from "@/app/stores/bareStores/fields/bareCheckboxFieldModel";
+import type { IBareChoiceFieldModel } from "@/app/stores/bareStores/fields/bareChoiceFieldModel";
 
 import { observer } from "mobx-react-lite";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { CHOICE_TYPES } from "@/lib/types/form";
 
 import CustomField from "./CustomField";
 
-type BaseCheckboxFieldProps = {
-	field: IBareCheckboxFieldModel;
+type BaseChoiceFieldProps = {
+	field: IBareChoiceFieldModel;
 };
 
-const BaseCheckboxField: React.FC<BaseCheckboxFieldProps> = ({ field }) => {
-	if (field.multipleChoice) {
+const BaseChoiceField: React.FC<BaseChoiceFieldProps> = ({ field }) => {
+	if (field.choiceType === CHOICE_TYPES.CHECKBOX) {
 		return (
 			<div className="flex w-full flex-col space-y-2 bg-white px-2 py-2">
 				{field.items.map((item) => (
@@ -24,7 +25,7 @@ const BaseCheckboxField: React.FC<BaseCheckboxFieldProps> = ({ field }) => {
 					>
 						<Checkbox
 							checked={field.value?.includes(item)}
-							id={item}
+							id={field.id + item}
 							onCheckedChange={(checked) => {
 								return checked
 									? field.setValue([...field.value, item])
@@ -33,7 +34,7 @@ const BaseCheckboxField: React.FC<BaseCheckboxFieldProps> = ({ field }) => {
 										);
 							}}
 						/>
-						<Label className="font-normal text-sm" htmlFor={item}>
+						<Label className="font-normal text-sm" htmlFor={field.id + item}>
 							{item}
 						</Label>
 					</div>
@@ -52,7 +53,7 @@ const BaseCheckboxField: React.FC<BaseCheckboxFieldProps> = ({ field }) => {
 
 	return (
 		<RadioGroup
-			className="flex w-full flex-col bg-white px-2 py-2"
+			className="flex w-full flex-col gap-2 bg-white px-2 py-2"
 			defaultValue={field.items[0]}
 			onValueChange={(value) => {
 				field.setValue([value]);
@@ -61,8 +62,8 @@ const BaseCheckboxField: React.FC<BaseCheckboxFieldProps> = ({ field }) => {
 			{field.items.map((item) => {
 				return (
 					<div className="flex items-center space-x-2" key={item}>
-						<RadioGroupItem id={item} value={item} />
-						<Label className="font-normal text-sm" htmlFor={item}>
+						<RadioGroupItem id={field.id + item} value={item} />
+						<Label className="font-normal text-sm" htmlFor={field.id + item}>
 							{item}
 						</Label>
 					</div>
@@ -79,4 +80,4 @@ const BaseCheckboxField: React.FC<BaseCheckboxFieldProps> = ({ field }) => {
 		</RadioGroup>
 	);
 };
-export default observer(BaseCheckboxField);
+export default observer(BaseChoiceField);

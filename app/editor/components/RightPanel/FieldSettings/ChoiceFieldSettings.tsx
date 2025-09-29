@@ -1,4 +1,4 @@
-import type { ICheckboxFieldModel } from "@/app/editor/stores/editorAppStore/fields/checkboxFieldModel";
+import type { IChoiceFieldModel } from "@/app/editor/stores/editorAppStore/fields/choiceFieldModel";
 
 import { useDragAndDrop } from "@formkit/drag-and-drop/react";
 import { GripVertical, Plus, Trash2 } from "lucide-react";
@@ -12,11 +12,11 @@ import { Switch } from "@/components/ui/switch";
 
 import FieldLabelSettings from "./FieldLabelSettings";
 
-export type CheckboxFieldSettingsProps = {
-	field: ICheckboxFieldModel;
+export type ChoiceFieldSettingsProps = {
+	field: IChoiceFieldModel;
 };
 
-const CheckboxFieldSettings = ({ field }: CheckboxFieldSettingsProps) => {
+const ChoiceFieldSettings = ({ field }: ChoiceFieldSettingsProps) => {
 	const [newItem, setNewItem] = useState("");
 
 	const [parent, draggableItems, setItems] = useDragAndDrop<
@@ -45,16 +45,6 @@ const CheckboxFieldSettings = ({ field }: CheckboxFieldSettingsProps) => {
 					}}
 				/>
 				<Label htmlFor="withCustomField">With Custom Field</Label>
-			</div>
-			<div className="flex items-center space-x-2">
-				<Switch
-					checked={field.multipleChoice}
-					id="withCustomField"
-					onCheckedChange={(checked) => {
-						field.setMultipleChoice(Boolean(checked));
-					}}
-				/>
-				<Label htmlFor="multipleChoice">Multiple choice</Label>
 			</div>
 			<div className="flex flex-col gap-2">
 				<Label className="font-medium text-sm" htmlFor="items">
@@ -103,4 +93,4 @@ const CheckboxFieldSettings = ({ field }: CheckboxFieldSettingsProps) => {
 	);
 };
 
-export default observer(CheckboxFieldSettings);
+export default observer(ChoiceFieldSettings);

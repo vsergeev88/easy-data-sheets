@@ -1,15 +1,15 @@
 import { cast, type Instance, types } from "mobx-state-tree";
 
-import { FIELD_TYPES } from "@/lib/types/form";
+import { CHOICE_TYPES, FIELD_TYPES } from "@/lib/types/form";
 
 import { BaseFieldModel } from "../baseFieldModel";
 
-export const BareCheckboxFieldModel = BaseFieldModel.named("CheckboxFieldModel")
+export const BareChoiceFieldModel = BaseFieldModel.named("BareChoiceFieldModel")
   .props({
-    type: types.literal(FIELD_TYPES.CHECKBOX),
+    type: types.literal(FIELD_TYPES.CHOICE),
+    choiceType: types.enumeration(Object.values(CHOICE_TYPES)),
     items: types.array(types.string),
     withCustomField: types.optional(types.boolean, false),
-    multipleChoice: types.optional(types.boolean, true),
     value: types.optional(types.array(types.string), []),
   })
   .actions((self) => ({
@@ -20,5 +20,5 @@ export const BareCheckboxFieldModel = BaseFieldModel.named("CheckboxFieldModel")
       self.items.push(item);
     },
   }));
-export interface IBareCheckboxFieldModel
-  extends Instance<typeof BareCheckboxFieldModel> {}
+export interface IBareChoiceFieldModel
+  extends Instance<typeof BareChoiceFieldModel> {}
