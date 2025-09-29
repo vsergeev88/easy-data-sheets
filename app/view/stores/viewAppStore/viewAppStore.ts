@@ -6,6 +6,7 @@ import React from "react";
 
 import { type IViewFormDataModel, ViewFormDataModel } from "./formDataModel";
 import { type IViewFormInfoModel, ViewFormInfoModel } from "./formInfoModel";
+import { getSubmitData, submitDatasheetClient } from "./utils";
 
 const ViewAppModel = types
   .model({
@@ -49,10 +50,18 @@ const ViewAppModel = types
     submitDatasheet: flow(function* () {
       self.isSubmitting = true;
       try {
-        yield new Promise((resolve) => {
-          console.log("submitDatasheet -- isDemo", self.isDemo);
-          resolve(true);
+        const data = yield submitDatasheetClient({
+          formData: {
+            name: self.safeFormInfo.name,
+            id: self.safeFormInfo.id,
+            authorId: self.safeFormInfo.userId,
+            companyId: self.safeFormInfo.companyId ?? null,
+          },
+          submitData: getSubmitData(self.safeFormData.fieldSets),
+          demo: self.isDemo,
+          contacts: null,
         });
+        console.log("data", data);
       } catch {
         // TODO: add error handling
       } finally {

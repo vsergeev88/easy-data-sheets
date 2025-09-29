@@ -25,6 +25,10 @@ export async function createDataSheet(
 
   const userId = await getUserId();
 
+  if (!userId) {
+    throw new Error("User ID is required");
+  }
+
   await sql`INSERT INTO data_sheets (id, name, data, created_at, updated_at, user_id, published, company_id) VALUES (${id}, ${name}, ${dataString}, ${createdAt}, ${updatedAt}, ${userId}, false, ${companyId ?? null})`;
 
   // Construct the DataSheet object to return

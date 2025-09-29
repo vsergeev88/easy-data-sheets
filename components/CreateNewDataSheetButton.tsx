@@ -1,6 +1,7 @@
+import { redirect } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import { createDataSheet } from "@/lib/data/dataSheets";
-import { redirect } from "next/navigation";
 
 export const CreateNewDataSheetButton: React.FC<{
 	userId: string;
@@ -10,8 +11,8 @@ export const CreateNewDataSheetButton: React.FC<{
 		"use server";
 		const dataSheet = await createDataSheet("My Data Sheet", {
 			description: "My Data Sheet Description",
-			userId: userId,
-			companyId: companyId,
+			userId,
+			companyId,
 			public: false,
 			private: false,
 			data: {},
