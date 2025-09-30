@@ -8,7 +8,7 @@ export const getSubmitData = (fieldSets: IViewFieldSetModel[]) => {
       legend: `${index + 1} ${fieldSet.legend ?? ""}`,
       fields: fieldSet.fields.map((field) => {
         return {
-          name: field.name,
+          name: field.label,
           value: field.value,
         };
       }),
