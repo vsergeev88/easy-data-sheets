@@ -13,6 +13,14 @@ export type DataSheet = {
   companyId: string | null;
 };
 
+export type DataSheetWithResponseCounts = DataSheet & {
+  responseCounts: {
+    total: number;
+    unread: number;
+    archived: number;
+  };
+};
+
 export async function createDataSheet(
   name: string,
   data?: Record<string, unknown>,
@@ -75,6 +83,62 @@ export async function updateDataSheet(
   const userId = await getUserId();
   await sql`UPDATE data_sheets SET name = ${dataSheet.name}, data = ${dataSheet.data}, updated_at = ${dataSheet.updatedAt}, published = ${dataSheet.published} WHERE id = ${dataSheet.id} AND user_id = ${userId}`;
   return dataSheet;
+}
+
+type DataSheetQueryResult = {
+  id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  user_id: string;
+  published: boolean;
+  company_id: string | null;
+  data: string;
+  total_responses: number;
+  unread_responses: number;
+  archived_responses: number;
+};
+
+export async function getDataSheetsWithResponseCounts(): Promise<
+  DataSheetWithResponseCounts[]
+> {
+  const userId = await getUserId();
+
+  const results = await sql`
+    SELECT 
+      ds.*,
+      COALESCE(dr.total_responses, 0) as total_responses,
+      COALESCE(dr.unread_responses, 0) as unread_responses,
+      COALESCE(dr.archived_responses, 0) as archived_responses
+    FROM data_sheets ds
+    LEFT JOIN (
+      SELECT 
+        datasheet_id,
+        COUNT(*) as total_responses,
+        COUNT(*) FILTER (WHERE unread = true) as unread_responses,
+        COUNT(*) FILTER (WHERE archived = true) as archived_responses
+      FROM datasheet_responses
+      GROUP BY datasheet_id
+    ) dr ON ds.id = dr.datasheet_id
+    WHERE ds.user_id = ${userId}
+    ORDER BY ds.updated_at DESC
+  `;
+
+  return (results as DataSheetQueryResult[]).map((row) => ({
+    id: row.id,
+    name: row.name,
+    createdAt: new Date(row.created_at),
+    updatedAt: new Date(row.updated_at),
+    userId: row.user_id,
+    published: row.published,
+    companyId: row.company_id,
+    data: row.data,
+    responseCounts: {
+      total: Number(row.total_responses),
+      unread: Number(row.unread_responses),
+      archived: Number(row.archived_responses),
+    },
+  }));
 }
 
 export async function deleteDataSheet(dataSheetId: string): Promise<void> {

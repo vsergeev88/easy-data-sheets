@@ -1,7 +1,8 @@
 import { getDataSheet } from "@/lib/data/dataSheets";
+
 import { EditorClientApp } from "./EditorClientApp";
 
-async function EditorPage({ params }: { params: { id: string } }) {
+async function EditorPage({ params }: { params: Promise<{ id: string }> }) {
 	const { id } = await params;
 	const dataSheet = await getDataSheet(id);
 	console.log("dataSheet", dataSheet);

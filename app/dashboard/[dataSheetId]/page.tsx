@@ -1,22 +1,21 @@
-import { getDataSheet } from "@/lib/data/dataSheets";
+import { getResponsesByDatasheetId } from "@/lib/data/datasheetResponses";
 
 export default async function DataSheetPage({
 	params,
 }: {
-	params: { dataSheetId: string };
+	params: Promise<{ dataSheetId: string }>;
 }) {
-	const dataSheet = await getDataSheet(params.dataSheetId);
+	const { dataSheetId } = await params;
+	const responses = await getResponsesByDatasheetId(dataSheetId, 100, 0, false);
 
-	if (!dataSheet) {
-		return <div>DataSheet not found</div>;
+	if (!responses) {
+		return <div>responses not found</div>;
 	}
-
-	const data = JSON.parse(dataSheet.data);
 
 	return (
 		<div>
-			<h1>{dataSheet.name}</h1>
-			<pre>{JSON.stringify(data, null, 2)}</pre>
+			<h1>Responses</h1>
+			<pre>{JSON.stringify(responses, null, 2)}</pre>
 		</div>
 	);
 }

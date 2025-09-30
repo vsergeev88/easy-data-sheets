@@ -41,7 +41,7 @@ export const submitDatasheetClient = async ({
     demo,
     data: JSON.stringify(submitData),
   };
-  const response = await fetch("/api/v1/datasheet/submit", {
+  const response = await fetch("/api/v1/response/submit", {
     method: "POST",
     body: JSON.stringify({ newResponse }),
   });
