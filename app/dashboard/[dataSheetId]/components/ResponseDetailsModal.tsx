@@ -56,7 +56,6 @@ const ResponseDetailsModal = ({
 						<Button variant="outline">Print</Button>
 					</DialogClose>
 					<Button type="button">Save as PDF</Button>
-					<Button type="button">Share</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

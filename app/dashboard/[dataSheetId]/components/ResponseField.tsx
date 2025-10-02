@@ -1,7 +1,6 @@
 import { Copy, MessageSquareMore, Pencil } from "lucide-react";
 import { useState } from "react";
 
-import { EditableText } from "@/components/EditableText";
 import { Tooltip } from "@/components/Tooltip";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,14 +9,14 @@ import { cn } from "@/lib/utils";
 export const ResponseField = ({
 	field,
 }: {
-	field: { name: string; value: string | string[]; notes: string };
+	field: { name: string; value: string | string[]; notes?: string };
 }) => {
 	const value = Array.isArray(field.value)
-		? field.value.join("; \n")
+		? field.value.join("; ")
 		: field.value;
 
 	const [isNotesEditing, setIsNotesEditing] = useState(false);
-	const [notes, setNotes] = useState(field.notes);
+	const [notes, setNotes] = useState(field.notes ?? "");
 
 	return (
 		<div className=" border-b py-1">
