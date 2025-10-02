@@ -107,12 +107,16 @@ const ResponseDetailsModal = ({
 	};
 	return (
 		<Dialog onOpenChange={setOpenDetailsModal} open={openDetailsModal}>
-			<DialogContent className="min-h-[90vh] min-w-[90vw] grid-cols-[1fr] grid-rows-[auto_1fr] gap-0">
-				<DialogHeader>
+			<DialogContent className="min-h-[90vh] min-w-[90vw] grid-cols-[1fr] grid-rows-[auto_1fr] gap-0 print:min-w-[100vw]">
+				<DialogHeader className="print:hidden">
 					<DialogTitle>Response Details</DialogTitle>
 				</DialogHeader>
 				{!response?.data && <div className="grid gap-4">No data</div>}
-				<div className="overflow-y-auto py-4" id="pdf-content" ref={contentRef}>
+				<div
+					className="overflow-y-auto py-4 print:visible print:w-[100vw] print:overflow-x-visible print:overflow-y-visible print:py-0"
+					id="pdf-content"
+					ref={contentRef}
+				>
 					{JSON.parse(response?.data ?? "[]").map(
 						(
 							fieldset: {
@@ -136,7 +140,7 @@ const ResponseDetailsModal = ({
 						)
 					)}
 				</div>
-				<DialogFooter>
+				<DialogFooter className="print:hidden">
 					<Button
 						className="flex items-center gap-2"
 						onClick={handlePrint}
