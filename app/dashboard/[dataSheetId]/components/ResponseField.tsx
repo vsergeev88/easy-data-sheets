@@ -29,7 +29,7 @@ export const ResponseField = ({
 						</div>
 					}
 				</div>
-				<div className="flex flex-col items-center gap-2 text-slate-400">
+				<div className="flex flex-col items-center gap-2 text-slate-400 print:hidden">
 					<Tooltip message="Copy value">
 						<Button
 							disabled={!value}

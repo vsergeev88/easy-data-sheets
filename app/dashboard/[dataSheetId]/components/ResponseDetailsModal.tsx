@@ -107,12 +107,20 @@ const ResponseDetailsModal = ({
 	};
 	return (
 		<Dialog onOpenChange={setOpenDetailsModal} open={openDetailsModal}>
-			<DialogContent className="min-h-[90vh] min-w-[90vw] grid-cols-[1fr] grid-rows-[auto_1fr] gap-0">
-				<DialogHeader>
-					<DialogTitle>Response Details</DialogTitle>
+			<DialogContent className="min-h-[90vh] min-w-[90vw] grid-cols-[1fr] grid-rows-[auto_1fr] gap-0 print:m-0 print:min-w-[100vw] print:p-0">
+				<DialogHeader className="print:hidden">
+					<DialogTitle>{response?.datasheetName}</DialogTitle>
 				</DialogHeader>
 				{!response?.data && <div className="grid gap-4">No data</div>}
-				<div className="overflow-y-auto py-4" id="pdf-content" ref={contentRef}>
+				<div
+					className="overflow-y-auto py-4 print:visible print:w-[100vw] print:overflow-x-visible print:overflow-y-visible print:py-0"
+					id="pdf-content"
+					ref={contentRef}
+				>
+					<h1 className="mb-2 hidden font-bold text-xl print:block">
+						{response?.datasheetName}
+					</h1>
+
 					{JSON.parse(response?.data ?? "[]").map(
 						(
 							fieldset: {
@@ -122,10 +130,10 @@ const ResponseDetailsModal = ({
 							fieldsetIndex: number
 						) => (
 							<div
-								className="bg-gray-50 p-2"
+								className="bg-gray-50 p-2 print:bg-white print:p-0"
 								key={`fieldset-${fieldsetIndex}-${fieldset.legend}`}
 							>
-								<h2 className="font-bold text-lg">{fieldset.legend}</h2>
+								<h2 className="font-semibold text-lg">{fieldset.legend}</h2>
 								{fieldset.fields.map((field, fieldIndex) => (
 									<ResponseField
 										field={field}
@@ -136,7 +144,7 @@ const ResponseDetailsModal = ({
 						)
 					)}
 				</div>
-				<DialogFooter>
+				<DialogFooter className="print:hidden">
 					<Button
 						className="flex items-center gap-2"
 						onClick={handlePrint}

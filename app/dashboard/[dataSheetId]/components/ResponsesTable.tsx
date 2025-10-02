@@ -5,6 +5,7 @@ import type { DataSheetResponse } from "@/lib/data/datasheetResponses";
 declare module "@tanstack/react-table" {
 	interface TableMeta<TData extends RowData> {
 		onRowClick?: (row: TData) => void;
+		addQuickNotes?: (row: TData, notes: string) => void;
 	}
 }
 
@@ -21,7 +22,7 @@ import {
 	useReactTable,
 	type VisibilityState,
 } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal, Star } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal, Pencil, Star } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -103,9 +104,28 @@ export const columns: ColumnDef<DataSheetResponse>[] = [
 	},
 	{
 		accessorKey: "notes",
-		header: () => <div className="text-right">Quick Notes</div>,
-		cell: ({ row }) => {
-			return <div className="cursor-pointer">{row.getValue("notes")}</div>;
+		header: () => <div className="text-center">Quick Notes</div>,
+		cell: ({ row, table }) => {
+			if (row.getValue("notes")) {
+				return <div className="cursor-pointer">{row.getValue("notes")}</div>;
+			}
+			return (
+				<div className="cursor-pointer text-center">
+					<Button
+						className="text-slate-400"
+						onClick={(e) => {
+							e.stopPropagation();
+							table.options.meta?.addQuickNotes?.(
+								row.original,
+								row.getValue("notes")
+							);
+						}}
+						variant="ghost"
+					>
+						<Pencil /> add notes
+					</Button>
+				</div>
+			);
 		},
 	},
 	{
@@ -182,6 +202,10 @@ const ResponsesTable: React.FC<ResponsesTableProps> = ({ responses }) => {
 		setOpenDetailsModal(true);
 	};
 
+	const addQuickNotes = (response: DataSheetResponse, notes: string) => {
+		console.log("addQuickNotes", response, notes);
+	};
+
 	const table = useReactTable({
 		data: responses,
 		columns,
@@ -201,6 +225,7 @@ const ResponsesTable: React.FC<ResponsesTableProps> = ({ responses }) => {
 		},
 		meta: {
 			onRowClick,
+			addQuickNotes,
 		},
 	});
 
