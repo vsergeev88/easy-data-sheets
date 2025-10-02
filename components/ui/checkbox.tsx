@@ -9,8 +9,11 @@ import { cn } from "@/lib/utils";
 
 function Checkbox({
 	className,
+	bubbles = true,
 	...props
-}: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
+}: React.ComponentProps<typeof CheckboxPrimitive.Root> & {
+	bubbles?: boolean;
+}) {
 	return (
 		<CheckboxPrimitive.Root
 			className={cn(
@@ -19,6 +22,7 @@ function Checkbox({
 			)}
 			data-slot="checkbox"
 			{...props}
+			onClick={(e) => bubbles && e.stopPropagation()}
 		>
 			<CheckboxPrimitive.Indicator
 				className="flex items-center justify-center text-current transition-none"

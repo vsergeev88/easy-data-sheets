@@ -1,21 +1,31 @@
 import { getResponsesByDatasheetId } from "@/lib/data/datasheetResponses";
 
+import { ResponsesList } from "./components/ResponsesList";
+
+const LIMIT = 100;
+const OFFSET = 0;
+
 export default async function DataSheetPage({
 	params,
 }: {
 	params: Promise<{ dataSheetId: string }>;
 }) {
 	const { dataSheetId } = await params;
-	const responses = await getResponsesByDatasheetId(dataSheetId, 100, 0, false);
+	const responsesData = await getResponsesByDatasheetId(
+		dataSheetId,
+		LIMIT,
+		OFFSET,
+		false
+	);
 
-	if (!responses) {
+	if (!responsesData) {
 		return <div>responses not found</div>;
 	}
 
 	return (
 		<div>
 			<h1>Responses</h1>
-			<pre>{JSON.stringify(responses, null, 2)}</pre>
+			<ResponsesList responsesData={responsesData} />
 		</div>
 	);
 }

@@ -19,6 +19,28 @@ export type DataSheetResponse = {
   unread: boolean;
 };
 
+export type DataSheetResponseDB = {
+  id: string;
+  datasheet_name: string;
+  contacts: string | null;
+  datasheet_id: string;
+  created_at: string;
+  updated_at: string;
+  author_id: string;
+  user_id: string | null;
+  company_id: string | null;
+  demo: boolean;
+  data: string;
+  bookmarked: boolean;
+  notes: string;
+  archived: boolean;
+  unread: boolean;
+};
+
+export type CountResult = {
+  count: number;
+};
+
 export type CreateResponse = Pick<
   DataSheetResponse,
   | "datasheetName"
@@ -30,16 +52,41 @@ export type CreateResponse = Pick<
   | "data"
 >;
 
+export type ResponsesData = {
+  responses: DataSheetResponse[];
+  total: number;
+};
+
 export async function getResponsesByDatasheetId(
   datasheetId: string,
   limit: number,
   offset: number,
   archived: boolean
-): Promise<{ responses: DataSheetResponse[]; total: number }> {
-  const responses =
-    (await sql`SELECT * FROM datasheet_responses WHERE datasheet_id = ${datasheetId} AND archived = ${archived} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as DataSheetResponse[];
-  const total =
-    (await sql`SELECT COUNT(*) FROM datasheet_responses WHERE datasheet_id = ${datasheetId} AND archived = ${archived}`) as unknown as number;
+): Promise<ResponsesData> {
+  const responsesQuery =
+    (await sql`SELECT * FROM datasheet_responses WHERE datasheet_id = ${datasheetId} AND archived = ${archived} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as DataSheetResponseDB[];
+
+  const responses: DataSheetResponse[] = responsesQuery.map((response) => ({
+    id: response.id,
+    datasheetName: response.datasheet_name,
+    contacts: response.contacts,
+    datasheetId: response.datasheet_id,
+    createdAt: new Date(response.created_at),
+    updatedAt: new Date(response.updated_at),
+    userId: response.user_id,
+    authorId: response.author_id,
+    companyId: response.company_id,
+    demo: response.demo,
+    data: response.data,
+    bookmarked: response.bookmarked,
+    notes: response.notes,
+    archived: response.archived,
+    unread: response.unread,
+  }));
+
+  const totalResult =
+    (await sql`SELECT COUNT(*) as count FROM datasheet_responses WHERE datasheet_id = ${datasheetId} AND archived = ${archived}`) as CountResult[];
+  const total = totalResult[0]?.count || 0;
   return { responses, total };
 }
 
@@ -57,8 +104,9 @@ export async function getResponsesByAuthorId(
 ): Promise<{ responses: DataSheetResponse[]; total: number }> {
   const responses =
     (await sql`SELECT * FROM datasheet_responses WHERE author_id = ${authorId} AND archived = ${archived} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as DataSheetResponse[];
-  const total =
-    (await sql`SELECT COUNT(*) FROM datasheet_responses WHERE author_id = ${authorId} AND archived = ${archived}`) as unknown as number;
+  const totalResult =
+    (await sql`SELECT COUNT(*) as count FROM datasheet_responses WHERE author_id = ${authorId} AND archived = ${archived}`) as CountResult[];
+  const total = totalResult[0]?.count || 0;
   return { responses, total };
 }
 
