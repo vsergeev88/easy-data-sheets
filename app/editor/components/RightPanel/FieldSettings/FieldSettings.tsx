@@ -1,7 +1,7 @@
 import type { IEditorFieldModel } from "@/app/editor/stores/editorAppStore/fieldModel";
 
 import { useEditorAppStore } from "@editorAppStore";
-import { X } from "lucide-react";
+import { Settings, X } from "lucide-react";
 import { observer } from "mobx-react-lite";
 
 import { ServiceButton } from "@/components/ServiceButton";
@@ -28,7 +28,10 @@ const FieldSettings = ({ fieldId }: { fieldId: string }) => {
 	return (
 		<div className="border border-gray-200 bg-background p-4">
 			<div className="flex items-center justify-between font-medium text-lg">
-				<h2>Field settings</h2>
+				<h2 className="flex items-center gap-2">
+					<Settings className="size-4" />
+					Field settings
+				</h2>
 				<ServiceButton
 					icon={<X />}
 					onClick={() => {

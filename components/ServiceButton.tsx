@@ -18,7 +18,7 @@ export const ServiceButton = ({
 			<TooltipTrigger asChild>
 				<Button
 					{...buttonProps}
-					className={cn(className, "bg-background")}
+					className={cn(className, "size-6 bg-background")}
 					size="icon"
 					type="button"
 					variant="ghost"

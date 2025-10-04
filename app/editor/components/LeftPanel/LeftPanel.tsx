@@ -1,7 +1,5 @@
 import { useEditorAppStore } from "@editorAppStore";
 import {
-	ChevronDown,
-	PencilRuler,
 	SquareCheckBig,
 	SquareDashed,
 	// Text,
@@ -17,6 +15,11 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { CHOICE_TYPES, FIELD_TYPES } from "@/lib/types/form";
+
+import {
+	deliveryConditionsFieldset,
+	emptyFieldset,
+} from "../../constants/fieldsetTemplates";
 
 export default function LeftPanel() {
 	const { safeFormData } = useEditorAppStore();
@@ -52,24 +55,24 @@ export default function LeftPanel() {
 				);
 			},
 		},
-		{
-			id: "select",
-			title: "Dropdown / Select",
-			icon: ChevronDown,
-			onClick: () => {
-				console.log("Select");
-			},
-			isSoon: true,
-		},
-		{
-			id: "drawing",
-			title: "Drawing",
-			icon: PencilRuler,
-			onClick: () => {
-				console.log("Drawing");
-			},
-			isSoon: true,
-		},
+		// {
+		// 	id: "select",
+		// 	title: "Dropdown / Select",
+		// 	icon: ChevronDown,
+		// 	onClick: () => {
+		// 		console.log("Select");
+		// 	},
+		// 	isSoon: true,
+		// },
+		// {
+		// 	id: "drawing",
+		// 	title: "Drawing",
+		// 	icon: PencilRuler,
+		// 	onClick: () => {
+		// 		console.log("Drawing");
+		// 	},
+		// 	isSoon: true,
+		// },
 		// {
 		//   id: 'text',
 		//   title: 'Text',
@@ -102,18 +105,12 @@ export default function LeftPanel() {
 								<li className="w-full" key={item.id}>
 									<Button
 										className="w-full justify-start"
-										disabled={item.isSoon}
 										onClick={item.onClick}
 										size="sm"
 										variant="ghost"
 									>
 										<item.icon />
-										<span>
-											{item.title}{" "}
-											{item.isSoon && (
-												<span className="text-gray-500 text-xs">soon</span>
-											)}
-										</span>
+										<span>{item.title}</span>
 									</Button>
 								</li>
 							))}
@@ -129,6 +126,12 @@ export default function LeftPanel() {
 							<li className="w-full">
 								<Button
 									className="w-full justify-start"
+									onClick={() => {
+										safeFormData.addFieldSet(
+											emptyFieldset,
+											safeFormData.selectedFieldSetId ?? ""
+										);
+									}}
 									size="sm"
 									variant="ghost"
 								>
@@ -138,30 +141,16 @@ export default function LeftPanel() {
 							<li className="w-full">
 								<Button
 									className="w-full justify-start"
+									onClick={() => {
+										safeFormData.addFieldSet(
+											deliveryConditionsFieldset,
+											safeFormData.selectedFieldSetId ?? ""
+										);
+									}}
 									size="sm"
 									variant="ghost"
 								>
-									Customer Contacts
-								</Button>
-							</li>
-
-							<li className="w-full">
-								<Button
-									className="w-full justify-start"
-									size="sm"
-									variant="ghost"
-								>
-									Delivery Address
-								</Button>
-							</li>
-
-							<li className="w-full">
-								<Button
-									className="w-full justify-start"
-									size="sm"
-									variant="ghost"
-								>
-									External Sizing
+									Delivery Conditions
 								</Button>
 							</li>
 						</ul>

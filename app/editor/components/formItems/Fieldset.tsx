@@ -44,6 +44,10 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index }) => {
 	}, [fieldsetFields, setValues]);
 
 	const handleRemoveFieldset = () => {
+		if (fieldsetFields.length === 0) {
+			safeFormData.removeFieldSet(fieldSet.id);
+			return;
+		}
 		confirmDialogManager.open({
 			title: "Delete section",
 			description:
@@ -95,7 +99,7 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index }) => {
 							legend={fieldSet.legend ?? ""}
 							setLegend={(legend) => fieldSet.setLegend(legend)}
 						/>
-						{isSelected && (
+						{isSelected && fieldSet.id !== "contacts" && (
 							<div className="flex flex-row items-center justify-between">
 								<ServiceButton
 									className="bg-transparent"
@@ -120,27 +124,20 @@ const Fieldset: React.FC<FieldsetProps> = ({ fieldSet, className, index }) => {
 							<div className="mb-2 flex items-center gap-2 text-gray-500 text-sm">
 								<CornerDownRight className="h-4 w-4" />
 								<div className="flex items-center">
-									Start with adding &nbsp;
-									<Button
-										className="cursor-pointer p-0 text-gray-500 underline underline-offset-4 hover:text-gray-700"
+									Start with adding&nbsp;
+									<span
+										className="cursor-pointer underline underline-offset-4 hover:text-gray-700"
 										onClick={() => safeFormData.addTextInput(fieldSet.id)}
-										size="sm"
-										variant="link"
+										onKeyDown={(e) => {
+											if (e.key === "Enter") {
+												safeFormData.addTextInput(fieldSet.id);
+											}
+										}}
 									>
 										Text Input
-									</Button>
+									</span>
 									&nbsp;or other basic elements from the left panel
 								</div>
-							</div>
-							<div className="flex items-center gap-2 text-gray-500 text-sm">
-								<CornerDownRight className="h-4 w-4" />
-								<Button
-									className="cursor-pointer p-0 text-gray-500 underline underline-offset-4 hover:text-gray-700"
-									size="sm"
-									variant="link"
-								>
-									Use section template
-								</Button>
 							</div>
 						</div>
 					)}

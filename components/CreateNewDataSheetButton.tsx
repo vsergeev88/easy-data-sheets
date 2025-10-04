@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 
+import { contactsFieldset } from "@/app/editor/constants/fieldsetTemplates";
 import { Button } from "@/components/ui/button";
 import { createDataSheet } from "@/lib/data/dataSheets";
 
@@ -14,9 +15,7 @@ export const CreateNewDataSheetButton: React.FC<{
 			description: "My Data Sheet Description",
 			userId,
 			companyId,
-			public: false,
-			private: false,
-			data: {},
+			fieldSets: [contactsFieldset],
 		});
 
 		redirect(`/editor/${dataSheet.id}`);

@@ -64,8 +64,17 @@ export const EditorFormDataModel = BareFormDataModel.named(
     setDescription: (description: string) => {
       self.description = description;
     },
-    addFieldSet: (fieldSet: FieldSet, afterId: string | null): void => {
-      const newFieldSet = EditorFieldSetModel.create(fieldSet);
+    addFieldSet: (
+      fieldSet: Omit<FieldSet, "id"> & { id?: string },
+      afterId: string | null
+    ): void => {
+      const newFieldSet = EditorFieldSetModel.create({
+        ...fieldSet,
+        id: fieldSet.id ?? crypto.randomUUID(),
+        fields: fieldSet.fields.map((field) =>
+          FieldModel.create({ ...field, id: field.id ?? crypto.randomUUID() })
+        ),
+      });
       const updatedFieldSets = [...self.fieldSets] as IEditorFieldSetModel[];
       if (afterId) {
         const afterIndex = self.fieldSets.findIndex(

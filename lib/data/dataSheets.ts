@@ -31,6 +31,9 @@ export async function createDataSheet(
   const updatedAt = new Date();
   const dataString = data ? JSON.stringify(data) : "";
 
+  console.log("===> data", data);
+  console.log("===> dataString", dataString);
+
   const userId = await getUserId();
 
   if (!userId) {

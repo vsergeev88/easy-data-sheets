@@ -46,6 +46,7 @@ const ChoiceFieldSettings = ({ field }: ChoiceFieldSettingsProps) => {
 				/>
 				<Label htmlFor="withCustomField">With Custom Field</Label>
 			</div>
+			<hr />
 			<div className="flex flex-col gap-2">
 				<Label className="font-medium text-sm" htmlFor="items">
 					Items
@@ -62,15 +63,19 @@ const ChoiceFieldSettings = ({ field }: ChoiceFieldSettingsProps) => {
 								text={item}
 							/>
 							<ServiceButton
+								className="ignore-deselect ml-auto hover:text-red-700"
 								icon={<Trash2 />}
-								onClick={() => field.removeItem(index)}
+								onClick={(e) => {
+									e.stopPropagation();
+									field.removeItem(index);
+								}}
 								size="sm"
 								tooltip="Delete item"
 							/>
 						</div>
 					))}
 				</div>
-				<div className="flex flex-row gap-2">
+				<div className="flex w-full flex-row gap-2">
 					<input
 						className="ignore-deselect border-1 px-1 text-left"
 						onChange={(e) => setNewItem(e.target.value)}
@@ -79,6 +84,7 @@ const ChoiceFieldSettings = ({ field }: ChoiceFieldSettingsProps) => {
 					/>
 					<ServiceButton
 						className="ignore-deselect hover:text-green-700"
+						disabled={!newItem}
 						icon={<Plus />}
 						onClick={() => {
 							field.addItem(newItem);

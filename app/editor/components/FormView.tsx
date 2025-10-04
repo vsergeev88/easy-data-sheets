@@ -1,5 +1,4 @@
 "use client";
-import type { FormSchema } from "@/components/baseFormItems/types";
 import type { IEditorFieldSetModel } from "../stores/editorAppStore/fieldSetModel";
 
 import { useEditorAppStore } from "@editorAppStore";
@@ -17,10 +16,6 @@ function FormView() {
 
 	if (!(formData && formInfo)) {
 		return <div>Loading...</div>;
-	}
-
-	function onSubmit(values: FormSchema) {
-		console.log(values);
 	}
 
 	return (
@@ -41,14 +36,16 @@ function FormView() {
 					text={safeFormData.description}
 				/>
 			)}
-			<form className="space-y-4 overflow-y-auto" onSubmit={onSubmit}>
-				{safeFormData.fieldSets.map((fieldSet, index) => (
-					<Fieldset
-						fieldSet={fieldSet as IEditorFieldSetModel}
-						index={index}
-						key={fieldSet.id}
-					/>
-				))}
+			<form className="space-y-4 overflow-y-auto">
+				{safeFormData.fieldSets.map((fieldSet, index) => {
+					return (
+						<Fieldset
+							fieldSet={fieldSet as IEditorFieldSetModel}
+							index={index}
+							key={fieldSet.id}
+						/>
+					);
+				})}
 			</form>
 			{!safeFormData.selectedFieldSetId && <AddFieldsetButton />}
 			<SubmitButton />

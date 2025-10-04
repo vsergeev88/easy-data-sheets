@@ -27,6 +27,9 @@ function EditorClient({ dataSheet }: EditorClientProps) {
 		if (!editorAppStore.isInitialized) {
 			editorAppStore.init(dataSheet);
 		}
+		return () => {
+			editorAppStore.setIsInitialized(false);
+		};
 	}, [editorAppStore, dataSheet]);
 
 	useAutosave();
