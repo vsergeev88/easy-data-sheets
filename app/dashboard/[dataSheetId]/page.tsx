@@ -1,6 +1,6 @@
 import { getResponsesByDatasheetId } from "@/lib/data/datasheetResponses";
 
-import { ResponsesList } from "./components/ResponsesList";
+import { ResponsesList } from "../components/ResponsesList";
 
 const LIMIT = 100;
 const OFFSET = 0;

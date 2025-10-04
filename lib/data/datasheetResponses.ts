@@ -57,6 +57,26 @@ export type ResponsesData = {
   total: number;
 };
 
+const prepareResponseToFrontend = (
+  response: DataSheetResponseDB
+): DataSheetResponse => ({
+  id: response.id,
+  datasheetName: response.datasheet_name,
+  contacts: response.contacts,
+  datasheetId: response.datasheet_id,
+  createdAt: new Date(response.created_at),
+  updatedAt: new Date(response.updated_at),
+  userId: response.user_id,
+  authorId: response.author_id,
+  companyId: response.company_id,
+  demo: response.demo,
+  data: response.data,
+  bookmarked: response.bookmarked,
+  notes: response.notes,
+  archived: response.archived,
+  unread: response.unread,
+});
+
 export async function getResponsesByDatasheetId(
   datasheetId: string,
   limit: number,
@@ -66,23 +86,9 @@ export async function getResponsesByDatasheetId(
   const responsesQuery =
     (await sql`SELECT * FROM datasheet_responses WHERE datasheet_id = ${datasheetId} AND archived = ${archived} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as DataSheetResponseDB[];
 
-  const responses: DataSheetResponse[] = responsesQuery.map((response) => ({
-    id: response.id,
-    datasheetName: response.datasheet_name,
-    contacts: response.contacts,
-    datasheetId: response.datasheet_id,
-    createdAt: new Date(response.created_at),
-    updatedAt: new Date(response.updated_at),
-    userId: response.user_id,
-    authorId: response.author_id,
-    companyId: response.company_id,
-    demo: response.demo,
-    data: response.data,
-    bookmarked: response.bookmarked,
-    notes: response.notes,
-    archived: response.archived,
-    unread: response.unread,
-  }));
+  const responses: DataSheetResponse[] = responsesQuery.map((response) =>
+    prepareResponseToFrontend(response)
+  );
 
   const totalResult =
     (await sql`SELECT COUNT(*) as count FROM datasheet_responses WHERE datasheet_id = ${datasheetId} AND archived = ${archived}`) as CountResult[];
@@ -103,11 +109,15 @@ export async function getResponsesByAuthorId(
   archived: boolean
 ): Promise<{ responses: DataSheetResponse[]; total: number }> {
   const responses =
-    (await sql`SELECT * FROM datasheet_responses WHERE author_id = ${authorId} AND archived = ${archived} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as DataSheetResponse[];
+    (await sql`SELECT * FROM datasheet_responses WHERE author_id = ${authorId} AND archived = ${archived} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as DataSheetResponseDB[];
   const totalResult =
     (await sql`SELECT COUNT(*) as count FROM datasheet_responses WHERE author_id = ${authorId} AND archived = ${archived}`) as CountResult[];
   const total = totalResult[0]?.count || 0;
-  return { responses, total };
+
+  return {
+    responses: responses.map((response) => prepareResponseToFrontend(response)),
+    total,
+  };
 }
 
 export async function createResponse(

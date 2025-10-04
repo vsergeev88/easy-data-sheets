@@ -6,7 +6,8 @@ import { createDataSheet } from "@/lib/data/dataSheets";
 export const CreateNewDataSheetButton: React.FC<{
 	userId: string;
 	companyId?: string | null;
-}> = ({ userId, companyId = null }) => {
+	className?: string;
+}> = ({ userId, companyId = null, className }) => {
 	const createNewDataSheet = async () => {
 		"use server";
 		const dataSheet = await createDataSheet("My Data Sheet", {
@@ -20,5 +21,9 @@ export const CreateNewDataSheetButton: React.FC<{
 
 		redirect(`/editor/${dataSheet.id}`);
 	};
-	return <Button onClick={createNewDataSheet}>Create new Data Sheet</Button>;
+	return (
+		<Button className={className} onClick={createNewDataSheet}>
+			Create new Data Sheet
+		</Button>
+	);
 };

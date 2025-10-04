@@ -107,7 +107,7 @@ const ResponseDetailsModal = ({
 	};
 	return (
 		<Dialog onOpenChange={setOpenDetailsModal} open={openDetailsModal}>
-			<DialogContent className="min-h-[90vh] min-w-[90vw] grid-cols-[1fr] grid-rows-[auto_1fr] gap-0 print:m-0 print:min-w-[100vw] print:p-0">
+			<DialogContent className="min-h-[90vh] min-w-[1000px] grid-cols-[1fr] grid-rows-[auto_1fr] gap-0 print:m-0 print:min-w-[100vw] print:p-0">
 				<DialogHeader className="print:hidden">
 					<DialogTitle>{response?.datasheetName}</DialogTitle>
 				</DialogHeader>
@@ -130,7 +130,7 @@ const ResponseDetailsModal = ({
 							fieldsetIndex: number
 						) => (
 							<div
-								className="bg-gray-50 p-2 print:bg-white print:p-0"
+								className="border border-gray-400 p-2 pb-0 print:bg-white print:px-2 print:py-0"
 								key={`fieldset-${fieldsetIndex}-${fieldset.legend}`}
 							>
 								<h2 className="font-semibold text-lg">{fieldset.legend}</h2>
@@ -153,7 +153,7 @@ const ResponseDetailsModal = ({
 						<Printer className="h-4 w-4" />
 						Print
 					</Button>
-					<Button
+					{/* <Button
 						className="flex items-center gap-2"
 						disabled={isGeneratingPDF}
 						onClick={handleSaveAsPDF}
@@ -161,7 +161,7 @@ const ResponseDetailsModal = ({
 					>
 						<Download className="h-4 w-4" />
 						{isGeneratingPDF ? "Generating PDF..." : "Save as PDF"}
-					</Button>
+					</Button> */}
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

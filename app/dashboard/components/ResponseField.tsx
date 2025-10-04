@@ -1,7 +1,6 @@
-import { Copy, MessageSquareMore, Pencil } from "lucide-react";
-import { useState } from "react";
+import { Copy, Pencil } from "lucide-react";
+import { useEffect, useState } from "react";
 
-import { Tooltip } from "@/components/Tooltip";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -17,38 +16,57 @@ export const ResponseField = ({
 
 	const [isNotesEditing, setIsNotesEditing] = useState(false);
 	const [notes, setNotes] = useState(field.notes ?? "");
+	const [isCopied, setIsCopied] = useState(false);
+
+	useEffect(() => {
+		if (isCopied) {
+			setTimeout(() => {
+				setIsCopied(false);
+			}, 2000);
+		}
+	}, [isCopied]);
 
 	return (
-		<div className=" border-b py-1">
+		<div className=" border-t py-1">
 			<div className="flex justify-between gap-2">
 				<div className="flex flex-1 items-center gap-2">
 					<div className="font-thin text-sm">{field.name}:</div>{" "}
 					{
-						<div className={cn("font-semibold", !value && "text-gray-400")}>
-							{value || "N/A"}
+						<div
+							className={cn(
+								"flex items-center gap-2 font-semibold",
+								!value && "text-gray-400"
+							)}
+						>
+							<div>{value || "N/A"} </div>
+							<Button
+								className="size-4 text-slate-400 text-xs"
+								disabled={!value}
+								onClick={() => {
+									navigator.clipboard.writeText(value);
+									setIsCopied(true);
+								}}
+								size="icon"
+								variant="ghost"
+							>
+								<Copy className="size-3" />
+							</Button>
+							{isCopied && (
+								<div className="flex animate-bounce items-center gap-1 font-normal text-slate-400 text-xs">
+									copied!
+								</div>
+							)}
 						</div>
 					}
 				</div>
 				<div className="flex flex-col items-center gap-2 text-slate-400 print:hidden">
-					<Tooltip message="Copy value">
-						<Button
-							disabled={!value}
-							onClick={() => navigator.clipboard.writeText(value)}
-							size="icon"
-							variant="ghost"
-						>
-							<Copy />
-						</Button>
-					</Tooltip>
-					<Tooltip message="Add notes for this response">
-						<Button
-							onClick={() => setIsNotesEditing(true)}
-							size="icon"
-							variant="ghost"
-						>
-							<MessageSquareMore />
-						</Button>
-					</Tooltip>
+					<Button
+						onClick={() => setIsNotesEditing(true)}
+						size="sm"
+						variant="ghost"
+					>
+						<Pencil /> Add notes
+					</Button>
 				</div>
 			</div>
 			{isNotesEditing && (
